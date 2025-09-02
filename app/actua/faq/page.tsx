@@ -68,9 +68,8 @@ export default function ActuaFAQPage() {
                   <AccordionTrigger className="text-left font-semibold">¿Qué es ACTUA 2.0?</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     ACTUA 2.0 es una aplicación web especializada en el análisis de mediciones de sonometría. Está
-                    diseñada específicamente para personal técnico y policial que necesita generar actas técnicas
-                    basadas en mediciones acústicas precisas. La aplicación combina algoritmos avanzados de
-                    procesamiento de señales con interfaces optimizadas para uso profesional.
+                    diseñada específicamente para personal técnico y Agentes de policía que necesitan generar actas técnicas con cálculos de resultados basadas en mediciones acústicas precisas sin realizar ningún cálculo laborioso. La aplicación combina algoritmos avanzados de
+                    procesamiento de señales con interfaces optimizadas para uso profesional, conforme a la Normativa de Aplicación.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -80,9 +79,7 @@ export default function ActuaFAQPage() {
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     La aplicación puede procesar diversos tipos de mediciones acústicas incluyendo niveles de ruido
-                    ambiental, mediciones de decibeles en diferentes frecuencias, análisis espectral de sonido,
-                    mediciones de ruido ocupacional, y evaluaciones de contaminación acústica. También soporta análisis
-                    temporal y frecuencial para generar reportes técnicos detallados.
+                    ambiental, específicamente niveles de Transmisión al Ambiente Interior e inmisión al ambiente Exterior de fuentes Sonoras, permitiendo generar reportes técnicos detallados.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -92,9 +89,8 @@ export default function ActuaFAQPage() {
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     El sistema analiza automáticamente los datos de sonometría ingresados y genera actas técnicas
-                    siguiendo los estándares requeridos por las autoridades. El proceso incluye validación de datos,
-                    análisis estadístico, generación de gráficos y tablas, conclusiones técnicas automatizadas, y
-                    cumplimiento con las normativas legales aplicables. Las actas incluyen metadatos, certificaciones y
+                    siguiendo los estándares requeridos por la Normativa de Aplicación. El proceso incluye validación de datos,
+                    análisis de datos, tablas, conclusiones técnicas de CONFORMIDAD o NO CONFORMIDAD automatizadas siguiendo las normativas legales aplicables. Las actas incluyen metadatos y
                     trazabilidad completa del proceso de medición.
                   </AccordionContent>
                 </AccordionItem>
@@ -105,10 +101,8 @@ export default function ActuaFAQPage() {
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     ACTUA 2.0 soporta múltiples formatos de entrada incluyendo CSV, Excel (.xlsx, .xls), formatos
-                    específicos de sonómetros profesionales (como archivos .wav para análisis acústico), archivos de
-                    texto delimitados, y formatos propietarios de equipos de medición. Los reportes se pueden exportar
-                    en PDF (para distribución oficial), Word (.docx), Excel (para análisis adicional), y formatos de
-                    imagen (PNG, JPG) para gráficos individuales.
+                    específicos de sonómetros profesionales, archivos de
+                    texto delimitados, y formatos propietarios de equipos de medición. Se identifican automáticamente distintos modelos de Sonómetros ( CESVA, BRÜEL,… ). Se debe consultar al fabricante sobre el modelo de Sonómetro que pretende utilizar. Los reportes se pueden exportar en Word (.docx) y TXT (para análisis adicional) para la elaboración de Informes.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -129,9 +123,9 @@ export default function ActuaFAQPage() {
                     ¿Qué normativas cumple la aplicación?
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
-                    ACTUA 2.0 cumple con normativas internacionales de medición acústica como ISO 1996 (descripción,
+                    ACTUA 2.0 interacciona con las normativas internacionales de medición acústica como ISO 1996 (descripción,
                     medición y evaluación del ruido ambiental), IEC 61672 (sonómetros), y estándares nacionales
-                    específicos para procedimientos policiales y técnicos. La aplicación también incorpora protocolos de
+                    específicos para procedimientos policiales y técnicos como el Real Decreto 1367/2007 y la Ley 37/2003. La aplicación también incorpora protocolos de
                     seguridad de datos y trazabilidad requeridos en procedimientos legales.
                   </AccordionContent>
                 </AccordionItem>
