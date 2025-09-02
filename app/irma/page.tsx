@@ -455,7 +455,7 @@ export default function IrmaPage() {
                 </div>
                 <h4 className="text-2xl font-bold mb-4">Aplicación Móvil</h4>
                 <p className="text-muted-foreground mb-6">
-                  App nativa para iOS y Android con capacidades offline, notificaciones push y sincronización automática
+                  App nativa para iOS y Android con capacidades offline y sincronización automática
                   de datos.
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-2">
