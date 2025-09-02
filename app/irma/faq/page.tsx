@@ -81,7 +81,7 @@ export default function IrmaFAQPage() {
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     IRMA es una plataforma avanzada disponible tanto en móvil como en web que permite realizar
                     mediciones y monitoreo en tiempo real de sensores acelerómetros especializados llamados "setas". La
-                    aplicación está diseñada para la detección precisa de vibraciones, análisis de datos sísmicos y
+                    aplicación está diseñada para la detección precisa de vibraciones, análisis de datos de vibraciones y
                     monitoreo estructural en aplicaciones industriales y de investigación.
                   </AccordionContent>
                 </AccordionItem>
@@ -159,7 +159,7 @@ export default function IrmaFAQPage() {
                     frecuencias dominantes, detección de patrones mediante machine learning, análisis de tendencias
                     temporales, correlación entre múltiples sensores, detección de anomalías automática, análisis de
                     fatiga estructural, y generación de reportes técnicos detallados. También ofrece herramientas de
-                    visualización 3D para representar datos de múltiples sensores en contexto espacial.
+                    visualización 3D para representar datos de múltiples sensores en contexto espacial mediante IRMADATA, aplicación de escritorio.
                   </AccordionContent>
                 </AccordionItem>
 

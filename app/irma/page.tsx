@@ -97,8 +97,8 @@ export default function IrmaPage() {
             </div>
 
             <p className="text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Plataforma avanzada para mediciones y monitoreo en tiempo real de sensores acelerómetros "setas",
-              especializada en la detección precisa de vibraciones y análisis de datos sísmicos.
+              Plataforma avanzada para mediciones y monitoreo en tiempo real de sensores de vibración a los que hemos dado forma de "setas",
+              especializadas en la detección precisa de vibraciones y análisis de múltiples funciones relacionadas con la edificación y la industria.
             </p>
 
             <Link href="/irma/faq">
@@ -124,13 +124,13 @@ export default function IrmaPage() {
             </div>
 
             <div className="grid lg:grid-cols-2 gap-12">
-              {/* Modelo MPU */}
+              {/* Modelo RED */}
               <Card className="p-8 hover:shadow-xl transition-all duration-300">
                 <div className="text-center mb-8">
                   <div className="h-20 w-20 rounded-3xl bg-blue-100 flex items-center justify-center mx-auto mb-6">
                     <Cpu className="h-10 w-10 text-blue-600" />
                   </div>
-                  <h4 className="text-2xl font-bold mb-2">IRMA MPU</h4>
+                  <h4 className="text-2xl font-bold mb-2">IRMA RED BIG y RED LITE</h4>
                   <Badge variant="secondary" className="bg-blue-100 text-blue-800">
                     Modelo Integrado
                   </Badge>
@@ -158,13 +158,13 @@ export default function IrmaPage() {
                 </div>
               </Card>
 
-              {/* Modelo ADXL355 */}
+              {/* Modelo WHITE Y GREY */}
               <Card className="p-8 hover:shadow-xl transition-all duration-300">
                 <div className="text-center mb-8">
                   <div className="h-20 w-20 rounded-3xl bg-purple-100 flex items-center justify-center mx-auto mb-6">
                     <Settings className="h-10 w-10 text-purple-600" />
                   </div>
-                  <h4 className="text-2xl font-bold mb-2">IRMA ADXL355</h4>
+                  <h4 className="text-2xl font-bold mb-2">IRMA WHITE BIG, WHITE LITE Y GREY</h4>
                   <Badge variant="secondary" className="bg-purple-100 text-purple-800">
                     Modelo Profesional
                   </Badge>

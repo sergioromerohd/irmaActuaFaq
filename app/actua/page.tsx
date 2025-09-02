@@ -78,8 +78,7 @@ export default function ActuaPage() {
             </div>
 
             <p className="text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Herramienta profesional para el análisis de mediciones de sonometría y generación automática de actas
-              técnicas, diseñada específicamente para personal técnico y policial.
+              Herramienta profesional para el análisis de mediciones sonométricas en tareas de Inspecciones acústicas de fuentes y actividades ruidosas y generación automática de cálculos y actas técnicas. Diseñada específicamente para personal técnico y Agentes de Policía.
             </p>
 
             <Link href="/actua/faq">
@@ -112,8 +111,7 @@ export default function ActuaPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-center">
-                  Procesamiento sofisticado de mediciones acústicas con algoritmos especializados para análisis
-                  espectral y temporal.
+                  Procesamiento de mediciones acústicas con algoritmos especializados para análisis espectral y temporal.
                 </p>
               </CardContent>
             </Card>
@@ -141,7 +139,7 @@ export default function ActuaPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-center">
-                  Diseñado para cumplir con las normativas policiales y técnicas requeridas en procedimientos oficiales.
+                  Diseñado para cumplir con las normativas nacionales, regionales y locales en procedimientos municipales
                 </p>
               </CardContent>
             </Card>
@@ -155,7 +153,7 @@ export default function ActuaPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-center">
-                  Diseño optimizado para personal técnico y policial, con flujos de trabajo intuitivos y eficientes.
+                  Diseño optimizado para personal técnico y agentes de policía con poca experiencia o formación en acústica, con flujos de trabajo intuitivos y eficientes.
                 </p>
               </CardContent>
             </Card>
@@ -198,8 +196,7 @@ export default function ActuaPage() {
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <h3 className="text-4xl font-bold">Dirigido a Profesionales</h3>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              ACTUA 2.0 está específicamente diseñado para satisfacer las necesidades de personal técnico especializado
-              y fuerzas policiales que requieren herramientas precisas y confiables para sus procedimientos oficiales.
+              ACTUA 2.0 está específicamente diseñado para satisfacer las necesidades de personal técnico y Agentes de policía que requieren herramientas precisas y confiables para sus procedimientos oficiales.
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 mt-12">
@@ -207,10 +204,9 @@ export default function ActuaPage() {
                 <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-6">
                   <Shield className="h-8 w-8 text-primary" />
                 </div>
-                <h4 className="text-2xl font-bold mb-4">Personal Policial</h4>
+                <h4 className="text-2xl font-bold mb-4">Agentes de Policía</h4>
                 <p className="text-muted-foreground">
-                  Herramientas especializadas para procedimientos oficiales, generación de actas legales y cumplimiento
-                  de normativas policiales en mediciones acústicas.
+                  Herramientas especializadas para procedimientos oficiales, generación de actas legales y cumplimiento de normativas nacional, regional y local en materia de acústica.
                 </p>
               </Card>
 
