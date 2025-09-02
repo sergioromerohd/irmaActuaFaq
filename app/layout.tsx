@@ -9,7 +9,6 @@ import "./globals.css"
 export const metadata: Metadata = {
   title: "dbbasico - ACTUA 2.0 & IRMA",
   description: "Información y FAQ de los productos ACTUA 2.0 y IRMA de dbbasico",
-    generator: 'v0.app'
 }
 
 export default function RootLayout({
