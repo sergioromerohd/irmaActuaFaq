@@ -145,7 +145,7 @@ export default function IrmaFAQPage() {
                     vibración (con múltiples niveles de severidad), alertas por pérdida de conexión con sensores,
                     alertas por batería baja en las "setas", alertas por patrones de vibración anómalos detectados por
                     IA, alertas por eventos sísmicos, y alertas personalizadas basadas en combinaciones de parámetros.
-                    Las notificaciones se pueden recibir por email, SMS, push notifications, webhooks, y integración con
+                    Las notificaciones se pueden recibir por email, SMS, webhooks, y integración con
                     sistemas de terceros como Slack o Microsoft Teams.
                   </AccordionContent>
                 </AccordionItem>
@@ -182,9 +182,8 @@ export default function IrmaFAQPage() {
                     ¿Qué duración tiene la batería de los sensores?
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
-                    La duración de la batería de los sensores "setas" varía según el modelo y la configuración de uso.
-                    En modo estándar (muestreo a 10 Hz), la batería puede durar entre 6-12 meses. En modo de alta
-                    frecuencia (100+ Hz), la duración se reduce a 2-4 meses. Los sensores incluyen gestión inteligente
+                    La batería tiene una carga de aproximadamente 6h a máximo rendimiento ampliable hasta 48-72h en 
+                    función de la configuración de sueño. Los sensores incluyen gestión inteligente
                     de energía con modos de bajo consumo, hibernación automática durante períodos de inactividad, y
                     alertas tempranas de batería baja. Algunos modelos ofrecen opciones de carga solar o conexión a
                     fuentes de alimentación externa para instalaciones permanentes.
