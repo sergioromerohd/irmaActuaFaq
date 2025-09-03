@@ -33,37 +33,8 @@ export default function HomePage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/20">
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="h-12 w-auto">
-                <Image
-                  src="/images/dbbasico-logo.png"
-                  alt="dbbasico - Servicios de Acústica SL"
-                  width={200}
-                  height={48}
-                  className="h-12 w-auto object-contain group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div></div>
-            </Link>
-
-            <nav className="hidden md:flex items-center space-x-6">
-              <Link href="/actua" className="text-sm font-medium hover:text-primary transition-colors">
-                ACTUA 2.0
-              </Link>
-              <Link href="/irma" className="text-sm font-medium hover:text-primary transition-colors">
-                IRMA
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
-      {/* Hero Section with Parallax */}
-      <section ref={heroRef} className="relative pt-24 pb-16 overflow-hidden">
+  {/* Hero Section with Parallax */}
+  <section ref={heroRef} className="relative pt-28 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/5 via-transparent to-accent/5" />
         <div className="container mx-auto px-4 text-center space-y-8 relative z-10">
           <div className="space-y-6">
@@ -306,7 +277,7 @@ export default function HomePage() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-accent/5">
+  <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-accent/5">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto space-y-8">
             <h3 className="text-4xl font-bold">¿Necesitas más información?</h3>
@@ -336,30 +307,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-12">
-          <div className="text-center space-y-6">
-            <Link href="/" className="inline-flex items-center space-x-3 group">
-              <div className="h-10 w-auto">
-                <Image
-                  src="/images/dbbasico-logo.png"
-                  alt="dbbasico"
-                  width={150}
-                  height={40}
-                  className="h-10 w-auto object-contain group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <span className="text-xl font-semibold">dbbasico</span>
-            </Link>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              Soluciones técnicas especializadas en medición y análisis para profesionales que requieren precisión y
-              confiabilidad.
-            </p>
-            <p className="text-sm text-muted-foreground">© 2024 dbbasico. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+  {/* Footer moved to global layout */}
     </div>
   )
 }

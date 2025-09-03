@@ -26,38 +26,8 @@ export default function ActuaPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center group-hover:scale-105 transition-transform">
-                <span className="text-primary-foreground font-bold text-lg">db</span>
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">dbbasico</h1>
-                <p className="text-sm text-muted-foreground">ACTUA 2.0</p>
-              </div>
-            </Link>
-
-            <nav className="flex items-center space-x-6">
-              <Link
-                href="/"
-                className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Inicio
-              </Link>
-              <Link href="/actua/faq" className="text-sm font-medium hover:text-primary transition-colors">
-                FAQ
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
-      <section ref={heroRef} className="relative pt-24 pb-16 overflow-hidden">
+  <section ref={heroRef} className="relative pt-28 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/5" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -244,23 +214,7 @@ export default function ActuaPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-12">
-          <div className="text-center space-y-6">
-            <Link href="/" className="inline-flex items-center space-x-3 group">
-              <div className="h-10 w-10 rounded-xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center group-hover:scale-105 transition-transform">
-                <span className="text-primary-foreground font-bold text-lg">db</span>
-              </div>
-              <span className="text-xl font-semibold">dbbasico</span>
-            </Link>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              ACTUA 2.0 - Solución profesional para análisis de sonometría y generación de actas técnicas.
-            </p>
-            <p className="text-sm text-muted-foreground">© 2024 dbbasico. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+  {/* Footer moved to global layout */}
     </div>
   )
 }

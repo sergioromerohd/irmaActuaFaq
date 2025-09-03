@@ -42,38 +42,8 @@ export default function IrmaPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:scale-105 transition-transform border">
-                <Image src="/images/irma-logo.png" alt="IRMA Logo" width={32} height={32} className="object-contain" />
-              </div>
-              <div>
-                <h1 className="text-2xl font-bold text-foreground">IRMA</h1>
-                <p className="text-sm text-muted-foreground">by dbbasico</p>
-              </div>
-            </Link>
-
-            <nav className="flex items-center space-x-6">
-              <Link
-                href="/"
-                className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                Inicio
-              </Link>
-              <Link href="/irma/faq" className="text-sm font-medium hover:text-primary transition-colors">
-                FAQ
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       {/* Hero Section */}
-      <section ref={heroRef} className="relative pt-24 pb-16 overflow-hidden">
+  <section ref={heroRef} className="relative pt-28 pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-accent/10 via-transparent to-accent/5" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -91,9 +61,11 @@ export default function IrmaPage() {
               <Badge variant="secondary" className="bg-accent text-accent-foreground text-lg px-6 py-2">
                 Aplicación Móvil
               </Badge>
-              <Badge variant="secondary" className="bg-accent text-accent-foreground text-lg px-6 py-2">
-                Aplicación Web
-              </Badge>
+              <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer">
+                <Badge variant="secondary" className="bg-accent text-accent-foreground text-lg px-6 py-2 hover:bg-accent/80 transition-colors cursor-pointer">
+                  Aplicación Web
+                </Badge>
+              </Link>
             </div>
 
             <p className="text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
@@ -246,8 +218,11 @@ export default function IrmaPage() {
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-center">
-                  Disponible tanto en dispositivos móviles como en navegadores web, con sincronización completa de
-                  datos.
+                  Disponible tanto en dispositivos móviles como en{" "}
+                  <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                    navegadores web
+                  </Link>
+                  , con sincronización completa de datos.
                 </p>
               </CardContent>
             </Card>
@@ -444,8 +419,11 @@ export default function IrmaPage() {
           <div className="max-w-4xl mx-auto text-center space-y-8">
             <h3 className="text-4xl font-bold">Disponible en Múltiples Plataformas</h3>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              IRMA está optimizado para funcionar tanto en dispositivos móviles como en navegadores web, ofreciendo
-              flexibilidad total para el monitoreo desde cualquier ubicación.
+              IRMA está optimizado para funcionar tanto en dispositivos móviles como en{" "}
+              <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                navegadores web
+              </Link>
+              , ofreciendo flexibilidad total para el monitoreo desde cualquier ubicación.
             </p>
 
             <div className="grid md:grid-cols-2 gap-8 mt-12">
@@ -470,10 +448,16 @@ export default function IrmaPage() {
                 <div className="h-20 w-20 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-6">
                   <Monitor className="h-10 w-10 text-accent" />
                 </div>
-                <h4 className="text-2xl font-bold mb-4">Aplicación Web</h4>
+                <h4 className="text-2xl font-bold mb-4">
+                  <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors">
+                    Aplicación Web
+                  </Link>
+                </h4>
                 <p className="text-muted-foreground mb-6">
-                  Plataforma web completa con dashboards avanzados, análisis detallado y herramientas de administración
-                  empresarial.
+                  <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                    Plataforma web
+                  </Link>{" "}
+                  completa con dashboards avanzados, análisis detallado y herramientas de administración empresarial.
                 </p>
                 <ul className="text-sm text-muted-foreground space-y-2">
                   <li>• Dashboards personalizables</li>
@@ -487,7 +471,7 @@ export default function IrmaPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+  {/* CTA Section */}
       <section className="py-20">
         <div className="container mx-auto px-4 text-center">
           <div className="max-w-3xl mx-auto space-y-8">
@@ -506,23 +490,7 @@ export default function IrmaPage() {
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-12">
-          <div className="text-center space-y-6">
-            <Link href="/" className="inline-flex items-center space-x-3 group">
-              <div className="h-10 w-10 rounded-xl bg-white flex items-center justify-center group-hover:scale-105 transition-transform border">
-                <Image src="/images/irma-logo.png" alt="IRMA Logo" width={32} height={32} className="object-contain" />
-              </div>
-              <span className="text-xl font-semibold">IRMA by dbbasico</span>
-            </Link>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              IRMA - Plataforma avanzada para monitoreo de vibraciones con sensores acelerómetros especializados.
-            </p>
-            <p className="text-sm text-muted-foreground">© 2024 dbbasico. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+  {/* Footer moved to global layout */}
     </div>
   )
 }

@@ -9,43 +9,8 @@ import { ArrowLeft } from "lucide-react"
 export default function IrmaFAQPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-background via-background to-accent/5">
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-background/80 backdrop-blur-md border-b">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="flex items-center space-x-3 group">
-              <div className="h-12 w-auto">
-                <Image
-                  src="/images/dbbasico-logo.png"
-                  alt="dbbasico - Servicios de Acústica SL"
-                  width={200}
-                  height={48}
-                  className="h-12 w-auto object-contain group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <div>
-                <p className="text-sm text-muted-foreground">FAQ IRMA</p>
-              </div>
-            </Link>
-
-            <nav className="flex items-center space-x-6">
-              <Link
-                href="/irma"
-                className="text-sm font-medium hover:text-primary transition-colors flex items-center gap-2"
-              >
-                <ArrowLeft className="h-4 w-4" />
-                IRMA
-              </Link>
-              <Link href="/" className="text-sm font-medium hover:text-primary transition-colors">
-                Inicio
-              </Link>
-            </nav>
-          </div>
-        </div>
-      </header>
-
       {/* Main Content */}
-      <main className="container mx-auto px-4 py-24">
+  <main className="container mx-auto px-4 py-24 pt-28">
         <div className="max-w-4xl mx-auto">
           {/* Header */}
           <div className="text-center space-y-6 mb-12">
@@ -79,8 +44,11 @@ export default function IrmaFAQPage() {
                 <AccordionItem value="item-1" className="border rounded-lg px-4">
                   <AccordionTrigger className="text-left font-semibold">¿Qué es IRMA?</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
-                    IRMA es una plataforma avanzada disponible tanto en móvil como en web que permite realizar
-                    mediciones y monitoreo en tiempo real de sensores acelerómetros especializados llamados "setas". La
+                    IRMA es una plataforma avanzada disponible tanto en móvil como en{" "}
+                    <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      web
+                    </Link>{" "}
+                    que permite realizar mediciones y monitoreo en tiempo real de sensores acelerómetros especializados llamados "setas". La
                     aplicación está diseñada para la detección precisa de vibraciones, análisis de datos de vibraciones y
                     monitoreo estructural en aplicaciones industriales y de investigación.
                   </AccordionContent>
@@ -95,7 +63,11 @@ export default function IrmaFAQPage() {
                     múltiples ejes. Su nombre proviene de su forma característica similar a una seta. Estos sensores
                     utilizan tecnología MEMS (Micro-Electro-Mechanical Systems) de alta precisión para detectar
                     aceleraciones desde micro-vibraciones hasta movimientos sísmicos significativos. Transmiten los
-                    datos de forma inalámbrica a la aplicación IRMA mediante protocolos de comunicación robustos.
+                    datos de forma inalámbrica a la{" "}
+                    <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      aplicación IRMA
+                    </Link>{" "}
+                    mediante protocolos de comunicación robustos.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -105,7 +77,11 @@ export default function IrmaFAQPage() {
                   </AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     IRMA se conecta de forma inalámbrica con los sensores "setas" utilizando protocolos de comunicación
-                    optimizados para baja latencia. La aplicación recibe datos continuamente a frecuencias de muestreo
+                    optimizados para baja latencia.{" "}
+                    <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      La aplicación
+                    </Link>{" "}
+                    recibe datos continuamente a frecuencias de muestreo
                     configurables (desde 1 Hz hasta 1000 Hz según el modelo de sensor). Los datos se procesan en tiempo
                     real mostrando gráficos dinámicos, análisis espectral, detección de eventos, y manteniendo un
                     historial completo con timestamps precisos para análisis posterior.
@@ -119,7 +95,11 @@ export default function IrmaFAQPage() {
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     IRMA puede gestionar múltiples sensores "setas" de forma simultánea. La versión básica soporta hasta
                     10 sensores, la versión profesional hasta 50 sensores, y la versión empresarial puede manejar redes
-                    de más de 100 dispositivos. La aplicación está optimizada para manejar grandes volúmenes de datos
+                    de más de 100 dispositivos.{" "}
+                    <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      La aplicación
+                    </Link>{" "}
+                    está optimizada para manejar grandes volúmenes de datos
                     con procesamiento distribuido y almacenamiento eficiente, permitiendo monitoreo de instalaciones
                     desde pequeñas hasta grandes redes industriales.
                   </AccordionContent>
@@ -128,7 +108,10 @@ export default function IrmaFAQPage() {
                 <AccordionItem value="item-5" className="border rounded-lg px-4">
                   <AccordionTrigger className="text-left font-semibold">¿Está disponible offline?</AccordionTrigger>
                   <AccordionContent className="text-muted-foreground leading-relaxed">
-                    La aplicación móvil de IRMA tiene capacidades offline robustas que incluyen visualización de datos
+                    <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      La aplicación móvil de IRMA
+                    </Link>{" "}
+                    tiene capacidades offline robustas que incluyen visualización de datos
                     históricos previamente sincronizados, configuración de parámetros de sensores, análisis de datos
                     almacenados localmente, y generación de reportes básicos. Los sensores pueden almacenar datos
                     localmente durante períodos sin conectividad y sincronizar automáticamente cuando se restablece la
@@ -145,8 +128,6 @@ export default function IrmaFAQPage() {
                     vibración (con múltiples niveles de severidad), alertas por pérdida de conexión con sensores,
                     alertas por batería baja en las "setas", alertas por patrones de vibración anómalos detectados por
                     IA, alertas por eventos sísmicos, y alertas personalizadas basadas en combinaciones de parámetros.
-                    Las notificaciones se pueden recibir por email, SMS, webhooks, y integración con
-                    sistemas de terceros como Slack o Microsoft Teams.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -170,10 +151,17 @@ export default function IrmaFAQPage() {
                   <AccordionContent className="text-muted-foreground leading-relaxed">
                     Los sensores "setas" están diseñados para instalación sencilla. Incluyen bases magnéticas para
                     superficies metálicas, sistemas de montaje con tornillos para instalación permanente, y opciones de
-                    montaje adhesivo para superficies especiales. La configuración se realiza a través de la aplicación
-                    IRMA mediante un proceso de emparejamiento automático. Cada sensor se puede configurar
+                    montaje adhesivo para superficies especiales. La configuración se realiza a través de{" "}
+                    <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      la aplicación IRMA
+                    </Link>{" "}
+                    mediante un proceso de emparejamiento automático. Cada sensor se puede configurar
                     individualmente con parámetros como frecuencia de muestreo, sensibilidad, filtros, y identificación
-                    personalizada. La aplicación incluye asistentes de configuración y herramientas de calibración.
+                    personalizada.{" "}
+                    <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">
+                      La aplicación
+                    </Link>{" "}
+                    incluye asistentes de configuración y herramientas de calibración.
                   </AccordionContent>
                 </AccordionItem>
 
@@ -195,29 +183,7 @@ export default function IrmaFAQPage() {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="border-t bg-card/50 backdrop-blur-sm">
-        <div className="container mx-auto px-4 py-12">
-          <div className="text-center space-y-6">
-            <Link href="/" className="inline-flex items-center space-x-3 group">
-              <div className="h-10 w-auto">
-                <Image
-                  src="/images/dbbasico-logo.png"
-                  alt="dbbasico"
-                  width={150}
-                  height={40}
-                  className="h-10 w-auto object-contain group-hover:scale-105 transition-transform"
-                />
-              </div>
-              <span className="text-xl font-semibold">dbbasico</span>
-            </Link>
-            <p className="text-muted-foreground max-w-md mx-auto">
-              IRMA - Plataforma avanzada para monitoreo de vibraciones con sensores acelerómetros especializados.
-            </p>
-            <p className="text-sm text-muted-foreground">© 2024 dbbasico. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
+  {/* Footer moved to global layout */}
     </div>
   )
 }
