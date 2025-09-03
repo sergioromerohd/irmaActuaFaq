@@ -27,7 +27,10 @@ export default function IrmaPage() {
   const heroRef = useRef<HTMLElement>(null)
 
   useEffect(() => {
-    const handleScroll = () => {
+  const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
+  if (mq.matches) return
+
+  const handleScroll = () => {
       const scrolled = window.pageYOffset
       const rate = scrolled * -0.3
 
@@ -36,8 +39,8 @@ export default function IrmaPage() {
       }
     }
 
-    window.addEventListener("scroll", handleScroll)
-    return () => window.removeEventListener("scroll", handleScroll)
+  window.addEventListener("scroll", handleScroll)
+  return () => window.removeEventListener("scroll", handleScroll)
   }, [])
 
   return (

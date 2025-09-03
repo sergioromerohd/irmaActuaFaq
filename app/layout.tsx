@@ -7,6 +7,7 @@ import { Suspense } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
+import { ScrollToTop } from "@/components/scroll-to-top"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -25,6 +26,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <SiteHeader />
           <Suspense fallback={null}>{children}</Suspense>
+          <ScrollToTop />
           <SiteFooter />
           <Analytics />
         </ThemeProvider>

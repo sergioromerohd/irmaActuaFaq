@@ -11,6 +11,7 @@ export function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
   const [progress, setProgress] = useState(0)
+  const [elevated, setElevated] = useState(false)
 
   useEffect(() => {
     const calc = () => {
@@ -19,6 +20,7 @@ export function SiteHeader() {
       const current = Math.min(total, Math.max(0, window.scrollY))
       const pct = total === 0 ? 0 : (current / total) * 100
       setProgress(pct)
+      setElevated(current > 2)
     }
     calc()
     window.addEventListener("scroll", calc, { passive: true })
@@ -32,7 +34,11 @@ export function SiteHeader() {
   const isActive = (href: string) => (pathname === href ? "text-primary" : "text-foreground/80 hover:text-primary")
 
   return (
-  <header className="sticky top-0 z-50 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+    <header
+      className={`sticky top-0 z-50 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b transition-shadow ${
+        elevated ? "shadow-sm" : "shadow-none"
+      }`}
+    >
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between gap-3">
           <Link href="/" className="flex items-center gap-3 shrink-0">
