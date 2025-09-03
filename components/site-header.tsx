@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
@@ -10,11 +10,29 @@ import { ThemeToggle } from "./theme-toggle"
 export function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [progress, setProgress] = useState(0)
+
+  useEffect(() => {
+    const calc = () => {
+      const doc = document.documentElement
+      const total = Math.max(0, doc.scrollHeight - window.innerHeight)
+      const current = Math.min(total, Math.max(0, window.scrollY))
+      const pct = total === 0 ? 0 : (current / total) * 100
+      setProgress(pct)
+    }
+    calc()
+    window.addEventListener("scroll", calc, { passive: true })
+    window.addEventListener("resize", calc)
+    return () => {
+      window.removeEventListener("scroll", calc)
+      window.removeEventListener("resize", calc)
+    }
+  }, [])
 
   const isActive = (href: string) => (pathname === href ? "text-primary" : "text-foreground/80 hover:text-primary")
 
   return (
-    <header className="sticky top-0 z-50 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
+  <header className="sticky top-0 z-50 bg-background/80 backdrop-blur supports-[backdrop-filter]:bg-background/60 border-b">
       <div className="container mx-auto px-4 py-3">
         <div className="flex items-center justify-between gap-3">
           <Link href="/" className="flex items-center gap-3 shrink-0">
@@ -77,6 +95,14 @@ export function SiteHeader() {
           </div>
         </div>
       )}
+      {/* Scroll progress bar */}
+      <div className="h-0.5 w-full bg-transparent">
+        <div
+          className="h-full bg-gradient-to-r from-primary via-accent to-primary transition-[width] duration-150"
+          style={{ width: `${progress}%` }}
+          aria-hidden
+        />
+      </div>
     </header>
   )
 }
