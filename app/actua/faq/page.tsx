@@ -112,6 +112,35 @@ export default function ActuaFAQPage() {
                   </AccordionContent>
                 </AccordionItem>
 
+                <AccordionItem value="item-tutorial" className="border rounded-lg px-4 bg-primary/5">
+                  <AccordionTrigger className="text-left font-semibold text-primary">
+                    📹 Tutorial de ACTUA 2.0
+                  </AccordionTrigger>
+                  <AccordionContent className="text-muted-foreground leading-relaxed">
+                    <p className="mb-4">
+                      Aprende a usar ACTUA 2.0 con este tutorial completo que te guía paso a paso por las principales
+                      funcionalidades de la aplicación.
+                    </p>
+                    <div className="rounded-lg overflow-hidden bg-muted/50 p-1">
+                      <video
+                        controls
+                        className="w-full h-auto rounded-md"
+                        poster="/images/actua-sonometer.png"
+                        preload="metadata"
+                      >
+                        <source src="/TutorialACTUA.mp4" type="video/mp4" />
+                        Tu navegador no soporta la reproducción de video. 
+                        <a href="/TutorialACTUA.mp4" className="text-primary hover:underline">
+                          Descargar video tutorial
+                        </a>
+                      </video>
+                    </div>
+                    <p className="text-sm text-muted-foreground mt-3">
+                      💡 <strong>Tip:</strong> Puedes usar los controles del video para pausar, retroceder y ajustar la velocidad según necesites.
+                    </p>
+                  </AccordionContent>
+                </AccordionItem>
+
                 <AccordionItem value="item-8" className="border rounded-lg px-4">
                   <AccordionTrigger className="text-left font-semibold">
                     ¿Qué soporte técnico está disponible?

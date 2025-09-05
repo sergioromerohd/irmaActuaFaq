@@ -64,6 +64,57 @@ export default function ActuaPage() {
         </div>
       </section>
 
+      {/* Tutorial Video Section */}
+      <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-primary/10">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-12">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+                <FileText className="h-4 w-4" />
+                Tutorial Completo
+              </div>
+              <h3 className="text-4xl font-bold mb-4">Aprende a usar ACTUA 2.0</h3>
+              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+                Tutorial paso a paso que te guía por todas las funcionalidades principales de la aplicación
+              </p>
+            </div>
+
+            <div className="rounded-2xl overflow-hidden shadow-2xl bg-card border">
+              <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-6">
+                <div className="flex items-center gap-3 mb-2">
+                  <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center">
+                    <BarChart3 className="h-5 w-5 text-primary" />
+                  </div>
+                  <div>
+                    <h4 className="text-lg font-semibold">Tutorial ACTUA 2.0</h4>
+                    <p className="text-sm text-muted-foreground">Guía completa de uso</p>
+                  </div>
+                </div>
+              </div>
+              <div className="p-6">
+                <video
+                  controls
+                  className="w-full h-auto rounded-lg"
+                  poster="/images/actua-sonometer.png"
+                  preload="metadata"
+                >
+                  <source src="/TutorialACTUA.mp4" type="video/mp4" />
+                  Tu navegador no soporta la reproducción de video.
+                  <a href="/TutorialACTUA.mp4" className="text-primary hover:underline">
+                    Descargar video tutorial
+                  </a>
+                </video>
+                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
+                  <p className="text-sm text-muted-foreground">
+                    💡 <strong>Recomendaciones:</strong> Utiliza los controles del video para pausar en las secciones que necesites revisar con más detalle. El tutorial cubre desde la configuración inicial hasta la generación de actas técnicas.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Features Section */}
       <section className="py-20">
         <div className="container mx-auto px-4">
