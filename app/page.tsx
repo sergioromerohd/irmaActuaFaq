@@ -58,9 +58,9 @@ export default function HomePage() {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-            <Link href="/actua">
+            <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
               <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
-                Explorar ACTUA 2.0
+                Usar ACTUA 2.0
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -156,9 +156,9 @@ export default function HomePage() {
                     <Users className="h-5 w-5 text-accent" />
                     <span className="font-medium">Personal Técnico y Policial</span>
                   </div>
-                  <Link href="/actua">
+                  <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
                     <Button className="group">
-                      Ver más
+                      Usar App
                       <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
                     </Button>
                   </Link>
@@ -289,9 +289,9 @@ export default function HomePage() {
               funcionalidades, requisitos técnicos y casos de uso específicos.
             </p>
             <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
-              <Link href="/actua/faq">
+              <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
                 <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
-                  FAQ ACTUA 2.0
+                  Usar ACTUA 2.0
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>

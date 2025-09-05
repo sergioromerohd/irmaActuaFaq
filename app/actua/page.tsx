@@ -54,12 +54,20 @@ export default function ActuaPage() {
               Herramienta profesional para el análisis de mediciones sonométricas en tareas de Inspecciones acústicas de fuentes y actividades ruidosas y generación automática de cálculos y actas técnicas. Diseñada específicamente para personal técnico y Agentes de Policía.
             </p>
 
-            <Link href="/actua/faq">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
-                Ver Preguntas Frecuentes
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
+              <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
+                  Usar ACTUA 2.0
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link href="/actua/faq">
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6 group">
+                  Ver FAQ
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
@@ -258,12 +266,20 @@ export default function ActuaPage() {
               Consulta nuestras preguntas frecuentes para obtener información detallada sobre funcionalidades,
               requisitos técnicos, formatos soportados y casos de uso específicos.
             </p>
-            <Link href="/actua/faq">
-              <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
-                Ver Preguntas Frecuentes
-                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-              </Button>
-            </Link>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
+              <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
+                  Usar ACTUA 2.0
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link href="/actua/faq">
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6 group">
+                  Ver FAQ
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

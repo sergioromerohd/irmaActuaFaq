@@ -2,6 +2,7 @@
 
 import Link from "next/link"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
+import { Button } from "@/components/ui/button"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import { BarChart3, ArrowLeft } from "lucide-react"
 
@@ -135,9 +136,18 @@ export default function ActuaFAQPage() {
                         </a>
                       </video>
                     </div>
-                    <p className="text-sm text-muted-foreground mt-3">
-                      💡 <strong>Tip:</strong> Puedes usar los controles del video para pausar, retroceder y ajustar la velocidad según necesites.
-                    </p>
+                    <div className="mt-4 p-3 bg-primary/5 rounded-lg border border-primary/20">
+                      <div className="flex flex-col sm:flex-row gap-3 items-start sm:items-center justify-between">
+                        <p className="text-sm text-muted-foreground">
+                          💡 <strong>Tip:</strong> Puedes usar los controles del video para pausar, retroceder y ajustar la velocidad según necesites.
+                        </p>
+                        <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
+                          <Button size="sm" className="shrink-0">
+                            Usar ACTUA 2.0 →
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
                   </AccordionContent>
                 </AccordionItem>
 
