@@ -20,6 +20,23 @@ export function SiteFooter() {
             Soluciones técnicas especializadas en medición y análisis para profesionales que requieren precisión y
             confiabilidad.
           </p>
+          <div className="flex flex-wrap justify-center gap-6 text-sm">
+            <Link href="/actua" className="text-muted-foreground hover:text-foreground transition-colors">
+              ACTUA 2.0
+            </Link>
+            <Link href="/irma" className="text-muted-foreground hover:text-foreground transition-colors">
+              IRMA
+            </Link>
+            <Link href="/contacto" className="text-muted-foreground hover:text-foreground transition-colors">
+              Contacto
+            </Link>
+            <Link href="https://dbbasico.es/aviso-legal/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+              Aviso Legal
+            </Link>
+            <Link href="https://dbbasico.es/politica-de-privacidad/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+              Política de Privacidad
+            </Link>
+          </div>
           <p className="text-sm text-muted-foreground">© {new Date().getFullYear()} dbbasico. Todos los derechos reservados.</p>
         </div>
       </div>

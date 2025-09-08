@@ -58,6 +58,7 @@ export function SiteHeader() {
               ACTUA 2.0
             </Link>
             <Link href="/irma" className={`text-sm font-medium transition-colors ${isActive("/irma")}`}>IRMA</Link>
+            <Link href="/contacto" className={`text-sm font-medium transition-colors ${isActive("/contacto")}`}>Contacto</Link>
           </nav>
 
           <div className="flex items-center gap-2">
@@ -97,6 +98,13 @@ export function SiteHeader() {
               onClick={() => setOpen(false)}
             >
               IRMA
+            </Link>
+            <Link
+              href="/contacto"
+              className={`block py-2 text-sm font-medium ${isActive("/contacto")}`}
+              onClick={() => setOpen(false)}
+            >
+              Contacto
             </Link>
           </div>
         </div>

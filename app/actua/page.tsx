@@ -280,6 +280,13 @@ export default function ActuaPage() {
                 </Button>
               </Link>
             </div>
+            <div className="pt-6">
+              <Link href="/contacto">
+                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+                  ¿Necesitas soporte personalizado? → Contáctanos
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>

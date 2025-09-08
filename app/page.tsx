@@ -314,6 +314,13 @@ export default function HomePage() {
                 </Button>
               </Link>
             </div>
+            <div className="pt-6">
+              <Link href="/contacto">
+                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+                  ¿Necesitas ayuda personalizada? → Contáctanos
+                </Button>
+              </Link>
+            </div>
           </div>
         </div>
       </section>
