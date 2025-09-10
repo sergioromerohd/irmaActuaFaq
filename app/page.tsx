@@ -6,7 +6,7 @@ import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { BarChart3, Shield, Smartphone, Monitor, Users, ArrowRight, Zap, Target } from "lucide-react"
+import { BarChart3, Shield, Smartphone, Monitor, Users, ArrowRight, Zap, Target, GraduationCap, Award, BookOpen, Clock } from "lucide-react"
 
 export default function HomePage() {
   const heroRef = useRef<HTMLElement>(null)
@@ -74,6 +74,16 @@ export default function HomePage() {
                 <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
+            <Link href="/cia">
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white text-lg px-8 py-6 group bg-transparent"
+              >
+                Conocer CIA
+                <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
@@ -92,7 +102,7 @@ export default function HomePage() {
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
+          <div className="grid lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
             {/* ACTUA 2.0 Card */}
             <Card className="relative overflow-hidden group hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-to-br from-card to-card/50">
               <div className="absolute inset-0 bg-gradient-to-br from-primary/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
@@ -283,6 +293,81 @@ export default function HomePage() {
                 </div>
               </CardContent>
             </Card>
+
+            {/* CIA Card */}
+            <Card className="relative overflow-hidden group hover:shadow-2xl transition-all duration-500 border-0 bg-gradient-to-br from-card to-card/50">
+              <div className="absolute inset-0 bg-gradient-to-br from-orange-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <div className="absolute top-6 right-6">
+                <Badge variant="secondary" className="bg-orange-500 text-white shadow-lg">
+                  Formación
+                </Badge>
+              </div>
+              <CardHeader className="space-y-6 relative z-10">
+                <div className="flex items-center space-x-4">
+                  <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center text-white group-hover:scale-110 transition-transform duration-300">
+                    <GraduationCap className="h-8 w-8" />
+                  </div>
+                  <div>
+                    <CardTitle className="text-3xl font-bold">CIA</CardTitle>
+                    <CardDescription className="text-lg">Cursos de Inspecciones Acústicas</CardDescription>
+                  </div>
+                </div>
+                <div className="relative h-48 w-full rounded-xl overflow-hidden bg-gradient-to-r from-orange-100 to-orange-50 flex items-center justify-center">
+                  <div className="flex items-center gap-6">
+                    <Award className="h-12 w-12 text-orange-500" />
+                    <BookOpen className="h-12 w-12 text-orange-600" />
+                    <Clock className="h-12 w-12 text-orange-500" />
+                  </div>
+                </div>
+              </CardHeader>
+              <CardContent className="space-y-6 relative z-10">
+                <p className="text-muted-foreground text-lg leading-relaxed">
+                  Formación especializada en inspecciones acústicas con certificación profesional para agentes de policía y personal técnico.
+                </p>
+
+                <div className="space-y-4">
+                  <h4 className="font-semibold text-lg flex items-center gap-3">
+                    <GraduationCap className="h-5 w-5 text-orange-500" />
+                    Características Principales
+                  </h4>
+                  <ul className="space-y-3 text-muted-foreground">
+                    <li className="flex items-start gap-3">
+                      <div className="h-2 w-2 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" />
+                      4 niveles de certificación progresiva (I, II, III, IV)
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="h-2 w-2 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" />
+                      Jornadas temáticas especializadas
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="h-2 w-2 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" />
+                      Certificación ACTUA incluida en niveles avanzados
+                    </li>
+                    <li className="flex items-start gap-3">
+                      <div className="h-2 w-2 rounded-full bg-orange-500 mt-2.5 flex-shrink-0" />
+                      Formación presencial con equipos reales
+                    </li>
+                  </ul>
+                </div>
+
+                <div className="flex items-center justify-between pt-4">
+                  <div className="flex items-center gap-2">
+                    <Users className="h-5 w-5 text-orange-500" />
+                    <span className="font-medium">Máximo 10 personas</span>
+                  </div>
+                  <Link href="/cia">
+                    <Button
+                      size="lg"
+                      variant="outline"
+                      className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white text-lg px-8 py-6 group bg-transparent"
+                    >
+                      Ver más
+                      <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
+                </div>
+              </CardContent>
+            </Card>
           </div>
         </div>
       </section>
@@ -296,9 +381,9 @@ export default function HomePage() {
               Explora las preguntas frecuentes de cada producto para obtener información detallada sobre
               funcionalidades, requisitos técnicos y casos de uso específicos.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-4">
               <Link href="/actua/faq">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-6 py-6 group">
                   FAQ ACTUA 2.0
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
@@ -307,9 +392,19 @@ export default function HomePage() {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground text-lg px-8 py-6 group bg-transparent"
+                  className="border-accent text-accent hover:bg-accent hover:text-accent-foreground text-lg px-6 py-6 group bg-transparent"
                 >
                   FAQ IRMA
+                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
+              <Link href="/cia/faq">
+                <Button
+                  size="lg"
+                  variant="outline"
+                  className="border-orange-500 text-orange-500 hover:bg-orange-500 hover:text-white text-lg px-6 py-6 group bg-transparent"
+                >
+                  FAQ CIA
                   <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
                 </Button>
               </Link>

@@ -27,6 +27,9 @@ export function SiteFooter() {
             <Link href="/irma" className="text-muted-foreground hover:text-foreground transition-colors">
               IRMA
             </Link>
+            <Link href="/cia" className="text-muted-foreground hover:text-foreground transition-colors">
+              CIA
+            </Link>
             <Link href="/contacto" className="text-muted-foreground hover:text-foreground transition-colors">
               Contacto
             </Link>

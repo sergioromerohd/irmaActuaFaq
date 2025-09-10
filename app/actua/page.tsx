@@ -222,6 +222,173 @@ export default function ActuaPage() {
         </div>
       </section>
 
+      {/* Pricing Section */}
+      <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-primary/10">
+        <div className="container mx-auto px-4">
+          <div className="max-w-6xl mx-auto">
+            <div className="text-center mb-16">
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
+                <BarChart3 className="h-4 w-4" />
+                Planes de Suscripción
+              </div>
+              <h3 className="text-4xl font-bold mb-4">Aplicación para Inspecciones Acústicas</h3>
+              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+                Para Agentes de policía, Técnicos e Ingenierías. Elige el plan que mejor se adapte a tus necesidades profesionales.
+              </p>
+            </div>
+
+            <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {/* ACTUA BÁSICO */}
+              <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/20">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <Badge className="bg-primary text-primary-foreground px-4 py-1">
+                    Básico
+                  </Badge>
+                </div>
+                <CardHeader className="text-center pt-8 pb-6">
+                  <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
+                    <BarChart3 className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">ACTUA BÁSICO</CardTitle>
+                  <p className="text-muted-foreground">Aplicación para el Procesado de Datos para el cálculo de los Niveles de Transmisión Lk según RD 1367/2007</p>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Elaboración de Actas de la Medición</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Registro Histórico de Mediciones</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Fichas de Resultados</span>
+                    </li>
+                  </ul>
+                  <div className="pt-4">
+                    <Link href="/contacto">
+                      <Button variant="outline" className="w-full group">
+                        IR A SUSCRIPCIÓN
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* ACTUA TÉCNICO - Destacado */}
+              <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 border-accent bg-gradient-to-b from-accent/5 to-background scale-105">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <Badge className="bg-accent text-accent-foreground px-4 py-1">
+                    Más Popular
+                  </Badge>
+                </div>
+                <CardHeader className="text-center pt-8 pb-6">
+                  <div className="h-16 w-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
+                    <Shield className="h-8 w-8 text-accent" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">ACTUA TÉCNICO</CardTitle>
+                  <p className="text-muted-foreground">Aplicación para el Procesado de Datos para el cálculo de los Niveles de Transmisión Lk según RD 1367/2007 + una Ordenanza a seleccionar</p>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Elaboración de Actas de Medición</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Registro Histórico de Mediciones</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Fichas de Resultados y Evaluación de CUMPLIMIENTO o INCUMPLIMIENTO DE NORMA</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Informe de la Inspección realizada</span>
+                    </li>
+                  </ul>
+                  <div className="pt-4">
+                    <Link href="/contacto">
+                      <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group">
+                        IR A SUSCRIPCIÓN
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+
+              {/* ACTUA AVANZADO */}
+              <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/20">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                  <Badge className="bg-gradient-to-r from-primary to-accent text-white px-4 py-1">
+                    Avanzado
+                  </Badge>
+                </div>
+                <CardHeader className="text-center pt-8 pb-6">
+                  <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mx-auto mb-4">
+                    <Zap className="h-8 w-8 text-primary" />
+                  </div>
+                  <CardTitle className="text-2xl font-bold">ACTUA AVANZADO</CardTitle>
+                  <p className="text-muted-foreground">Aplicación para el Procesado de Datos para el cálculo de los Niveles de Transmisión Lk según RD 1367/2007 + 10 Ordenanzas</p>
+                </CardHeader>
+                <CardContent className="space-y-6">
+                  <ul className="space-y-3 text-sm">
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Elaboración de Actas de Medición</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Registro Histórico de Mediciones</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Fichas de Resultados y Evaluación de CUMPLIMIENTO o INCUMPLIMIENTO DE NORMA</span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
+                      <span>Informe de la Inspección realizada</span>
+                    </li>
+                  </ul>
+                  <div className="pt-4">
+                    <Link href="/contacto">
+                      <Button variant="outline" className="w-full group border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                        IR A SUSCRIPCIÓN
+                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                      </Button>
+                    </Link>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+
+            <div className="text-center mt-12 space-y-4">
+              <p className="text-muted-foreground">
+                <strong>¿Necesitas más información sobre los planes?</strong>
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link href="/contacto">
+                  <Button variant="outline" className="group">
+                    Contactar con Ventas
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+                <Link href="/actua/faq">
+                  <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
+                    Ver FAQ sobre funcionalidades
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Target Audience */}
       <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-primary/10">
         <div className="container mx-auto px-4">

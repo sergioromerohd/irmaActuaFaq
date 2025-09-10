@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CIA - Jornadas Especializadas en Inspecciones Acústicas | DBBASICO</title>
+    <style>
+        /* Reset y estilos base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+        .content { padding: 20px; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #7c3aed 0%, #5b21b6 100%); color: white; text-align: center; padding: 30px 20px; }
+        .logo { font-size: 32px; font-weight: bold; margin-bottom: 10px; }
+        .tagline { font-size: 16px; opacity: 0.9; }
+        
+        /* Hero section */
+        .hero { text-align: center; padding: 30px 20px; background: linear-gradient(to right, rgba(124, 58, 237, 0.05), rgba(124, 58, 237, 0.1)); }
+        .hero h1 { font-size: 28px; color: #1e293b; margin-bottom: 15px; }
+        .hero p { font-size: 18px; color: #64748b; margin-bottom: 25px; }
+        .badge { display: inline-block; background-color: #7c3aed; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+        
+        /* Jornadas */
+        .jornadas-section { padding: 30px 20px; }
+        .jornadas-title { text-align: center; font-size: 24px; color: #1e293b; margin-bottom: 30px; }
+        .jornada { border: 2px solid #e2e8f0; border-radius: 12px; margin-bottom: 20px; overflow: hidden; transition: all 0.3s ease; }
+        .jornada:hover { border-color: #7c3aed; box-shadow: 0 8px 25px rgba(124, 58, 237, 0.15); }
+        .jornada-destacada { border-color: #10b981; background: linear-gradient(to bottom, rgba(16, 185, 129, 0.05), #ffffff); }
+        .jornada-header { padding: 20px; text-align: center; }
+        .jornada-vehiculos .jornada-header { background: linear-gradient(135deg, #fee2e2, #fecaca); }
+        .jornada-vibraciones .jornada-header { background: linear-gradient(135deg, #ecfdf5, #d1fae5); }
+        .jornada-limitadores .jornada-header { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+        .jornada-actas .jornada-header { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+        .jornada-name { font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 8px; }
+        .jornada-subtitle { font-size: 14px; color: #64748b; margin-bottom: 15px; font-weight: 600; }
+        .jornada-badge { display: inline-block; padding: 6px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; }
+        .badge-vehiculos { background-color: #ef4444; color: white; }
+        .badge-vibraciones { background-color: #10b981; color: white; }
+        .badge-limitadores { background-color: #3b82f6; color: white; }
+        .badge-actas { background-color: #f59e0b; color: white; }
+        
+        .jornada-features { padding: 0 20px 20px; }
+        .feature { display: flex; align-items: flex-start; margin-bottom: 12px; padding: 0 10px; }
+        .feature-icon { color: #10b981; margin-right: 10px; margin-top: 2px; flex-shrink: 0; }
+        .feature-text { font-size: 14px; color: #374151; }
+        .duracion { display: flex; align-items: center; gap: 8px; margin-top: 15px; padding: 10px; background-color: rgba(124, 58, 237, 0.1); border-radius: 8px; }
+        .duracion-icon { color: #7c3aed; }
+        .duracion-text { font-size: 13px; font-weight: 600; color: #7c3aed; }
+        
+        /* Casos Prácticos */
+        .casos-section { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 30px 20px; }
+        .casos-title { color: #1e293b; font-size: 20px; margin-bottom: 20px; text-align: center; }
+        .casos-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .caso-item { background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #7c3aed; }
+        .caso-titulo { font-weight: bold; color: #1e293b; font-size: 14px; margin-bottom: 5px; }
+        .caso-descripcion { font-size: 12px; color: #64748b; }
+        
+        /* Beneficios */
+        .beneficios { background: linear-gradient(135deg, #f8fafc, #f1f5f9); padding: 30px 20px; margin: 20px 0; }
+        .beneficios h3 { color: #1e293b; font-size: 22px; margin-bottom: 20px; text-align: center; }
+        .beneficio-item { display: flex; align-items: flex-start; margin-bottom: 15px; }
+        .beneficio-icon { background-color: #7c3aed; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; margin-top: 2px; flex-shrink: 0; }
+        .beneficio-text { font-size: 14px; color: #374151; }
+        
+        /* Ideal Para */
+        .ideal-section { background: linear-gradient(135deg, #fef7ed, #fed7aa); padding: 30px 20px; }
+        .ideal-title { color: #1e293b; font-size: 20px; margin-bottom: 20px; text-align: center; }
+        .ideal-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+        .ideal-item { display: flex; align-items: center; background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #7c3aed; }
+        .ideal-icon { font-size: 20px; margin-right: 12px; }
+        .ideal-text { font-size: 14px; color: #374151; font-weight: 500; }
+        
+        /* Contacto */
+        .contacto-section { background: linear-gradient(135deg, #eff6ff, #dbeafe); padding: 30px 20px; }
+        .contacto-title { color: #1e293b; font-size: 20px; margin-bottom: 20px; text-align: center; }
+        .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .contacto-item { background: white; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #e2e8f0; }
+        .contacto-item:hover { border-color: #7c3aed; }
+        .contacto-icon { font-size: 24px; margin-bottom: 10px; }
+        .contacto-label { font-size: 12px; color: #64748b; font-weight: 600; margin-bottom: 5px; }
+        .contacto-value { font-size: 14px; color: #1e293b; font-weight: bold; }
+        
+        /* Solicita */
+        .solicita-section { background: linear-gradient(135deg, #f0fdf4, #dcfce7); padding: 30px 20px; }
+        .solicita-title { color: #1e293b; font-size: 20px; margin-bottom: 20px; text-align: center; }
+        .solicita-grid { display: grid; grid-template-columns: 1fr; gap: 10px; }
+        .solicita-item { display: flex; align-items: center; background: white; padding: 12px 15px; border-radius: 8px; }
+        .solicita-bullet { color: #7c3aed; font-weight: bold; margin-right: 10px; font-size: 16px; }
+        .solicita-text { font-size: 14px; color: #374151; }
+        
+        /* Convocatorias */
+        .convocatorias-section { background: linear-gradient(135deg, #fef2f2, #fecaca); padding: 30px 20px; text-align: center; }
+        .convocatorias-title { color: #1e293b; font-size: 20px; margin-bottom: 15px; }
+        .convocatorias-content { background: white; padding: 20px; border-radius: 12px; border: 2px solid #ef4444; }
+        .convocatorias-text { font-size: 14px; color: #374151; margin-bottom: 10px; }
+        .convocatorias-urgencia { font-size: 16px; color: #ef4444; }
+        
+        /* Información Práctica */
+        .info-practica { background: linear-gradient(135deg, #fefbf3, #fef7ed); padding: 30px 20px; }
+        .info-title { color: #1e293b; font-size: 20px; margin-bottom: 20px; text-align: center; }
+        .info-highlight { background: white; padding: 20px; border-radius: 12px; border: 2px solid #7c3aed; margin-bottom: 20px; text-align: center; }
+        .info-highlight .numero { font-size: 32px; font-weight: bold; color: #7c3aed; }
+        .info-highlight .texto { font-size: 14px; color: #64748b; margin-top: 5px; }
+        .info-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .info-item { background: white; padding: 15px; border-radius: 8px; text-align: center; }
+        .info-item .icono { font-size: 24px; margin-bottom: 10px; }
+        .info-item .titulo { font-weight: bold; color: #1e293b; font-size: 14px; margin-bottom: 5px; }
+        .info-item .descripcion { font-size: 12px; color: #64748b; }
+        
+        /* CTA */
+        .cta { text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #1e293b, #374151); color: white; }
+        .cta h3 { font-size: 22px; margin-bottom: 15px; }
+        .cta p { font-size: 16px; margin-bottom: 25px; opacity: 0.9; }
+        .cta-button { display: inline-block; background-color: #7c3aed; color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; }
+        .cta-button:hover { background-color: #5b21b6; }
+        
+        /* Footer */
+        .footer { background-color: #f8fafc; padding: 30px 20px; text-align: center; border-top: 1px solid #e2e8f0; }
+        .footer-content { font-size: 14px; color: #64748b; margin-bottom: 15px; }
+        .footer-locations { font-size: 12px; color: #64748b; margin-bottom: 15px; }
+        .footer-contact { margin-bottom: 15px; }
+        .footer-contact a { color: #7c3aed; text-decoration: none; }
+        .footer-legal { font-size: 11px; color: #9ca3af; }
+        
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container { width: 100% !important; }
+            .content { padding: 15px !important; }
+            .hero h1 { font-size: 24px !important; }
+            .jornada-name { font-size: 16px !important; }
+            .casos-grid, .info-grid, .contacto-grid { grid-template-columns: 1fr !important; }
+            .ideal-grid, .solicita-grid { grid-template-columns: 1fr !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🎯 CIA</div>
+            <div class="tagline">Jornadas Especializadas de Inspecciones Acústicas</div>
+        </div>
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Especialízate en Casos Específicos de Inspección</h1>
+            <p>Jornadas temáticas de 8 horas para profesionales que buscan conocimientos especializados</p>
+            <span class="badge">4 Jornadas Temáticas Disponibles</span>
+        </div>
+        
+        <!-- Contenido principal -->
+        <div class="content">
+            <!-- Jornadas Especializadas -->
+            <div class="jornadas-section">
+                <h2 class="jornadas-title">Jornadas Temáticas Especializadas</h2>
+                
+                <!-- Jornada Vehículos -->
+                <div class="jornada jornada-vehiculos jornada-destacada">
+                    <div class="jornada-header">
+                        <div class="jornada-name">Jornada Ciclomotores y Motocicletas</div>
+                        <div class="jornada-subtitle">Inspección de Ruidos y Protocolo de Medición</div>
+                        <span class="jornada-badge badge-vehiculos">Muy Demandado</span>
+                    </div>
+                    <div class="jornada-features">
+                        <div class="feature">
+                            <span class="feature-icon">🎯</span>
+                            <span class="feature-text"><strong>Objetivo:</strong> Conocimientos básicos para inspección sonométrica de vehículos</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📋</span>
+                            <span class="feature-text">Elaboración de Actas específicas para vehículos</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📖</span>
+                            <span class="feature-text">Procedimiento de Inspección según Normativa de Aplicación</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🔧</span>
+                            <span class="feature-text">Casos prácticos con diferentes tipos de vehículos</span>
+                        </div>
+                        <div class="duracion">
+                            <span class="duracion-icon">⏱️</span>
+                            <span class="duracion-text">Duración: 8 horas intensivas con práctica real</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Jornada Vibraciones -->
+                <div class="jornada jornada-vibraciones">
+                    <div class="jornada-header">
+                        <div class="jornada-name">Jornada Vibraciones</div>
+                        <div class="jornada-subtitle">Inspección y Protocolo de Medición</div>
+                        <span class="jornada-badge badge-vibraciones">Especializado</span>
+                    </div>
+                    <div class="jornada-features">
+                        <div class="feature">
+                            <span class="feature-icon">🎯</span>
+                            <span class="feature-text"><strong>Objetivo:</strong> Inspección sonométrica especializada en vibraciones</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📋</span>
+                            <span class="feature-text">Elaboración de Actas específicas para vibraciones</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📖</span>
+                            <span class="feature-text">Normativa específica de vibraciones y límites</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📊</span>
+                            <span class="feature-text">Medición con acelerómetros y análisis de resultados</span>
+                        </div>
+                        <div class="duracion">
+                            <span class="duracion-icon">⏱️</span>
+                            <span class="duracion-text">Duración: 8 horas con equipos especializados</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Jornada Limitadores -->
+                <div class="jornada jornada-limitadores">
+                    <div class="jornada-header">
+                        <div class="jornada-name">Jornada Protocolo de Inspección de Limitadores</div>
+                        <div class="jornada-subtitle">Inspección, Actas y Descarga de Datos</div>
+                        <span class="jornada-badge badge-limitadores">Técnico</span>
+                    </div>
+                    <div class="jornada-features">
+                        <div class="feature">
+                            <span class="feature-icon">🎯</span>
+                            <span class="feature-text"><strong>Objetivo:</strong> Conocimientos para inspección de limitadores acústicos</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📋</span>
+                            <span class="feature-text">Elaboración de Actas y Descarga de Datos de limitadores</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">💻</span>
+                            <span class="feature-text">Manejo de software de limitadores y análisis de datos</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🔍</span>
+                            <span class="feature-text">Verificación de cumplimiento y calibración</span>
+                        </div>
+                        <div class="duracion">
+                            <span class="duracion-icon">⏱️</span>
+                            <span class="duracion-text">Duración: 8 horas con limitadores reales</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Jornada Actas -->
+                <div class="jornada jornada-actas">
+                    <div class="jornada-header">
+                        <div class="jornada-name">Jornada El Acta en las Inspecciones Acústicas</div>
+                        <div class="jornada-subtitle">Elaboración Profesional de Documentación</div>
+                        <span class="jornada-badge badge-actas">Fundamental</span>
+                    </div>
+                    <div class="jornada-features">
+                        <div class="feature">
+                            <span class="feature-icon">🎯</span>
+                            <span class="feature-text"><strong>Objetivo:</strong> Dominio completo en elaboración de actas</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📋</span>
+                            <span class="feature-text">Estructura legal y técnica de las actas</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">⚖️</span>
+                            <span class="feature-text">Aspectos jurídicos y valor probatorio</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✍️</span>
+                            <span class="feature-text">Redacción profesional y casos prácticos</span>
+                        </div>
+                        <div class="duracion">
+                            <span class="duracion-icon">⏱️</span>
+                            <span class="duracion-text">Duración: 8 horas con ejercicios prácticos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Casos Prácticos -->
+            <div class="casos-section">
+                <h3 class="casos-title">🔬 Casos Prácticos que Abordaremos</h3>
+                <div class="casos-grid">
+                    <div class="caso-item">
+                        <div class="caso-titulo">🏍️ Vehículos</div>
+                        <div class="caso-descripcion">Motocicletas, ciclomotores, vehículos modificados, escape libre</div>
+                    </div>
+                    <div class="caso-item">
+                        <div class="caso-titulo">🏗️ Obras y Construcción</div>
+                        <div class="caso-descripcion">Maquinaria pesada, trabajos nocturnos, vibraciones de obra</div>
+                    </div>
+                    <div class="caso-item">
+                        <div class="caso-titulo">🎵 Locales de Ocio</div>
+                        <div class="caso-descripcion">Bares musicales, discotecas, limitadores defectuosos</div>
+                    </div>
+                    <div class="caso-item">
+                        <div class="caso-titulo">🏭 Actividades Industriales</div>
+                        <div class="caso-descripcion">Talleres mecánicos, lavanderías, actividades productivas</div>
+                    </div>
+                    <div class="caso-item">
+                        <div class="caso-titulo">🏠 Ruidos Vecinales</div>
+                        <div class="caso-descripcion">Aires acondicionados, ladridos, equipos domésticos</div>
+                    </div>
+                    <div class="caso-item">
+                        <div class="caso-titulo">🎓 Gimnasios y Deportes</div>
+                        <div class="caso-descripcion">Actividades deportivas, música, equipamiento</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Información Práctica -->
+            <div class="info-practica">
+                <h3 class="info-title">📋 Información Práctica</h3>
+                <div class="info-highlight">
+                    <div class="numero">MAX 10</div>
+                    <div class="texto">participantes por jornada para garantizar atención personalizada</div>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="icono">🏢</div>
+                        <div class="titulo">Modalidad</div>
+                        <div class="descripcion">100% Presencial en nuestras instalaciones</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icono">🔧</div>
+                        <div class="titulo">Equipos</div>
+                        <div class="descripcion">Sonómetros y equipos reales incluidos</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icono">📚</div>
+                        <div class="titulo">Material</div>
+                        <div class="descripcion">Documentación técnica y casos prácticos</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="icono">🏆</div>
+                        <div class="titulo">Certificado</div>
+                        <div class="descripcion">Certificado oficial por jornada completada</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Beneficios -->
+            <div class="beneficios">
+                <h3>✨ Ventajas de las Jornadas Especializadas</h3>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">🎯</div>
+                    <div class="beneficio-text"><strong>Enfoque Específico:</strong> Cada jornada se centra en un tema concreto con casos reales</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">⏰</div>
+                    <div class="beneficio-text"><strong>Formato Intensivo:</strong> 8 horas de formación concentrada y práctica</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">🔄</div>
+                    <div class="beneficio-text"><strong>Complementarias:</strong> Se pueden realizar independientemente o como complemento a los niveles CIA</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">👥</div>
+                    <div class="beneficio-text"><strong>Grupos Reducidos:</strong> Máximo 10 participantes para interacción directa con formadores</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">📊</div>
+                    <div class="beneficio-text"><strong>Casos Reales:</strong> Ejercicios basados en situaciones reales del día a día profesional</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">🎓</div>
+                    <div class="beneficio-text"><strong>Certificación Individual:</strong> Certificado específico por cada jornada completada</div>
+                </div>
+            </div>
+        
+            
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta">
+            <h3>🎯 ¡Especialízate en tu Área de Interés!</h3>
+            <p>Elige las jornadas que mejor se adapten a tu trabajo diario y conviértete en experto en casos específicos</p>
+            <a href="mailto:contacto@dbbasico.es?subject=Información%20CIA%20-%20Jornadas%20Especializadas&body=Buenos%20días,%0A%0AEstoy%20interesado/a%20en%20las%20jornadas%20especializadas%20CIA.%0A%0AJornadas%20de%20mi%20interés:%0A☐%20Ciclomotores%20y%20Motocicletas%0A☐%20Vibraciones%0A☐%20Limitadores%0A☐%20El%20Acta%20en%20Inspecciones%0A%0APor%20favor,%20envíenme%20información%20sobre:%0A-%20Fechas%20disponibles%20por%20jornada%0A-%20Precios%20individuales%20y%20paquetes%0A-%20Descuentos%20por%20múltiples%20jornadas%0A-%20Posibilidad%20de%20formación%20in-company%0A-%20Requisitos%20específicos%20por%20jornada%0A%0AInformación%20adicional:%0A-%20Mi%20perfil%20profesional:%20[AGENTE/TÉCNICO/OTRO]%0A-%20Experiencia%20actual:%20[NIVEL]%0A-%20Casos%20más%20frecuentes%20en%20mi%20trabajo:%20[DESCRIPCIÓN]%0A-%20Fechas%20de%20preferencia:%20[FECHAS]%0A%0AMuchas%20gracias." class="cta-button">Solicitar Información de Jornadas</a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <strong>DBBASICO - Servicios de Acústica S.L.</strong><br>
+                Formación especializada adaptada a tu trabajo diario
+            </div>
+            <div class="footer-locations">
+                <div class="location-item">
+                    <strong>Oficinas:</strong><br>
+                    • Talavera de la Reina (Toledo) - Sede principal<br>
+                    • Madrid - Oficina comercial
+                </div>
+            </div>
+            <div class="footer-contact">
+                📧 <a href="mailto:contacto@dbbasico.es">contacto@dbbasico.es</a> | 
+                📞 925 81 11 28 | 
+                📱 667 07 29 11 | 
+                🌐 <a href="https://dbbasico.es">www.dbbasico.es</a>
+            </div>
+            <div class="footer-legal">
+                <small>Este email contiene información comercial de DBBASICO S.L.<br>
+                Si no deseas recibir más información, responde con "BAJA" en el asunto.</small>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

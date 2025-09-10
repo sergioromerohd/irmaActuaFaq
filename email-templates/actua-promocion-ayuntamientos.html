@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACTUA 2.0 - Solución Profesional para Inspecciones Acústicas</title>
+    <style>
+        /* Reset y estilos base */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+        .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+        .content { padding: 20px; }
+        
+        /* Header */
+        .header { background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%); color: white; text-align: center; padding: 30px 20px; }
+        .logo { font-size: 32px; font-weight: bold; margin-bottom: 10px; }
+        .tagline { font-size: 16px; opacity: 0.9; }
+        
+        /* Hero section */
+        .hero { text-align: center; padding: 30px 20px; background: linear-gradient(to right, rgba(37, 99, 235, 0.05), rgba(37, 99, 235, 0.1)); }
+        .hero h1 { font-size: 28px; color: #1e293b; margin-bottom: 15px; }
+        .hero p { font-size: 18px; color: #64748b; margin-bottom: 25px; }
+        .badge { display: inline-block; background-color: #2563eb; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+        
+        /* Planes */
+        .planes-section { padding: 30px 20px; }
+        .planes-title { text-align: center; font-size: 24px; color: #1e293b; margin-bottom: 30px; }
+        .plan { border: 2px solid #e2e8f0; border-radius: 12px; margin-bottom: 20px; overflow: hidden; transition: all 0.3s ease; }
+        .plan:hover { border-color: #2563eb; box-shadow: 0 8px 25px rgba(37, 99, 235, 0.15); }
+        .plan-destacado { border-color: #10b981; background: linear-gradient(to bottom, rgba(16, 185, 129, 0.05), #ffffff); }
+        .plan-header { padding: 20px; text-align: center; }
+        .plan-basico .plan-header { background: linear-gradient(135deg, #f1f5f9, #e2e8f0); }
+        .plan-tecnico .plan-header { background: linear-gradient(135deg, #ecfdf5, #d1fae5); }
+        .plan-avanzado .plan-header { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+        .plan-name { font-size: 20px; font-weight: bold; color: #1e293b; margin-bottom: 10px; }
+        .plan-description { font-size: 14px; color: #64748b; margin-bottom: 15px; }
+        .plan-badge { display: inline-block; padding: 6px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; }
+        .badge-basico { background-color: #2563eb; color: white; }
+        .badge-tecnico { background-color: #10b981; color: white; }
+        .badge-avanzado { background: linear-gradient(135deg, #f59e0b, #d97706); color: white; }
+        
+        .plan-features { padding: 0 20px 20px; }
+        .feature { display: flex; align-items: flex-start; margin-bottom: 12px; padding: 0 10px; }
+        .feature-icon { color: #10b981; margin-right: 10px; margin-top: 2px; flex-shrink: 0; }
+        .feature-text { font-size: 14px; color: #374151; }
+        
+        /* Beneficios para ayuntamientos */
+        .beneficios { background: linear-gradient(135deg, #f8fafc, #f1f5f9); padding: 30px 20px; margin: 20px 0; }
+        .beneficios h3 { color: #1e293b; font-size: 22px; margin-bottom: 20px; text-align: center; }
+        .beneficio-item { display: flex; align-items: flex-start; margin-bottom: 15px; }
+        .beneficio-icon { background-color: #2563eb; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; margin-top: 2px; flex-shrink: 0; }
+        .beneficio-text { font-size: 14px; color: #374151; }
+        
+        /* CTA */
+        .cta { text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #1e293b, #374151); color: white; }
+        .cta h3 { font-size: 22px; margin-bottom: 15px; }
+        .cta p { font-size: 16px; margin-bottom: 25px; opacity: 0.9; }
+        .cta-button { display: inline-block; background-color: #10b981; color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; }
+        .cta-button:hover { background-color: #059669; }
+        
+        /* Footer */
+        .footer { background-color: #f8fafc; padding: 30px 20px; text-align: center; border-top: 1px solid #e2e8f0; }
+        .footer-content { font-size: 14px; color: #64748b; }
+        .footer-contact { margin-top: 15px; }
+        .footer-contact a { color: #2563eb; text-decoration: none; }
+        
+        /* Responsive */
+        @media only screen and (max-width: 600px) {
+            .container { width: 100% !important; }
+            .content { padding: 15px !important; }
+            .hero h1 { font-size: 24px !important; }
+            .plan-name { font-size: 18px !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🎵 ACTUA 2.0</div>
+            <div class="tagline">Solución Profesional para Inspecciones Acústicas</div>
+        </div>
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Moderniza las Inspecciones Acústicas de tu Ayuntamiento</h1>
+            <p>Herramienta especializada para agentes de policía y personal técnico</p>
+            <span class="badge">Cumplimiento Normativo RD 1367/2007</span>
+        </div>
+        
+        <!-- Contenido principal -->
+        <div class="content">
+            <!-- Planes -->
+            <div class="planes-section">
+                <h2 class="planes-title">Planes Adaptados a tus Necesidades</h2>
+                
+                <!-- Plan Básico -->
+                <div class="plan plan-basico">
+                    <div class="plan-header">
+                        <div class="plan-name">ACTUA BÁSICO</div>
+                        <div class="plan-description">Procesado de Datos según RD 1367/2007</div>
+                        <span class="plan-badge badge-basico">Ideal para empezar</span>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Elaboración de Actas de la Medición</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Registro Histórico de Mediciones</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Fichas de Resultados</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plan Técnico -->
+                <div class="plan plan-tecnico plan-destacado">
+                    <div class="plan-header">
+                        <div class="plan-name">ACTUA TÉCNICO</div>
+                        <div class="plan-description">RD 1367/2007 + Una Ordenanza Municipal a seleccionar</div>
+                        <span class="plan-badge badge-tecnico">Más Popular</span>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Elaboración de Actas de Medición</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Registro Histórico de Mediciones</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Evaluación de CUMPLIMIENTO/INCUMPLIMIENTO</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Informe de la Inspección realizada</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Plan Avanzado -->
+                <div class="plan plan-avanzado">
+                    <div class="plan-header">
+                        <div class="plan-name">ACTUA AVANZADO</div>
+                        <div class="plan-description">RD 1367/2007 + 10 Ordenanzas Municipales</div>
+                        <span class="plan-badge badge-avanzado">Máxima Cobertura</span>
+                    </div>
+                    <div class="plan-features">
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Elaboración de Actas de Medición</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Registro Histórico de Mediciones</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Evaluación de CUMPLIMIENTO/INCUMPLIMIENTO</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Informe de la Inspección realizada</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text">Cobertura multi-ordenanza completa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Beneficios para Ayuntamientos -->
+            <div class="beneficios">
+                <h3>¿Por qué los Ayuntamientos eligen ACTUA 2.0?</h3>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">🏛️</div>
+                    <div class="beneficio-text"><strong>Cumplimiento Legal:</strong> Garantiza el cumplimiento de la normativa nacional, regional y local en materia de acústica</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">⚡</div>
+                    <div class="beneficio-text"><strong>Eficiencia Operativa:</strong> Reduce significativamente el tiempo de procesamiento de inspecciones acústicas</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">📋</div>
+                    <div class="beneficio-text"><strong>Documentación Automática:</strong> Generación automática de actas técnicas y documentos oficiales</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">👥</div>
+                    <div class="beneficio-text"><strong>Fácil Adopción:</strong> Diseñado para agentes sin formación específica en acústica</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">💰</div>
+                    <div class="beneficio-text"><strong>Ahorro de Costes:</strong> Elimina la necesidad de consultorías externas para inspecciones rutinarias</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">📊</div>
+                    <div class="beneficio-text"><strong>Trazabilidad Completa:</strong> Registro histórico y seguimiento de todas las mediciones realizadas</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta">
+            <h3>¿Listo para modernizar tu ayuntamiento?</h3>
+            <p>Solicita una demostración personalizada y descubre cómo ACTUA 2.0 puede optimizar las inspecciones acústicas de tu municipio</p>
+            <a href="mailto:contacto@dbbasico.es?subject=Información%20ACTUA%202.0%20-%20Ayuntamiento&body=Buenos%20días,%0A%0ASomos%20el%20ayuntamiento%20de%20[NOMBRE_MUNICIPIO]%20y%20estamos%20interesados%20en%20conocer%20más%20sobre%20ACTUA%202.0%20para%20nuestras%20inspecciones%20acústicas.%0A%0APor%20favor,%20contáctenme%20para%20una%20demostración%20personalizada.%0A%0AGracias." class="cta-button">Solicitar Información</a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <strong>DBBASICO - Servicios de Acústica S.L.</strong><br>
+                Especialistas en soluciones acústicas para administraciones públicas
+            </div>
+            <div class="footer-contact">
+                📧 <a href="mailto:contacto@dbbasico.es">contacto@dbbasico.es</a> | 
+                📞 925 81 11 28 | 
+                🌐 <a href="https://dbbasico.es">www.dbbasico.es</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
