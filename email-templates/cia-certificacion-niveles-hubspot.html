@@ -1,0 +1,402 @@
+<style>
+    /* Reset y estilos base */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    .email-container { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif; line-height: 1.6; color: #333; background-color: #f8f9fa; }
+    .container { max-width: 600px; margin: 0 auto; background-color: #ffffff; }
+    .content { padding: 20px; }
+    
+    /* Header */
+    .header { background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%); color: white; text-align: center; padding: 30px 20px; }
+    .logo { font-size: 32px; font-weight: bold; margin-bottom: 10px; }
+    .tagline { font-size: 16px; opacity: 0.9; }
+    
+    /* Hero section */
+    .hero { text-align: center; padding: 30px 20px; background: linear-gradient(to right, rgba(234, 88, 12, 0.05), rgba(234, 88, 12, 0.1)); }
+    .hero h1 { font-size: 28px; color: #1e293b; margin-bottom: 15px; }
+    .hero p { font-size: 18px; color: #64748b; margin-bottom: 25px; }
+    .badge { display: inline-block; background-color: #ea580c; color: white; padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 600; }
+    
+    /* Niveles */
+    .niveles-section { padding: 30px 20px; }
+    .niveles-title { text-align: center; font-size: 24px; color: #1e293b; margin-bottom: 30px; }
+    .nivel { border: 2px solid #e2e8f0; border-radius: 12px; margin-bottom: 20px; overflow: hidden; transition: all 0.3s ease; }
+    .nivel:hover { border-color: #ea580c; box-shadow: 0 8px 25px rgba(234, 88, 12, 0.15); }
+    .nivel-destacado { border-color: #10b981; background: linear-gradient(to bottom, rgba(16, 185, 129, 0.05), #ffffff); }
+    .nivel-header { padding: 20px; text-align: center; }
+    .nivel-i .nivel-header { background: linear-gradient(135deg, #fef3c7, #fde68a); }
+    .nivel-ii .nivel-header { background: linear-gradient(135deg, #ecfdf5, #d1fae5); }
+    .nivel-iii .nivel-header { background: linear-gradient(135deg, #dbeafe, #bfdbfe); }
+    .nivel-iv .nivel-header { background: linear-gradient(135deg, #fee2e2, #fecaca); }
+    .nivel-name { font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 8px; }
+    .nivel-description { font-size: 14px; color: #64748b; margin-bottom: 15px; font-weight: 600; }
+    .nivel-badge { display: inline-block; padding: 6px 12px; border-radius: 16px; font-size: 12px; font-weight: 600; }
+    .badge-i { background-color: #f59e0b; color: white; }
+    .badge-ii { background-color: #10b981; color: white; }
+    .badge-iii { background-color: #3b82f6; color: white; }
+    .badge-iv { background-color: #ef4444; color: white; }
+    
+    .nivel-features { padding: 0 20px 20px; }
+    .feature { display: flex; align-items: flex-start; margin-bottom: 12px; padding: 0 10px; }
+    .feature-icon { color: #10b981; margin-right: 10px; margin-top: 2px; flex-shrink: 0; }
+    .feature-text { font-size: 14px; color: #374151; }
+    .duracion { display: flex; align-items: center; gap: 8px; margin-top: 15px; padding: 10px; background-color: rgba(234, 88, 12, 0.1); border-radius: 8px; }
+    .duracion-icon { color: #ea580c; }
+    .duracion-text { font-size: 13px; font-weight: 600; color: #ea580c; }
+    
+    /* Temario */
+    .temario { background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 30px 20px; margin: 20px 0; }
+    .temario h3 { color: #1e293b; font-size: 22px; margin-bottom: 20px; text-align: center; }
+    .temario-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .temario-item { display: flex; align-items: center; margin-bottom: 15px; background: white; padding: 12px; border-radius: 8px; border-left: 4px solid #ea580c; }
+    .temario-numero { background-color: #ea580c; color: white; width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: bold; font-size: 14px; }
+    .temario-texto { font-size: 14px; color: #374151; font-weight: 500; }
+    
+    /* Beneficios */
+    .beneficios { background: linear-gradient(135deg, #f8fafc, #f1f5f9); padding: 30px 20px; margin: 20px 0; }
+    .beneficios h3 { color: #1e293b; font-size: 22px; margin-bottom: 20px; text-align: center; }
+    .beneficio-item { display: flex; align-items: flex-start; margin-bottom: 15px; }
+    .beneficio-icon { background-color: #ea580c; color: white; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-right: 12px; margin-top: 2px; flex-shrink: 0; }
+    .beneficio-text { font-size: 14px; color: #374151; }
+    
+    /* Ideal Para */
+    .ideal-section { background: linear-gradient(135deg, #fef7ed, #fed7aa); padding: 30px 20px; }
+    .ideal-title { color: #1e293b; font-size: 20px; margin-bottom: 20px; text-align: center; }
+    .ideal-grid { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .ideal-item { display: flex; align-items: center; background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #ea580c; }
+    .ideal-icon { font-size: 20px; margin-right: 12px; }
+    .ideal-text { font-size: 14px; color: #374151; font-weight: 500; }
+    
+    /* Contacto */
+    .contacto-section { background: linear-gradient(135deg, #eff6ff, #dbeafe); padding: 30px 20px; }
+    .contacto-title { color: #1e293b; font-size: 20px; margin-bottom: 20px; text-align: center; }
+    .contacto-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+    .contacto-item { background: white; padding: 20px; border-radius: 12px; text-align: center; border: 2px solid #e2e8f0; }
+    .contacto-item:hover { border-color: #ea580c; }
+    .contacto-icon { font-size: 24px; margin-bottom: 10px; }
+    .contacto-label { font-size: 12px; color: #64748b; font-weight: 600; margin-bottom: 5px; }
+    .contacto-value { font-size: 14px; color: #1e293b; font-weight: bold; }
+    
+    /* CTA */
+    .cta { text-align: center; padding: 30px 20px; background: linear-gradient(135deg, #1e293b, #374151); color: white; }
+    .cta h3 { font-size: 22px; margin-bottom: 15px; }
+    .cta p { font-size: 16px; margin-bottom: 25px; opacity: 0.9; }
+    .cta-button { display: inline-block; background-color: #ea580c; color: white; padding: 12px 30px; border-radius: 8px; text-decoration: none; font-weight: 600; font-size: 16px; }
+    .cta-button:hover { background-color: #c2410c; }
+    
+    /* Footer */
+    .footer { background-color: #f8fafc; padding: 30px 20px; text-align: center; border-top: 1px solid #e2e8f0; }
+    .footer-content { font-size: 14px; color: #64748b; margin-bottom: 15px; }
+    .footer-locations { font-size: 12px; color: #64748b; margin-bottom: 15px; }
+    .footer-contact { margin-bottom: 15px; }
+    .footer-contact a { color: #ea580c; text-decoration: none; }
+    .footer-legal { font-size: 11px; color: #9ca3af; }
+    
+    /* Responsive */
+    @media only screen and (max-width: 600px) {
+        .container { width: 100% !important; }
+        .content { padding: 15px !important; }
+        .hero h1 { font-size: 24px !important; }
+        .nivel-name { font-size: 16px !important; }
+        .temario-grid { grid-template-columns: 1fr !important; }
+        .contacto-grid { grid-template-columns: 1fr !important; }
+    }
+</style>
+
+<div class="email-container">
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">🎓 CIA</div>
+            <div class="tagline">Cursos de Inspecciones Acústicas - Certificación Profesional</div>
+        </div>
+        
+        <!-- Hero -->
+        <div class="hero">
+            <h1>Certifícate como Experto en Inspecciones Acústicas</h1>
+            <p>Formación profesional progresiva para agentes de policía y personal técnico</p>
+            <span class="badge">4 Niveles de Certificación Oficial</span>
+        </div>
+        
+        <!-- Contenido principal -->
+        <div class="content">
+            <!-- Niveles de Certificación -->
+            <div class="niveles-section">
+                <h2 class="niveles-title">Programa de Certificación por Niveles</h2>
+                
+                <!-- Nivel I -->
+                <div class="nivel nivel-i">
+                    <div class="nivel-header">
+                        <div class="nivel-name">CIA - Certificación Nivel I</div>
+                        <div class="nivel-description">Fundamentos de Inspección Sonométrica</div>
+                        <span class="nivel-badge badge-i">Básico</span>
+                    </div>
+                    <div class="nivel-features">
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text"><strong>Objetivo:</strong> Adquirir conocimientos básicos para la inspección sonométrica</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📋</span>
+                            <span class="feature-text">Elaboración de Actas profesionales</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📖</span>
+                            <span class="feature-text">Conocimientos sobre procedimiento de inspección y normativa</span>
+                        </div>
+                        <div class="duracion">
+                            <span class="duracion-icon">⏱️</span>
+                            <span class="duracion-text">Duración: 16 horas - Diploma de asistencia / Certificado Nivel 1</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nivel II -->
+                <div class="nivel nivel-ii nivel-destacado">
+                    <div class="nivel-header">
+                        <div class="nivel-name">CIA - Certificación Nivel II</div>
+                        <div class="nivel-description">Profundización en Procedimientos de Inspección</div>
+                        <span class="nivel-badge badge-ii">Recomendado</span>
+                    </div>
+                    <div class="nivel-features">
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text"><strong>Objetivo:</strong> Profundizar en los procedimientos de inspección</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🔬</span>
+                            <span class="feature-text">Certificado de Aptitud mediante ejercicio de Intercomparación</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📈</span>
+                            <span class="feature-text">Validación práctica de conocimientos adquiridos</span>
+                        </div>
+                        <div class="duracion">
+                            <span class="duracion-icon">⏱️</span>
+                            <span class="duracion-text">Duración: 24 horas - Diploma de asistencia / Certificado Nivel 2 + Certificado de Aptitud</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nivel III -->
+                <div class="nivel nivel-iii">
+                    <div class="nivel-header">
+                        <div class="nivel-name">CIA - Certificación Nivel III</div>
+                        <div class="nivel-description">Procesado de Datos y Análisis Avanzado</div>
+                        <span class="nivel-badge badge-iii">Avanzado</span>
+                    </div>
+                    <div class="nivel-features">
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text"><strong>Objetivo:</strong> Procesado de datos recogidos en la inspección</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">📊</span>
+                            <span class="feature-text">Elaboración de Fichas de Resultados profesionales</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">💻</span>
+                            <span class="feature-text">Certificado ACTUA incluido para uso del software especializado</span>
+                        </div>
+                        <div class="duracion">
+                            <span class="duracion-icon">⏱️</span>
+                            <span class="duracion-text">Duración: 24 horas - Diploma de asistencia / Certificado Nivel 3</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Nivel IV -->
+                <div class="nivel nivel-iv">
+                    <div class="nivel-header">
+                        <div class="nivel-name">CIA IV - Certificación Nivel IV</div>
+                        <div class="nivel-description">Redacción de Informes y Medidas Correctoras</div>
+                        <span class="nivel-badge badge-iv">Experto</span>
+                    </div>
+                    <div class="nivel-features">
+                        <div class="feature">
+                            <span class="feature-icon">✅</span>
+                            <span class="feature-text"><strong>Objetivo:</strong> Redacción de informes técnicos profesionales</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🔧</span>
+                            <span class="feature-text">Propuesta de Medidas Correctoras especializadas</span>
+                        </div>
+                        <div class="feature">
+                            <span class="feature-icon">🏆</span>
+                            <span class="feature-text">Certificación completa como experto en inspecciones acústicas</span>
+                        </div>
+                        <div class="duracion">
+                            <span class="duracion-icon">⏱️</span>
+                            <span class="duracion-text">Duración: 16 horas - Diploma de asistencia / Certificado Nivel 4</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Temario General -->
+            <div class="temario">
+                <h3>📚 Temario General Completo</h3>
+                <div class="temario-grid">
+                    <div>
+                        <div class="temario-item">
+                            <div class="temario-numero">1</div>
+                            <div class="temario-texto">Introducción a la Acústica</div>
+                        </div>
+                        <div class="temario-item">
+                            <div class="temario-numero">2</div>
+                            <div class="temario-texto">Instrumentación</div>
+                        </div>
+                        <div class="temario-item">
+                            <div class="temario-numero">3</div>
+                            <div class="temario-texto">Marcos Normativos y Límites</div>
+                        </div>
+                        <div class="temario-item">
+                            <div class="temario-numero">4</div>
+                            <div class="temario-texto">Procedimientos Ambiente Exterior</div>
+                        </div>
+                        <div class="temario-item">
+                            <div class="temario-numero">5</div>
+                            <div class="temario-texto">Procedimientos Ambiente Interior</div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="temario-item">
+                            <div class="temario-numero">6</div>
+                            <div class="temario-texto">Vibraciones</div>
+                        </div>
+                        <div class="temario-item">
+                            <div class="temario-numero">7</div>
+                            <div class="temario-texto">Casos Habituales de Inspección</div>
+                        </div>
+                        <div class="temario-item">
+                            <div class="temario-numero">8</div>
+                            <div class="temario-texto">Medidas Correctoras</div>
+                        </div>
+                        <div class="temario-item">
+                            <div class="temario-numero">9</div>
+                            <div class="temario-texto">Actas y Estadillos</div>
+                        </div>
+                        <div class="temario-item">
+                            <div class="temario-numero">10</div>
+                            <div class="temario-texto">Cálculos e Informes</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Beneficios -->
+            <div class="beneficios">
+                <h3>🎯 ¿Por qué elegir nuestros cursos CIA?</h3>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">📜</div>
+                    <div class="beneficio-text"><strong>Certificación Oficial:</strong> Reconocida por ayuntamientos y administraciones públicas en toda España</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">👨‍🏫</div>
+                    <div class="beneficio-text"><strong>Formación Presencial:</strong> Máximo 10 participantes para garantizar atención personalizada</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">🔬</div>
+                    <div class="beneficio-text"><strong>Equipos Reales:</strong> Práctica con sonómetros profesionales y equipos de calibración</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">📈</div>
+                    <div class="beneficio-text"><strong>Progresión Estructurada:</strong> Desde conceptos básicos hasta especialización completa</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">💻</div>
+                    <div class="beneficio-text"><strong>Software Incluido:</strong> Acceso a ACTUA 2.0 en niveles avanzados</div>
+                </div>
+                <div class="beneficio-item">
+                    <div class="beneficio-icon">🏅</div>
+                    <div class="beneficio-text"><strong>15+ años de experiencia:</strong> Formadores expertos reconocidos en el sector</div>
+                </div>
+            </div>
+            
+            <!-- Ideal Para -->
+            <div class="ideal-section">
+                <h3 class="ideal-title">👥 Ideal Para:</h3>
+                <div class="ideal-grid">
+                    <div class="ideal-item">
+                        <div class="ideal-icon">👮</div>
+                        <div class="ideal-text">Agentes de Policía Local que realizan inspecciones</div>
+                    </div>
+                    <div class="ideal-item">
+                        <div class="ideal-icon">🏛️</div>
+                        <div class="ideal-text">Personal Técnico de ayuntamientos</div>
+                    </div>
+                    <div class="ideal-item">
+                        <div class="ideal-icon">🔧</div>
+                        <div class="ideal-text">Técnicos en medio ambiente y acústica</div>
+                    </div>
+                    <div class="ideal-item">
+                        <div class="ideal-icon">📊</div>
+                        <div class="ideal-text">Profesionales que buscan certificación oficial</div>
+                    </div>
+                    <div class="ideal-item">
+                        <div class="ideal-icon">🎯</div>
+                        <div class="ideal-text">Equipos que requieren formación especializada</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Contacto Detallado -->
+            <div class="contacto-section">
+                <h3 class="contacto-title">📞 Contacta Ahora</h3>
+                <div class="contacto-grid">
+                    <div class="contacto-item">
+                        <div class="contacto-icon">📧</div>
+                        <div class="contacto-label">Email</div>
+                        <div class="contacto-value">contacto@dbbasico.es</div>
+                    </div>
+                    <div class="contacto-item">
+                        <div class="contacto-icon">📞</div>
+                        <div class="contacto-label">Administración</div>
+                        <div class="contacto-value">925 81 11 28</div>
+                    </div>
+                    <div class="contacto-item">
+                        <div class="contacto-icon">📱</div>
+                        <div class="contacto-label">Comercial</div>
+                        <div class="contacto-value">667 07 29 11</div>
+                    </div>
+                    <div class="contacto-item">
+                        <div class="contacto-icon">🌐</div>
+                        <div class="contacto-label">Web</div>
+                        <div class="contacto-value">www.dbbasico.es</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Call to Action -->
+        <div class="cta">
+            <h3>🎓 ¡Inicia tu Certificación CIA Ahora!</h3>
+            <p>Únete a los cientos de profesionales que ya confían en nuestra formación especializada</p>
+            <a href="mailto:contacto@dbbasico.es?subject=Información%20CIA%20-%20Certificación%20por%20Niveles&body=Buenos%20días,%0A%0AEstoy%20interesado/a%20en%20la%20certificación%20CIA%20por%20niveles.%0A%0ANiveles%20de%20mi%20interés:%0A☐%20Nivel%201%20-%20Fundamentos%0A☐%20Nivel%202%20-%20Procedimientos%0A☐%20Nivel%203%20-%20Análisis%20Avanzado%0A☐%20Nivel%204%20-%20Informes%20y%20Medidas%0A%0APor%20favor,%20envíenme%20información%20sobre:%0A-%20Próximas%20fechas%20de%20convocatorias%0A-%20Precios%20por%20nivel%20y%20paquetes%20completos%0A-%20Descuentos%20por%20inscripción%20múltiple%0A-%20Modalidades%20de%20pago%0A-%20Posibilidad%20de%20formación%20in-company%0A%0AInformación%20adicional:%0A-%20Mi%20perfil%20profesional:%20[AGENTE/TÉCNICO/OTRO]%0A-%20Experiencia%20previa:%20[NIVEL]%0A-%20Organización:%20[AYUNTAMIENTO/EMPRESA]%0A-%20Número%20de%20participantes:%20[NÚMERO]%0A%0AMuchas%20gracias." class="cta-button">Solicitar Información CIA</a>
+        </div>
+        
+        <!-- Footer -->
+        <div class="footer">
+            <div class="footer-content">
+                <strong>DBBASICO - Servicios de Acústica S.L.</strong><br>
+                Líder en formación especializada en inspecciones acústicas
+            </div>
+            <div class="footer-locations">
+                <div class="location-item">
+                    <strong>Oficinas:</strong><br>
+                    • Talavera de la Reina (Toledo) - Sede principal<br>
+                    • Madrid - Oficina comercial
+                </div>
+            </div>
+            <div class="footer-contact">
+                📧 <a href="mailto:contacto@dbbasico.es">contacto@dbbasico.es</a> | 
+                📞 925 81 11 28 | 
+                📱 667 07 29 11 | 
+                🌐 <a href="https://dbbasico.es">www.dbbasico.es</a>
+            </div>
+            <div class="footer-legal">
+                <small>Este email contiene información comercial de DBBASICO S.L.<br>
+                Si no deseas recibir más información, responde con "BAJA" en el asunto.</small>
+            </div>
+        </div>
+    </div>
+</div>
