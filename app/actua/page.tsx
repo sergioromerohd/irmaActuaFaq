@@ -1,395 +1,314 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
-import { BarChart3, Shield, Users, FileText, Zap, CheckCircle, ArrowLeft, ArrowRight } from "lucide-react"
+import { BarChart3, Shield, Users, FileText, Zap, CheckCircle, ArrowRight } from "lucide-react"
+import { motion, useScroll, useTransform } from "framer-motion"
+import { WebinarModal } from "@/components/WebinarModal"
 
 export default function ActuaPage() {
-  const heroRef = useRef<HTMLElement>(null)
+  const containerRef = useRef<HTMLDivElement>(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  })
 
-  useEffect(() => {
-  const mq = window.matchMedia("(prefers-reduced-motion: reduce)")
-  if (mq.matches) return
-
-  const handleScroll = () => {
-      const scrolled = window.pageYOffset
-      const rate = scrolled * -0.3
-
-      if (heroRef.current) {
-        heroRef.current.style.transform = `translateY(${rate}px)`
-      }
-    }
-
-  window.addEventListener("scroll", handleScroll)
-  return () => window.removeEventListener("scroll", handleScroll)
-  }, [])
+  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 100])
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      {/* Hero Section */}
-  <section ref={heroRef} className="relative pt-28 pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary/10 via-transparent to-primary/5" />
+    <div ref={containerRef} className="min-h-screen bg-background overflow-x-hidden">
+      <WebinarModal />
+      {/* Hero Section with Parallax */}
+      <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
+        {/* Abstract Background Elements */}
+        <div className="absolute inset-0 z-0">
+          <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-br from-primary/5 via-background to-primary/10" />
+          <motion.div
+            animate={{
+              scale: [1, 1.2, 1],
+              rotate: [0, 90, 0],
+            }}
+            transition={{
+              duration: 20,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute top-20 right-20 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+          />
+          <motion.div
+            animate={{
+              scale: [1, 1.5, 1],
+              rotate: [0, -45, 0],
+            }}
+            transition={{
+              duration: 15,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+            className="absolute bottom-20 left-20 w-72 h-72 bg-blue-500/5 rounded-full blur-3xl"
+          />
+        </div>
+
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
-            <div className="flex items-center justify-center gap-4 mb-6">
-              <div className="h-20 w-20 rounded-3xl bg-gradient-to-br from-primary to-primary/80 flex items-center justify-center">
-                <BarChart3 className="h-10 w-10 text-primary-foreground" />
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, ease: "circOut" }}
+              style={{ y: heroY, opacity: heroOpacity }}
+              className="space-y-8 text-center lg:text-left"
+            >
+              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary font-medium border border-primary/20 backdrop-blur-sm">
+                <BarChart3 className="h-5 w-5" />
+                <span>ACTUA 2.0</span>
               </div>
-              <div className="text-left">
-                <h2 className="text-5xl font-bold">ACTUA 2.0</h2>
-                <p className="text-xl text-muted-foreground">Análisis de Sonometría</p>
+              
+              <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-primary via-blue-600 to-primary">
+                Análisis Acústico Profesional
+              </h1>
+              
+              <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
+                La herramienta definitiva para inspecciones acústicas. Generación automática de actas y cálculos precisos para técnicos y agentes de policía.
+              </p>
+
+              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 h-auto shadow-lg shadow-primary/25 hover:shadow-primary/40 transition-all duration-300 hover:-translate-y-1">
+                    Comenzar Ahora
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <Link href="/actua/faq">
+                  <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto backdrop-blur-sm bg-background/50 hover:bg-background/80 transition-all duration-300">
+                    Ver Tutoriales
+                  </Button>
+                </Link>
               </div>
-            </div>
+            </motion.div>
 
-            <div className="flex justify-center">
-              <Badge variant="secondary" className="bg-primary text-primary-foreground text-lg px-6 py-2">
-                Aplicación Web Especializada
-              </Badge>
-            </div>
-
-            <p className="text-2xl text-muted-foreground leading-relaxed max-w-3xl mx-auto">
-              Herramienta profesional para el análisis de mediciones sonométricas en tareas de Inspecciones acústicas de fuentes y actividades ruidosas y generación automática de cálculos y actas técnicas. Diseñada específicamente para personal técnico y Agentes de Policía.
-            </p>
-
-            <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
-              <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
-                  Usar ACTUA 2.0
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-              <Link href="/actua/faq">
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6 group">
-                  Ver FAQ
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-            </div>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, y: 50 }}
+              animate={{ 
+                opacity: 1, 
+                scale: 1, 
+                y: [0, -20, 0] // Floating effect
+              }}
+              transition={{ 
+                opacity: { duration: 0.8, delay: 0.2 },
+                scale: { duration: 0.8, delay: 0.2 },
+                y: { 
+                  duration: 6, 
+                  repeat: Infinity, 
+                  ease: "easeInOut" 
+                }
+              }}
+              className="relative hidden lg:block"
+            >
+              <div className="relative z-10 transform hover:scale-105 transition-transform duration-500">
+                 <Image
+                  src="/images/actua-playmobil-v2.png"
+                  alt="Actua Playmobil"
+                  width={600}
+                  height={800}
+                  className="object-contain drop-shadow-2xl"
+                  priority
+                />
+              </div>
+              {/* Decorative elements behind image */}
+              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-b from-primary/20 to-transparent rounded-full blur-3xl -z-10" />
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Tutorial Video Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-primary/10">
+      {/* Features Grid with Scroll Reveal */}
+      <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto">
-            <div className="text-center mb-12">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <FileText className="h-4 w-4" />
-                Tutorial Completo
-              </div>
-              <h3 className="text-4xl font-bold mb-4">Aprende a usar ACTUA 2.0</h3>
-              <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-                Tutorial paso a paso que te guía por todas las funcionalidades principales de la aplicación
-              </p>
-            </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl font-bold mb-4">Potencia y Simplicidad</h2>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              Todo lo que necesitas para realizar mediciones profesionales en una sola plataforma
+            </p>
+          </motion.div>
 
-            <div className="rounded-2xl overflow-hidden shadow-2xl bg-card border">
-              <div className="bg-gradient-to-r from-primary/10 to-primary/5 p-6">
-                <div className="flex items-center gap-3 mb-2">
-                  <div className="h-10 w-10 rounded-xl bg-primary/20 flex items-center justify-center">
-                    <BarChart3 className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-semibold">Tutorial ACTUA 2.0</h4>
-                    <p className="text-sm text-muted-foreground">Guía completa de uso</p>
-                  </div>
-                </div>
-              </div>
-              <div className="p-6">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
+            {[
+              { icon: BarChart3, title: "Análisis Avanzado", desc: "Algoritmos especializados para análisis espectral y temporal de alta precisión." },
+              { icon: FileText, title: "Actas Automáticas", desc: "Generación instantánea de documentación legal y técnica lista para firmar." },
+              { icon: Shield, title: "Normativa al Día", desc: "Actualizado constantemente con las últimas regulaciones nacionales y locales." },
+              { icon: Users, title: "Interfaz Intuitiva", desc: "Diseñado para ser usado por cualquier profesional, sin necesidad de ser experto." },
+              { icon: Zap, title: "Resultados en Tiempo Real", desc: "Procesamiento inmediato de grandes volúmenes de datos acústicos." },
+              { icon: CheckCircle, title: "Validación Técnica", desc: "Control de calidad automático para garantizar la validez de cada medición." }
+            ].map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className="h-full hover:shadow-xl transition-all duration-300 border-none shadow-md bg-card/50 backdrop-blur-sm hover:-translate-y-1">
+                  <CardHeader>
+                    <div className="h-14 w-14 rounded-2xl bg-primary/10 flex items-center justify-center mb-4 text-primary">
+                      <feature.icon className="h-7 w-7" />
+                    </div>
+                    <CardTitle className="text-xl">{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-muted-foreground">{feature.desc}</p>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Video Section */}
+      <section className="py-24 relative overflow-hidden">
+        <div className="absolute inset-0 bg-primary/5 -skew-y-3 transform origin-top-left scale-110" />
+        <div className="container mx-auto px-4 relative">
+          <div className="max-w-5xl mx-auto">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+              >
+                <h3 className="text-3xl font-bold mb-6">Domina la herramienta en minutos</h3>
+                <p className="text-lg text-muted-foreground mb-8">
+                  Nuestro tutorial paso a paso te guiará desde la configuración inicial hasta la emisión de tu primera acta técnica. Sin complicaciones.
+                </p>
+                <ul className="space-y-4 mb-8">
+                  {[
+                    "Configuración del sonómetro",
+                    "Subida de archivos",
+                    "Análisis de resultados",
+                    "Exportación de informes PDF"
+                  ].map((item, i) => (
+                    <li key={i} className="flex items-center gap-3">
+                      <div className="h-2 w-2 rounded-full bg-primary" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+                <Link href="/actua/faq">
+                  <Button variant="outline" className="group">
+                    Ver todos los tutoriales
+                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                  </Button>
+                </Link>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                className="relative rounded-2xl overflow-hidden shadow-2xl ring-1 ring-border"
+              >
                 <video
                   controls
-                  className="w-full h-auto rounded-lg"
+                  className="w-full h-auto bg-black"
                   poster="/images/actua-sonometer.png"
                   preload="metadata"
                 >
                   <source src="/TutorialACTUA.mp4" type="video/mp4" />
                   Tu navegador no soporta la reproducción de video.
-                  <a href="/TutorialACTUA.mp4" className="text-primary hover:underline">
-                    Descargar video tutorial
-                  </a>
                 </video>
-                <div className="mt-4 p-4 bg-muted/50 rounded-lg">
-                  <p className="text-sm text-muted-foreground">
-                    💡 <strong>Recomendaciones:</strong> Utiliza los controles del video para pausar en las secciones que necesites revisar con más detalle. El tutorial cubre desde la configuración inicial hasta la generación de actas técnicas.
-                  </p>
-                </div>
-              </div>
+              </motion.div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
-      <section className="py-20">
+      {/* Pricing Cards */}
+      <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-16">
-            <h3 className="text-4xl font-bold mb-4">Características Principales</h3>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              ACTUA 2.0 ofrece herramientas avanzadas para el análisis profesional de sonometría
-            </p>
+            <h2 className="text-4xl font-bold mb-4">Planes Flexibles</h2>
+            <p className="text-xl text-muted-foreground">Elige la solución que mejor se adapte a tu flujo de trabajo</p>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            <Card className="group hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center">
-                <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <BarChart3 className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl">Análisis Avanzado</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center">
-                  Procesamiento de mediciones acústicas con algoritmos especializados para análisis espectral y temporal.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center">
-                <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <FileText className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl">Generación de Actas</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center">
-                  Creación automática de actas técnicas siguiendo estándares legales y normativas oficiales aplicables.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center">
-                <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Shield className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl">Cumplimiento Normativo</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center">
-                  Diseñado para cumplir con las normativas nacionales, regionales y locales en procedimientos municipales
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center">
-                <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Users className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl">Interface Especializada</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center">
-                  Diseño optimizado para personal técnico y agentes de policía con poca experiencia o formación en acústica, con flujos de trabajo intuitivos y eficientes.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center">
-                <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <Zap className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl">Procesamiento Rápido</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center">
-                  Análisis en tiempo real de grandes volúmenes de datos acústicos con resultados instantáneos.
-                </p>
-              </CardContent>
-            </Card>
-
-            <Card className="group hover:shadow-xl transition-all duration-300">
-              <CardHeader className="text-center">
-                <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform">
-                  <CheckCircle className="h-8 w-8 text-primary" />
-                </div>
-                <CardTitle className="text-xl">Validación Técnica</CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-center">
-                  Verificación automática de la calidad de los datos y validación de resultados según estándares
-                  técnicos.
-                </p>
-              </CardContent>
-            </Card>
+          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto items-start">
+            {[
+              {
+                title: "Básico",
+                price: "Esencial",
+                desc: "Cálculo de Niveles de Transmisión Lk según RD 1367/2007",
+                features: ["Actas de Medición", "Histórico de Mediciones", "Fichas de Resultados"],
+                highlight: false
+              },
+              {
+                title: "Técnico",
+                price: "Más Popular",
+                desc: "Incluye RD 1367/2007 + 1 Ordenanza Municipal a elección",
+                features: ["Todo lo del plan Básico", "Evaluación de Cumplimiento", "Informe de Inspección", "Soporte Prioritario"],
+                highlight: true
+              },
+              {
+                title: "Avanzado",
+                price: "Completo",
+                desc: "La suite completa con RD 1367/2007 + 10 Ordenanzas",
+                features: ["Todo lo del plan Técnico", "Multi-ordenanza", "Gestión Avanzada", "Consultoría Técnica"],
+                highlight: false
+              }
+            ].map((plan, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+              >
+                <Card className={`relative h-full transition-all duration-300 hover:shadow-2xl ${plan.highlight ? 'border-primary shadow-lg scale-105 z-10' : 'hover:scale-105'}`}>
+                  {plan.highlight && (
+                    <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+                      <Badge className="bg-primary text-primary-foreground px-4 py-1 text-sm">
+                        Recomendado
+                      </Badge>
+                    </div>
+                  )}
+                  <CardHeader className="text-center pt-8">
+                    <CardTitle className="text-2xl font-bold mb-2">{plan.title}</CardTitle>
+                    <div className="text-primary font-medium mb-2">{plan.price}</div>
+                    <p className="text-sm text-muted-foreground min-h-[3rem]">{plan.desc}</p>
+                  </CardHeader>
+                  <CardContent className="space-y-6">
+                    <ul className="space-y-3 text-sm">
+                      {plan.features.map((feature, i) => (
+                        <li key={i} className="flex items-center gap-3">
+                          <CheckCircle className={`h-4 w-4 flex-shrink-0 ${plan.highlight ? 'text-primary' : 'text-muted-foreground'}`} />
+                          <span>{feature}</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="pt-4">
+                      <Link href="/contacto" className="w-full">
+                        <Button variant={plan.highlight ? "default" : "outline"} className="w-full group">
+                          Solicitar Información
+                          <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      </Link>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-primary/10">
-        <div className="container mx-auto px-4">
-          <div className="max-w-6xl mx-auto">
-            <div className="text-center mb-16">
-              <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-6">
-                <BarChart3 className="h-4 w-4" />
-                Planes de Suscripción
-              </div>
-              <h3 className="text-4xl font-bold mb-4">Aplicación para Inspecciones Acústicas</h3>
-              <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-                Para Agentes de policía, Técnicos e Ingenierías. Elige el plan que mejor se adapte a tus necesidades profesionales.
-              </p>
-            </div>
-
-            <div className="grid lg:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              {/* ACTUA BÁSICO */}
-              <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/20">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-primary text-primary-foreground px-4 py-1">
-                    Básico
-                  </Badge>
-                </div>
-                <CardHeader className="text-center pt-8 pb-6">
-                  <div className="h-16 w-16 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto mb-4">
-                    <BarChart3 className="h-8 w-8 text-primary" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold">ACTUA BÁSICO</CardTitle>
-                  <p className="text-muted-foreground">Aplicación para el Procesado de Datos para el cálculo de los Niveles de Transmisión Lk según RD 1367/2007</p>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Elaboración de Actas de la Medición</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Registro Histórico de Mediciones</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Fichas de Resultados</span>
-                    </li>
-                  </ul>
-                  <div className="pt-4">
-                    <Link href="/contacto">
-                      <Button variant="outline" className="w-full group">
-                        IR A SUSCRIPCIÓN
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* ACTUA TÉCNICO - Destacado */}
-              <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 border-accent bg-gradient-to-b from-accent/5 to-background scale-105">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-accent text-accent-foreground px-4 py-1">
-                    Más Popular
-                  </Badge>
-                </div>
-                <CardHeader className="text-center pt-8 pb-6">
-                  <div className="h-16 w-16 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-4">
-                    <Shield className="h-8 w-8 text-accent" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold">ACTUA TÉCNICO</CardTitle>
-                  <p className="text-muted-foreground">Aplicación para el Procesado de Datos para el cálculo de los Niveles de Transmisión Lk según RD 1367/2007 + una Ordenanza a seleccionar</p>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Elaboración de Actas de Medición</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Registro Histórico de Mediciones</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Fichas de Resultados y Evaluación de CUMPLIMIENTO o INCUMPLIMIENTO DE NORMA</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Informe de la Inspección realizada</span>
-                    </li>
-                  </ul>
-                  <div className="pt-4">
-                    <Link href="/contacto">
-                      <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground group">
-                        IR A SUSCRIPCIÓN
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-
-              {/* ACTUA AVANZADO */}
-              <Card className="relative group hover:shadow-2xl transition-all duration-500 border-2 hover:border-primary/20">
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2">
-                  <Badge className="bg-gradient-to-r from-primary to-accent text-white px-4 py-1">
-                    Avanzado
-                  </Badge>
-                </div>
-                <CardHeader className="text-center pt-8 pb-6">
-                  <div className="h-16 w-16 rounded-2xl bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center mx-auto mb-4">
-                    <Zap className="h-8 w-8 text-primary" />
-                  </div>
-                  <CardTitle className="text-2xl font-bold">ACTUA AVANZADO</CardTitle>
-                  <p className="text-muted-foreground">Aplicación para el Procesado de Datos para el cálculo de los Niveles de Transmisión Lk según RD 1367/2007 + 10 Ordenanzas</p>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <ul className="space-y-3 text-sm">
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Elaboración de Actas de Medición</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Registro Histórico de Mediciones</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Fichas de Resultados y Evaluación de CUMPLIMIENTO o INCUMPLIMIENTO DE NORMA</span>
-                    </li>
-                    <li className="flex items-center gap-3">
-                      <CheckCircle className="h-4 w-4 text-green-600 flex-shrink-0" />
-                      <span>Informe de la Inspección realizada</span>
-                    </li>
-                  </ul>
-                  <div className="pt-4">
-                    <Link href="/contacto">
-                      <Button variant="outline" className="w-full group border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                        IR A SUSCRIPCIÓN
-                        <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                      </Button>
-                    </Link>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div className="text-center mt-12 space-y-4">
-              <p className="text-muted-foreground">
-                <strong>¿Necesitas más información sobre los planes?</strong>
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link href="/contacto">
-                  <Button variant="outline" className="group">
-                    Contactar con Ventas
-                    <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                  </Button>
-                </Link>
-                <Link href="/actua/faq">
-                  <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-                    Ver FAQ sobre funcionalidades
-                  </Button>
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Target Audience */}
+      {/* Target Audience - Simple Version */}
       <section className="py-20 bg-gradient-to-r from-primary/5 via-background to-primary/10">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center space-y-8">
@@ -424,41 +343,29 @@ export default function ActuaPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className="py-20">
-        <div className="container mx-auto px-4 text-center">
-          <div className="max-w-3xl mx-auto space-y-8">
-            <h3 className="text-4xl font-bold">¿Tienes preguntas sobre ACTUA 2.0?</h3>
-            <p className="text-xl text-muted-foreground leading-relaxed">
-              Consulta nuestras preguntas frecuentes para obtener información detallada sobre funcionalidades,
-              requisitos técnicos, formatos soportados y casos de uso específicos.
+      {/* Final CTA */}
+      <section className="py-24">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto text-center bg-gradient-to-r from-primary/10 via-primary/5 to-primary/10 rounded-3xl p-12 border border-primary/10">
+            <h2 className="text-3xl md:text-4xl font-bold mb-6">¿Listo para modernizar tus inspecciones?</h2>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Únete a los cientos de profesionales que ya confían en ACTUA 2.0 para sus mediciones acústicas.
             </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center pt-4">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="https://actua2.dbblab.es/" target="_blank" rel="noopener noreferrer">
-                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 group">
-                  Usar ACTUA 2.0
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
+                <Button size="lg" className="bg-primary hover:bg-primary/90 text-lg px-8 py-6 w-full sm:w-auto shadow-lg">
+                  Acceder a la Plataforma
                 </Button>
               </Link>
-              <Link href="/actua/faq">
-                <Button size="lg" variant="outline" className="text-lg px-8 py-6 group">
-                  Ver FAQ
-                  <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 transition-transform" />
-                </Button>
-              </Link>
-            </div>
-            <div className="pt-6">
               <Link href="/contacto">
-                <Button variant="ghost" className="text-muted-foreground hover:text-foreground">
-                  ¿Necesitas soporte personalizado? → Contáctanos
+                <Button size="lg" variant="outline" className="text-lg px-8 py-6 w-full sm:w-auto bg-background">
+                  Contactar Soporte
                 </Button>
               </Link>
             </div>
           </div>
         </div>
       </section>
-
-  {/* Footer moved to global layout */}
     </div>
   )
 }
