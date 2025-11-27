@@ -70,7 +70,7 @@ export function WebinarModal() {
               <div className="space-y-2 text-center">
                 <h3 className="text-xl font-semibold text-foreground">Domina la herramienta definitiva</h3>
                 <p className="text-muted-foreground">
-                  Aprende a realizar mediciones, generar actas y cumplir la normativa en una sesión práctica con nuestros expertos.
+                  Aprende a utilizar ACTUA 2.0, generar actas y cumplir la normativa en una sesión práctica con nuestros expertos.
                 </p>
               </div>
 
