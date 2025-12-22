@@ -4,8 +4,14 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X } from "lucide-react"
+import { Menu, X, ChevronDown } from "lucide-react"
 import { ThemeToggle } from "./theme-toggle"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 export function SiteHeader() {
   const pathname = usePathname()
@@ -31,7 +37,7 @@ export function SiteHeader() {
     }
   }, [])
 
-  const isActive = (href: string) => (pathname === href ? "text-primary" : "text-foreground/80 hover:text-primary")
+  const isActive = (href: string) => (pathname === href || pathname?.startsWith(href + "/") ? "text-primary" : "text-foreground/80 hover:text-primary")
 
   return (
     <header
@@ -53,11 +59,26 @@ export function SiteHeader() {
           </Link>
 
           <nav className="hidden md:flex items-center gap-6">
-            <Link href="/" className={`text-sm font-medium transition-colors ${isActive("/")}`}>Inicio</Link>
+            <Link href="/" className={`text-sm font-medium transition-colors ${isActive("/") === "text-primary" && pathname === "/" ? "text-primary" : "text-foreground/80 hover:text-primary"}`}>Inicio</Link>
             <Link href="/actua" className={`text-sm font-medium transition-colors ${isActive("/actua")}`}>
               ACTUA 2.0
             </Link>
-            <Link href="/irma" className={`text-sm font-medium transition-colors ${isActive("/irma")}`}>IRMA</Link>
+            
+            {/* IRMA Dropdown */}
+            <DropdownMenu>
+              <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors outline-none ${isActive("/irma")}`}>
+                IRMA <ChevronDown className="h-4 w-4" />
+              </DropdownMenuTrigger>
+              <DropdownMenuContent align="end">
+                <DropdownMenuItem asChild>
+                  <Link href="/irma" className="cursor-pointer">Plataforma IRMA</Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/irma/dispositivo" className="cursor-pointer">Dispositivo (Seta)</Link>
+                </DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <Link href="/cia" className={`text-sm font-medium transition-colors ${isActive("/cia")}`}>CIA</Link>
             <Link href="/contacto" className={`text-sm font-medium transition-colors ${isActive("/contacto")}`}>Contacto</Link>
           </nav>
@@ -81,35 +102,49 @@ export function SiteHeader() {
           <div className="container mx-auto px-4 py-3 grid gap-2">
             <Link
               href="/"
-              className={`block py-2 text-sm font-medium ${isActive("/")}`}
+              className="block py-2 text-sm font-medium"
               onClick={() => setOpen(false)}
             >
               Inicio
             </Link>
             <Link
               href="/actua"
-              className={`block py-2 text-sm font-medium ${isActive("/actua")}`}
+              className="block py-2 text-sm font-medium"
               onClick={() => setOpen(false)}
             >
               ACTUA 2.0
             </Link>
-            <Link
-              href="/irma"
-              className={`block py-2 text-sm font-medium ${isActive("/irma")}`}
-              onClick={() => setOpen(false)}
-            >
-              IRMA
-            </Link>
+            
+            <div className="py-2">
+               <div className="text-sm font-medium text-foreground/80 mb-2">IRMA</div>
+               <div className="pl-4 border-l-2 border-muted space-y-2">
+                  <Link
+                    href="/irma"
+                    className="block text-sm text-foreground/70 hover:text-primary"
+                    onClick={() => setOpen(false)}
+                  >
+                    Plataforma
+                  </Link>
+                  <Link
+                    href="/irma/dispositivo"
+                    className="block text-sm text-foreground/70 hover:text-primary"
+                    onClick={() => setOpen(false)}
+                  >
+                    Dispositivo (Seta)
+                  </Link>
+               </div>
+            </div>
+
             <Link
               href="/cia"
-              className={`block py-2 text-sm font-medium ${isActive("/cia")}`}
+              className="block py-2 text-sm font-medium"
               onClick={() => setOpen(false)}
             >
               CIA
             </Link>
             <Link
               href="/contacto"
-              className={`block py-2 text-sm font-medium ${isActive("/contacto")}`}
+              className="block py-2 text-sm font-medium"
               onClick={() => setOpen(false)}
             >
               Contacto

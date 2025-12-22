@@ -8,7 +8,6 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { BarChart3, Shield, Users, FileText, Zap, CheckCircle, ArrowRight } from "lucide-react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { WebinarModal } from "@/components/WebinarModal"
 
 export default function ActuaPage() {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -22,7 +21,6 @@ export default function ActuaPage() {
 
   return (
     <div ref={containerRef} className="min-h-screen bg-background overflow-x-hidden">
-      <WebinarModal />
       {/* Hero Section with Parallax */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-20">
         {/* Abstract Background Elements */}
