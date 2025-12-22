@@ -11,8 +11,28 @@ import { ScrollToTop } from "@/components/scroll-to-top"
 import "./globals.css"
 
 export const metadata: Metadata = {
-  title: "dbbasico - ACTUA 2.0 & IRMA",
-  description: "Información y FAQ de los productos ACTUA 2.0 y IRMA de dbbasico",
+  title: {
+    default: "dbbasico - Soluciones Acústicas y de Vibraciones",
+    template: "%s | dbbasico"
+  },
+  description: "Expertos en monitorización de ruido y vibraciones. Descubre nuestra plataforma IRMA y el sistema ACTUA para gestión ambiental.",
+  keywords: ["monitorización vibraciones", "control ruido", "sensor IoT", "mantenimiento predictivo", "IRMA", "ACTUA", "acústica"],
+  authors: [{ name: "dbbasico Team" }],
+  creator: "dbbasico",
+  openGraph: {
+    type: "website",
+    locale: "es_ES",
+    url: "https://www.dbbasico.com",
+    title: "dbbasico - Tecnología de Monitorización Avanzada",
+    description: "Soluciones integrales para la medición y control de vibraciones y ruido en tiempo real.",
+    siteName: "dbbasico",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "dbbasico - IRMA & ACTUA",
+    description: "Tecnología punta en sensores de vibración y gestión acústica.",
+    creator: "@dbbasico",
+  },
 }
 
 export default function RootLayout({
