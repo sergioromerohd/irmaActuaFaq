@@ -56,6 +56,8 @@ export function DeviceConfigModal() {
   const [currentId, setCurrentId] = React.useState<string | null>(null)
   const [reader, setReader] = React.useState<ReadableStreamDefaultReader | null>(null)
   const [writer, setWriter] = React.useState<WritableStreamDefaultWriter | null>(null)
+  const [readClosed, setReadClosed] = React.useState<Promise<void> | null>(null)
+  const [writeClosed, setWriteClosed] = React.useState<Promise<void> | null>(null)
   const logEndRef = React.useRef<HTMLDivElement>(null)
   
   // Flasher state
@@ -122,11 +124,13 @@ export function DeviceConfigModal() {
         const readableStreamClosed = portInstance.readable.pipeTo(textDecoder.writable)
         const reader = textDecoder.readable.getReader()
         setReader(reader)
+        setReadClosed(readableStreamClosed)
 
         const textEncoder = new TextEncoderStream()
         const writableStreamClosed = textEncoder.readable.pipeTo(portInstance.writable)
         const writer = textEncoder.writable.getWriter()
         setWriter(writer)
+        setWriteClosed(writableStreamClosed)
 
         // Initial query
         setTimeout(() => catchWrite(writer, "GET_ID"), 500)
@@ -141,13 +145,24 @@ export function DeviceConfigModal() {
   const stopTerminalStreams = async () => {
       // Must release locks by canceling reader and closing writer
       if (reader) {
-          await reader.cancel()
+          await reader.cancel().catch(() => {})
           setReader(null)
       }
       if (writer) {
-          await writer.close()
+          await writer.close().catch(() => {})
           setWriter(null)
       }
+      
+      // Wait for the pipes to fully close
+      if (readClosed) {
+          await readClosed.catch(() => {})
+          setReadClosed(null)
+      }
+      if (writeClosed) {
+          await writeClosed.catch(() => {})
+          setWriteClosed(null)
+      }
+      
       // Note: Do NOT close the port itself, or esptool cannot use it.
   }
 
@@ -220,13 +235,8 @@ export function DeviceConfigModal() {
           addLog("Deteniendo terminal...", 'sys')
           await stopTerminalStreams()
           
-          // Wait for streams to fully close
-          await new Promise(r => setTimeout(r, 500))
-          
-          // Close the port completely before flashing
-          addLog("Cerrando puerto serial...", 'sys')
-          await port.close()
-          await new Promise(r => setTimeout(r, 300))
+          // Small delay to ensure everything is settled
+          await new Promise(r => setTimeout(r, 200))
 
           // 2. Load the binary file
           addLog(`Descargando firmware: ${fw.filename}...`, 'sys')
