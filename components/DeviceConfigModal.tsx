@@ -336,35 +336,35 @@ export function DeviceConfigModal() {
           Configurar Dispositivo
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-2xl bg-card border-border shadow-2xl">
+      <DialogContent className="w-[95vw] max-w-[95vw] sm:max-w-2xl lg:max-w-4xl bg-card border-border shadow-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2 text-xl">
-             <Smartphone className="h-6 w-6 text-primary" />
+          <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
+             <Smartphone className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
              Configurador IRMA Seta
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-xs sm:text-sm">
              Conecta tu dispositivo vía USB para gestionar su ID o actualizar el firmware.
           </DialogDescription>
         </DialogHeader>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 py-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 py-2 sm:py-4">
             {/* Left Column: Controls */}
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
                  {/* Connection Status */}
-                 <Card className="p-4 border-l-4 border-l-primary/50 bg-secondary/10">
-                    <div className="flex items-center justify-between mb-4">
+                 <Card className="p-3 sm:p-4 border-l-4 border-l-primary/50 bg-secondary/10">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-3 sm:mb-4">
                         <div className="flex items-center gap-2">
                              <div className={`h-3 w-3 rounded-full ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
-                             <span className="font-medium text-sm">
+                             <span className="font-medium text-xs sm:text-sm">
                                  {isConnected ? "Conectado" : "Desconectado"}
                              </span>
                         </div>
                         {isConnected ? (
-                             <Button variant="destructive" size="sm" onClick={disconnectSerial} className="h-7 text-xs" disabled={isFlashing}>
+                             <Button variant="destructive" size="sm" onClick={disconnectSerial} className="h-7 text-xs w-full sm:w-auto" disabled={isFlashing}>
                                  Desconectar
                              </Button>
                         ) : (
-                             <Button size="sm" onClick={connectSerial} className="h-7 text-xs gap-2">
+                             <Button size="sm" onClick={connectSerial} className="h-7 text-xs gap-2 w-full sm:w-auto">
                                 <Cable className="h-3 w-3" /> Conectar USB
                              </Button>
                         )}
@@ -373,23 +373,23 @@ export function DeviceConfigModal() {
 
                  {/* Config Tabs */}
                  <Tabs defaultValue="config" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2">
-                        <TabsTrigger value="config" disabled={!isConnected || isFlashing}>Configuración</TabsTrigger>
-                        <TabsTrigger value="firmware" disabled={!isConnected}>Firmware</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-2 h-auto">
+                        <TabsTrigger value="config" disabled={!isConnected || isFlashing} className="text-xs sm:text-sm py-2">Configuración</TabsTrigger>
+                        <TabsTrigger value="firmware" disabled={!isConnected} className="text-xs sm:text-sm py-2">Firmware</TabsTrigger>
                     </TabsList>
                     
-                    <TabsContent value="config" className="space-y-4 pt-4">
+                    <TabsContent value="config" className="space-y-3 sm:space-y-4 pt-3 sm:pt-4">
                          <div className="space-y-1">
                             <Label className="text-xs text-muted-foreground uppercase tracking-wider">ID Actual</Label>
-                            <div className="text-2xl font-mono font-bold text-foreground">
+                            <div className="text-xl sm:text-2xl font-mono font-bold text-foreground break-all">
                                 {currentId || "---"}
                             </div>
                          </div>
                          <Separator />
 
                          <div className="space-y-2">
-                            <Label>Herramientas de Diagnóstico</Label>
-                            <div className="grid grid-cols-3 gap-2">
+                            <Label className="text-xs sm:text-sm">Herramientas de Diagnóstico</Label>
+                            <div className="grid grid-cols-3 gap-1.5 sm:gap-2">
                                 <Button variant="outline" size="sm" onClick={() => handleCommand("INFO")} disabled={!isConnected} className="text-xs">
                                      <Info className="h-3 w-3 mr-1" /> Info
                                 </Button>
@@ -404,56 +404,56 @@ export function DeviceConfigModal() {
 
                          <Separator />
                          <div className="space-y-2">
-                            <Label>Establecer Nuevo ID</Label>
+                            <Label className="text-xs sm:text-sm">Establecer Nuevo ID</Label>
                             <div className="flex gap-2">
                                 <Input 
                                     placeholder="Ej: SALA_TECNICA_01" 
                                     value={newId}
                                     onChange={(e) => setNewId(e.target.value.toUpperCase())}
-                                    className="font-mono text-sm"
+                                    className="font-mono text-xs sm:text-sm"
                                     disabled={!isConnected}
                                 />
-                                <Button onClick={handleSetId} disabled={!newId || !isConnected}>
-                                    <Save className="h-4 w-4" />
+                                <Button onClick={handleSetId} disabled={!newId || !isConnected} className="shrink-0">
+                                    <Save className="h-3 w-3 sm:h-4 sm:w-4" />
                                 </Button>
                             </div>
                          </div>
-                         <div className="grid grid-cols-2 gap-2 mt-4">
-                             <Button variant="outline" onClick={() => handleCommand("GET_ID")} disabled={!isConnected} className="justify-start gap-2">
-                                 <RefreshCw className="h-4 w-4 text-blue-500" /> Leer ID
+                         <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-3 sm:mt-4">
+                             <Button variant="outline" onClick={() => handleCommand("GET_ID")} disabled={!isConnected} className="justify-start gap-2 text-xs sm:text-sm">
+                                 <RefreshCw className="h-3 w-3 sm:h-4 sm:w-4 text-blue-500" /> Leer ID
                              </Button>
-                             <Button variant="outline" onClick={() => handleCommand("CLEAR_ID")} disabled={!isConnected} className="justify-start gap-2 hover:bg-orange-100 hover:text-orange-600 dark:hover:bg-orange-900/20">
-                                 <Trash2 className="h-4 w-4 text-orange-500" /> Borrar ID
+                             <Button variant="outline" onClick={() => handleCommand("CLEAR_ID")} disabled={!isConnected} className="justify-start gap-2 hover:bg-orange-100 hover:text-orange-600 dark:hover:bg-orange-900/20 text-xs sm:text-sm">
+                                 <Trash2 className="h-3 w-3 sm:h-4 sm:w-4 text-orange-500" /> Borrar ID
                              </Button>
-                             <Button variant="outline" onClick={() => handleCommand("FACTORY_RESET")} disabled={!isConnected} className="col-span-2 justify-center gap-2 border-red-200 hover:bg-red-100 hover:text-red-700 dark:border-red-900/30 dark:hover:bg-red-900/20">
-                                 <AlertTriangle className="h-4 w-4 text-red-500" /> Reset de Fábrica
+                             <Button variant="outline" onClick={() => handleCommand("FACTORY_RESET")} disabled={!isConnected} className="col-span-1 sm:col-span-2 justify-center gap-2 border-red-200 hover:bg-red-100 hover:text-red-700 dark:border-red-900/30 dark:hover:bg-red-900/20 text-xs sm:text-sm">
+                                 <AlertTriangle className="h-3 w-3 sm:h-4 sm:w-4 text-red-500" /> Reset de Fábrica
                              </Button>
                          </div>
                     </TabsContent>
 
-                    <TabsContent value="firmware" className="space-y-4 pt-4">
-                        <div className="space-y-4">
-                           <Label>Versiones Disponibles</Label>
-                           <ScrollArea className="h-[200px] border rounded-md p-2">
+                    <TabsContent value="firmware" className="space-y-3 sm:space-y-4 pt-3 sm:pt-4">
+                        <div className="space-y-3 sm:space-y-4">
+                           <Label className="text-xs sm:text-sm">Versiones Disponibles</Label>
+                           <ScrollArea className="h-[150px] sm:h-[200px] border rounded-md p-2">
                              {firmwares.map((fw) => (
                                <div 
                                  key={fw.filename} 
-                                 className={`p-3 rounded-lg mb-2 cursor-pointer transition-colors border ${selectedFirmware === fw.filename ? 'bg-primary/10 border-primary' : 'bg-card border-border hover:bg-accent'}`}
+                                 className={`p-2 sm:p-3 rounded-lg mb-2 cursor-pointer transition-colors border ${selectedFirmware === fw.filename ? 'bg-primary/10 border-primary' : 'bg-card border-border hover:bg-accent'}`}
                                  onClick={() => !isFlashing && setSelectedFirmware(fw.filename)}
                                >
                                  <div className="flex justify-between items-start mb-1">
-                                    <span className="font-bold">{fw.version}</span>
-                                    <Badge variant="outline" className="text-[10px]">{fw.releaseDate}</Badge>
+                                    <span className="font-bold text-xs sm:text-sm">{fw.version}</span>
+                                    <Badge variant="outline" className="text-[9px] sm:text-[10px]">{fw.releaseDate}</Badge>
                                  </div>
-                                 <div className="text-sm font-medium">{fw.name}</div>
-                                 <p className="text-xs text-muted-foreground mt-1 line-clamp-2">{fw.description}</p>
+                                 <div className="text-xs sm:text-sm font-medium">{fw.name}</div>
+                                 <p className="text-[10px] sm:text-xs text-muted-foreground mt-1 line-clamp-2">{fw.description}</p>
                                </div>
                              ))}
                            </ScrollArea>
                            
                            {isFlashing ? (
                                <div className="space-y-2">
-                                   <div className="flex justify-between text-xs text-muted-foreground">
+                                   <div className="flex justify-between text-[10px] sm:text-xs text-muted-foreground">
                                        <span>Flasheando...</span>
                                        <span>{flashProgress}%</span>
                                    </div>
@@ -466,17 +466,17 @@ export function DeviceConfigModal() {
                                </div>
                            ) : (
                                <Button 
-                                  className="w-full gap-2" 
+                                  className="w-full gap-2 text-xs sm:text-sm" 
                                   disabled={!selectedFirmware || !isConnected}
                                   onClick={handleFlashFirmware}
                                >
-                                  {selectedFirmware ? <Upload className="h-4 w-4" /> : <Download className="h-4 w-4" />}
+                                  {selectedFirmware ? <Upload className="h-3 w-3 sm:h-4 sm:w-4" /> : <Download className="h-3 w-3 sm:h-4 sm:w-4" />}
                                   {selectedFirmware ? "Instalar Firmware Seleccionado" : "Selecciona una versión"}
                                </Button>
                            )}
                            
-                           <div className="text-[10px] text-muted-foreground text-center bg-yellow-500/10 p-2 rounded border border-yellow-500/20">
-                               <AlertTriangle className="h-3 w-3 inline-block mr-1 -mt-0.5 text-yellow-500" />
+                           <div className="text-[9px] sm:text-[10px] text-muted-foreground text-center bg-yellow-500/10 p-2 rounded border border-yellow-500/20">
+                               <AlertTriangle className="h-2.5 w-2.5 sm:h-3 sm:w-3 inline-block mr-1 -mt-0.5 text-yellow-500" />
                                No desconectes el cable USB durante el proceso.
                            </div>
                         </div>
@@ -485,16 +485,16 @@ export function DeviceConfigModal() {
             </div>
 
             {/* Right Column: Terminal */}
-            <div className="flex flex-col h-[450px] bg-zinc-950 rounded-lg border border-zinc-800 p-2 font-mono text-xs overflow-hidden shadow-inner">
+            <div className="flex flex-col h-[300px] sm:h-[350px] lg:h-[450px] bg-zinc-950 rounded-lg border border-zinc-800 p-2 font-mono text-xs overflow-hidden shadow-inner">
                 <div className="flex items-center gap-2 text-zinc-400 border-b border-zinc-800 pb-2 mb-2 px-2">
                     <Terminal className="h-3 w-3" />
-                    <span>Serial Output</span>
+                    <span className="text-[10px] sm:text-xs">Serial Output</span>
                 </div>
-                <ScrollArea className="flex-1 w-full p-2">
-                    <div className="space-y-1">
-                        {logs.length === 0 && <span className="text-zinc-600 italic">Esperando conexión...</span>}
+                <ScrollArea className="flex-1 w-full p-1 sm:p-2">
+                    <div className="space-y-0.5 sm:space-y-1">
+                        {logs.length === 0 && <span className="text-zinc-600 italic text-[10px] sm:text-xs">Esperando conexión...</span>}
                         {logs.map((log, i) => (
-                            <div key={i} className={`break-all ${log.includes(">>") ? 'text-blue-400' : log.includes("<<") ? 'text-green-400' : 'text-zinc-500'}`}>
+                            <div key={i} className={`break-all text-[10px] sm:text-xs ${log.includes(">>") ? 'text-blue-400' : log.includes("<<") ? 'text-green-400' : 'text-zinc-500'}`}>
                                 {log}
                             </div>
                         ))}
