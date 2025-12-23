@@ -77,21 +77,21 @@ export function IrmaLiveSimulator() {
                  {/* Emitting Device Visualization */}
                  <div className="relative w-48 h-48 mb-8 group">
                     {/* Pulsing effects to simulate data transmission */}
-                    <div className={cn("absolute inset-0 bg-blue-500/20 rounded-full blur-3xl transition-opacity duration-1000", isOn ? "opacity-100 animate-pulse" : "opacity-0")} />
+                    <div className={cn("absolute inset-0 bg-red-500/20 rounded-full blur-3xl transition-opacity duration-1000", isOn ? "opacity-100 animate-pulse" : "opacity-0")} />
                     
                     {isOn && (
                         <>
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border border-blue-500/30 rounded-full animate-[ping_3s_linear_infinite]" />
-                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 border border-blue-500/20 rounded-full animate-[ping_3s_linear_infinite_1s]" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full border border-red-500/30 rounded-full animate-[ping_3s_linear_infinite]" />
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 border border-red-500/20 rounded-full animate-[ping_3s_linear_infinite_1s]" />
                         </>
                     )}
 
                     <div className="relative z-10 w-full h-full transition-transform duration-500 group-hover:scale-105">
                         <Image 
-                            src="/images/setablancaSF.png" 
+                            src="/images/setarojasf.png" 
                             alt="Sensor IRMA Emisor"
                             fill
-                            className="object-contain drop-shadow-[0_0_25px_rgba(59,130,246,0.3)]"
+                            className="object-contain drop-shadow-[0_0_25px_rgba(239,68,68,0.3)]"
                         />
                     </div>
                  </div>
