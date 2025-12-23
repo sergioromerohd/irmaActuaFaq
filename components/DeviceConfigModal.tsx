@@ -213,13 +213,11 @@ export function DeviceConfigModal() {
           addLog("Iniciando proceso de flasheo...", 'sys')
           
           // Try soft entry to bootloader first if possible
-          // We can't easily do this if we stop streams first, so do it before
           addLog("Enviando comando BOOTLOADER...", 'sys')
           await writeToPort(writer, "BOOTLOADER")
           await new Promise(r => setTimeout(r, 500))
 
           addLog("Deteniendo terminal...", 'sys')
-          // 1. Release locks on the port so esptool can use it
           await stopTerminalStreams()
 
           // 2. Load the binary file
@@ -234,8 +232,7 @@ export function DeviceConfigModal() {
           // 3. Initialize esptool
           const transport = new Transport(port)
           
-          // Check if hardware reset is needed or if soft bootloader worked.
-          // Usually safe to do hardware sequence anyway to be sure.
+          // Hardware Reset
           addLog("Sincronizando...", 'sys')
           await transport.setDTR(false)
           await transport.setRTS(true)
@@ -244,16 +241,8 @@ export function DeviceConfigModal() {
           await transport.setRTS(false)
           await new Promise(r => setTimeout(r, 500)) 
           await transport.setDTR(false)
-          // Wait longer for buffer flush/stabilization
           await new Promise(r => setTimeout(r, 1000))
 
-          // ATTEMPT TO FLUSH BUFFER MANUALLY?
-          // We can't easily read from transport directly due to private fields in library.
-          // But creating a temporary reader might work if library implementation allows.
-          // Let's rely on the longer 1000ms wait.
-          // Also, creating esptool with implicit options.
-
-          // ESPLoader requires a terminal-like object for logging
           const term = {
             clean: () => {},
             writeLine: (data: string) => { /* console.log(data) */ },
@@ -261,28 +250,46 @@ export function DeviceConfigModal() {
           }
            
           // @ts-ignore
-          const espLoader = new ESPLoader(transport, 115200, term)
+          // Explicitly pass 115200 as romBaudRate (4th argument)
+          // Some versions of esptool-js require 4 args to correctly map the terminal object
+          const espLoader = new ESPLoader(transport, 115200, term, 115200)
           
           addLog("Conectando al Bootloader...", 'sys')
           
           try {
              await espLoader.main_fn()
+             
+             // Verify chip detection
+             // @ts-ignore
+             if (!espLoader.chip) {
+                 throw new Error("Chip no detectado (Chip is undefined)")
+             }
+             
              addLog("Bootloader conectado!", 'sys')
-          } catch(e) {
-             addLog("Reintentando conexión al Bootloader...", 'sys')
+          } catch(e: any) {
+             console.error("Main_fn failed", e)
+             addLog(`Error conectando bootloader: ${e?.message || e}`, 'sys')
+             addLog("Reintentando...", 'sys')
              await new Promise(r => setTimeout(r, 1000))
-             // Force cleaner reset
+             
+             // Hard Reset again
              await transport.setDTR(false)
              await transport.setRTS(true)
-             await new Promise(r => setTimeout(r, 100))
+             await new Promise(r => setTimeout(r, 200))
              await transport.setDTR(true)
              await transport.setRTS(false)
-             await new Promise(r => setTimeout(r, 500))
+             await new Promise(r => setTimeout(r, 1000))
              await transport.setDTR(false)
              await new Promise(r => setTimeout(r, 1000))
-             // Retry main_fn
-             await espLoader.main_fn()
+             
+             // Re-instantiate
+             // @ts-ignore
+             const retryLoader = new ESPLoader(transport, 115200, term, 115200)
+             await retryLoader.main_fn()
              addLog("Bootloader conectado (reintento)!", 'sys')
+             // Verify again
+             // @ts-ignore
+             if (!retryLoader.chip) throw new Error("Chip no detectado tras reintento")
           }
 
           // 4. Flash
@@ -311,17 +318,14 @@ export function DeviceConfigModal() {
           
       } catch (err: any) {
           console.error(err)
-          addLog(`Error flasheando: ${err.message}`, 'sys')
+          addLog(`Error flasheando: ${err?.message || "Error desconocido"}`, 'sys')
       } finally {
           setIsFlashing(false)
           // Re-enable terminal
           addLog("Reconectando terminal...", 'sys')
           try {
-             // Reset writer/readers to be safe
-             // NOTE: Using a timeout to ensure port is free
              setTimeout(async () => {
                  try {
-                     // Check if port is readable (some browsers close it on error)
                      if (port && port.readable && !port.readable.locked) {
                          await startTerminalStreams(port)
                          setTimeout(() => catchWrite(writer, "INFO"), 1000)
@@ -336,8 +340,7 @@ export function DeviceConfigModal() {
   }
   
   function cleanBinaryString(data: Uint8Array): string {
-      // Chunked processing to avoid stack overflow for large files
-      const CHUNK_SIZE = 0x8000; // 32k
+      const CHUNK_SIZE = 0x8000;
       const chunks = [];
       for (let i = 0; i < data.length; i += CHUNK_SIZE) {
         chunks.push(String.fromCharCode.apply(null, Array.from(data.subarray(i, i + CHUNK_SIZE))));
