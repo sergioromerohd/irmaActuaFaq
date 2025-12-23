@@ -15,7 +15,9 @@ import {
   Loader2,
   AlertTriangle,
   Download,
-  Upload
+  Upload,
+  Info,
+  FileText
 } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import {
@@ -208,8 +210,14 @@ export function DeviceConfigModal() {
           setIsFlashing(true)
           setFlashProgress(0)
           addLog("Iniciando proceso de flasheo...", 'sys')
-          addLog("Deteniendo terminal...", 'sys')
           
+          // Try soft entry to bootloader first if possible
+          // We can't easily do this if we stop streams first, so do it before
+          addLog("Enviando comando BOOTLOADER...", 'sys')
+          await writeToPort(writer, "BOOTLOADER")
+          await new Promise(r => setTimeout(r, 500))
+
+          addLog("Deteniendo terminal...", 'sys')
           // 1. Release locks on the port so esptool can use it
           await stopTerminalStreams()
 
@@ -218,10 +226,6 @@ export function DeviceConfigModal() {
           const response = await fetch(`/firmware/${fw.filename}`)
           const blob = await response.blob()
           const data = await blob.arrayBuffer()
-           // Use Uint8Array directly if supported, or conversion. 
-           // Modern esptool-js accepts Uint8Array in fileArray.data?
-           // Actually, let's keep it safe: cleanBinaryString is reliable for older versions, 
-           // but let's try just passing the buffer if we can, or improve the string conversion.
           const fileData = new Uint8Array(data)
           const fileString = cleanBinaryString(fileData)
           addLog(`Firmware descargado (${fileData.byteLength} bytes)`, 'sys')
@@ -229,17 +233,16 @@ export function DeviceConfigModal() {
           // 3. Initialize esptool
           const transport = new Transport(port)
           
-          // Manual Reset Sequence to ensure bootloader mode
-          addLog("Reseteando a modo bootloader...", 'sys')
+          // Check if hardware reset is needed or if soft bootloader worked.
+          // Usually safe to do hardware sequence anyway to be sure.
+          addLog("Sincronizando...", 'sys')
           await transport.setDTR(false)
           await transport.setRTS(true)
           await new Promise(r => setTimeout(r, 100))
           await transport.setDTR(true)
           await transport.setRTS(false)
-          // Wait longer for device to enter bootloader
           await new Promise(r => setTimeout(r, 500)) 
           await transport.setDTR(false)
-          // Wait longer for stabilization
           await new Promise(r => setTimeout(r, 500))
 
           // ESPLoader requires a terminal-like object for logging
@@ -305,12 +308,10 @@ export function DeviceConfigModal() {
           setIsFlashing(false)
           // Re-enable terminal
           addLog("Reconectando terminal...", 'sys')
-          // We might need to close and re-open port entirely if state is messed up, 
-          // but usually starting streams again checks out.
-          // Ideally: await port.close(); await port.open(...)
-          // But user permission persists. 
           try {
              await startTerminalStreams(port)
+             // Send INFO command to verify new firmware
+             setTimeout(() => writeToPort(writer, "INFO"), 1000)
           } catch (e) {
              addLog("Error reconectando terminal. Por favor reconecta USB.", 'sys')
              setIsConnected(false)
@@ -383,6 +384,23 @@ export function DeviceConfigModal() {
                                 {currentId || "---"}
                             </div>
                          </div>
+                         <Separator />
+
+                         <div className="space-y-2">
+                            <Label>Herramientas de Diagnóstico</Label>
+                            <div className="grid grid-cols-3 gap-2">
+                                <Button variant="outline" size="sm" onClick={() => handleCommand("INFO")} disabled={!isConnected} className="text-xs">
+                                     <Info className="h-3 w-3 mr-1" /> Info
+                                </Button>
+                                <Button variant="outline" size="sm" onClick={() => handleCommand("VERSION")} disabled={!isConnected} className="text-xs">
+                                     <FileText className="h-3 w-3 mr-1" /> Ver.
+                                </Button>
+                                <Button variant="outline" size="sm" onClick={() => handleCommand("RESET")} disabled={!isConnected} className="text-xs hover:bg-red-100 hover:text-red-600">
+                                     <RefreshCw className="h-3 w-3 mr-1" /> Reset
+                                </Button>
+                            </div>
+                         </div>
+
                          <Separator />
                          <div className="space-y-2">
                             <Label>Establecer Nuevo ID</Label>
