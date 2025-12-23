@@ -129,7 +129,7 @@ export function DeviceConfigModal() {
         setWriter(writer)
 
         // Initial query
-        setTimeout(() => writeToPort(writer, "GET_ID"), 500)
+        setTimeout(() => catchWrite(writer, "GET_ID"), 500)
         
         // Read loop
         readLoop(reader)
@@ -180,13 +180,14 @@ export function DeviceConfigModal() {
   }
 
   const writeToPort = async (writerInstance: any, data: string) => {
-     if (!writerInstance) return
-     try {
-         await writerInstance.write(data + "\n")
-         addLog(data, 'tx')
-     } catch (err: any) {
-         addLog(`Error enviando: ${err.message}`, 'sys')
-     }
+     await catchWrite(writerInstance, data)
+     addLog(data, 'tx')
+  }
+
+  // Safe write wrapper to prevent crashes
+  const catchWrite = async (w: any, d: string) => {
+      if (!w) return
+      try { await w.write(d + "\n") } catch(e) {/* ignore closed stream errors */}
   }
 
   const handleCommand = async (cmd: string) => {
@@ -243,7 +244,14 @@ export function DeviceConfigModal() {
           await transport.setRTS(false)
           await new Promise(r => setTimeout(r, 500)) 
           await transport.setDTR(false)
-          await new Promise(r => setTimeout(r, 500))
+          // Wait longer for buffer flush/stabilization
+          await new Promise(r => setTimeout(r, 1000))
+
+          // ATTEMPT TO FLUSH BUFFER MANUALLY?
+          // We can't easily read from transport directly due to private fields in library.
+          // But creating a temporary reader might work if library implementation allows.
+          // Let's rely on the longer 1000ms wait.
+          // Also, creating esptool with implicit options.
 
           // ESPLoader requires a terminal-like object for logging
           const term = {
@@ -271,7 +279,7 @@ export function DeviceConfigModal() {
              await transport.setRTS(false)
              await new Promise(r => setTimeout(r, 500))
              await transport.setDTR(false)
-             await new Promise(r => setTimeout(r, 500))
+             await new Promise(r => setTimeout(r, 1000))
              // Retry main_fn
              await espLoader.main_fn()
              addLog("Bootloader conectado (reintento)!", 'sys')
@@ -309,9 +317,17 @@ export function DeviceConfigModal() {
           // Re-enable terminal
           addLog("Reconectando terminal...", 'sys')
           try {
-             await startTerminalStreams(port)
-             // Send INFO command to verify new firmware
-             setTimeout(() => writeToPort(writer, "INFO"), 1000)
+             // Reset writer/readers to be safe
+             // NOTE: Using a timeout to ensure port is free
+             setTimeout(async () => {
+                 try {
+                     // Check if port is readable (some browsers close it on error)
+                     if (port && port.readable && !port.readable.locked) {
+                         await startTerminalStreams(port)
+                         setTimeout(() => catchWrite(writer, "INFO"), 1000)
+                     }
+                 } catch(ex) { console.error(ex) }
+             }, 1000)
           } catch (e) {
              addLog("Error reconectando terminal. Por favor reconecta USB.", 'sys')
              setIsConnected(false)
@@ -320,11 +336,13 @@ export function DeviceConfigModal() {
   }
   
   function cleanBinaryString(data: Uint8Array): string {
-      let str = "";
-      for (let i = 0; i < data.length; i++) {
-          str += String.fromCharCode(data[i]);
+      // Chunked processing to avoid stack overflow for large files
+      const CHUNK_SIZE = 0x8000; // 32k
+      const chunks = [];
+      for (let i = 0; i < data.length; i += CHUNK_SIZE) {
+        chunks.push(String.fromCharCode.apply(null, Array.from(data.subarray(i, i + CHUNK_SIZE))));
       }
-      return str;
+      return chunks.join("");
   }
 
   return (
