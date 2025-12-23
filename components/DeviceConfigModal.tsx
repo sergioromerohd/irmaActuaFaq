@@ -236,8 +236,11 @@ export function DeviceConfigModal() {
           await new Promise(r => setTimeout(r, 100))
           await transport.setDTR(true)
           await transport.setRTS(false)
-          await new Promise(r => setTimeout(r, 100))
+          // Wait longer for device to enter bootloader
+          await new Promise(r => setTimeout(r, 500)) 
           await transport.setDTR(false)
+          // Wait longer for stabilization
+          await new Promise(r => setTimeout(r, 500))
 
           // ESPLoader requires a terminal-like object for logging
           const term = {
@@ -251,9 +254,25 @@ export function DeviceConfigModal() {
           
           addLog("Conectando al Bootloader...", 'sys')
           
-          // Try to connect with explicit mode if possible, but main_fn is standard
-          await espLoader.main_fn()
-          addLog("Bootloader conectado!", 'sys')
+          try {
+             await espLoader.main_fn()
+             addLog("Bootloader conectado!", 'sys')
+          } catch(e) {
+             addLog("Reintentando conexión al Bootloader...", 'sys')
+             await new Promise(r => setTimeout(r, 1000))
+             // Force cleaner reset
+             await transport.setDTR(false)
+             await transport.setRTS(true)
+             await new Promise(r => setTimeout(r, 100))
+             await transport.setDTR(true)
+             await transport.setRTS(false)
+             await new Promise(r => setTimeout(r, 500))
+             await transport.setDTR(false)
+             await new Promise(r => setTimeout(r, 500))
+             // Retry main_fn
+             await espLoader.main_fn()
+             addLog("Bootloader conectado (reintento)!", 'sys')
+          }
 
           // 4. Flash
           addLog("Escribiendo flash... (Esto puede tardar)", 'sys')
