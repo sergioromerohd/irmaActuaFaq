@@ -284,8 +284,7 @@ export function DeviceConfigModal() {
               compress: true,
               reportProgress: (current: number, total: number) => {
                   setFlashProgress(Math.round((current / total) * 100))
-              },
-              calculateMD5Hash: (image: string) => image 
+              }
           })
 
           addLog("Flasheo completado exitosamente!", 'sys')
