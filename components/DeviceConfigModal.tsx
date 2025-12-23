@@ -137,6 +137,7 @@ export function DeviceConfigModal() {
   }
 
   const stopTerminalStreams = async () => {
+      // Must release locks by canceling reader and closing writer
       if (reader) {
           await reader.cancel()
           setReader(null)
@@ -145,11 +146,7 @@ export function DeviceConfigModal() {
           await writer.close()
           setWriter(null)
       }
-      // Note: we don't close the port here if we intend to reuse it for flashing, 
-      // EXCEPT esptool usually needs a fresh start or raw access. 
-      // Actually esptool creates its own Transport. We usually pass the port to it 
-      // but the streams must be released (unlocked).
-      // Canceling reader/writer above releases the lock on port.readable/writable.
+      // Note: Do NOT close the port itself, or esptool cannot use it.
   }
 
   const disconnectSerial = async () => {
@@ -221,12 +218,27 @@ export function DeviceConfigModal() {
           const response = await fetch(`/firmware/${fw.filename}`)
           const blob = await response.blob()
           const data = await blob.arrayBuffer()
+           // Use Uint8Array directly if supported, or conversion. 
+           // Modern esptool-js accepts Uint8Array in fileArray.data?
+           // Actually, let's keep it safe: cleanBinaryString is reliable for older versions, 
+           // but let's try just passing the buffer if we can, or improve the string conversion.
           const fileData = new Uint8Array(data)
+          const fileString = cleanBinaryString(fileData)
           addLog(`Firmware descargado (${fileData.byteLength} bytes)`, 'sys')
 
           // 3. Initialize esptool
           const transport = new Transport(port)
           
+          // Manual Reset Sequence to ensure bootloader mode
+          addLog("Reseteando a modo bootloader...", 'sys')
+          await transport.setDTR(false)
+          await transport.setRTS(true)
+          await new Promise(r => setTimeout(r, 100))
+          await transport.setDTR(true)
+          await transport.setRTS(false)
+          await new Promise(r => setTimeout(r, 100))
+          await transport.setDTR(false)
+
           // ESPLoader requires a terminal-like object for logging
           const term = {
             clean: () => {},
@@ -238,19 +250,14 @@ export function DeviceConfigModal() {
           const espLoader = new ESPLoader(transport, 115200, term)
           
           addLog("Conectando al Bootloader...", 'sys')
+          
+          // Try to connect with explicit mode if possible, but main_fn is standard
           await espLoader.main_fn()
           addLog("Bootloader conectado!", 'sys')
 
           // 4. Flash
           addLog("Escribiendo flash... (Esto puede tardar)", 'sys')
-          const fileArray = [{ data: cleanBinaryString(fileData), address: 0x10000 }] // Often 0x10000 for App, or 0x00 for full image. 
-          // Assuming user provides a full update bin often for 0x10000 or similar.
-          // For simplicity in this demo, we assume standard app offset 0x10000. 
-          // Adjust based on partition scheme! 
-          // If it's a factory bin including bootloader/partitions, use 0x00.
-          // Let's assume standard offset 0x00 if "factory" or 0x10000 if OTA.
-          // We will use 0x00 just in case it is a full dump, OR default to 0x10000 if it's just app.
-          // **CRITICAL USER NOTE**: You need to know the offset. Defaulting to 0x00 for safety if it's a "merged" bin.
+          const fileArray = [{ data: fileString, address: 0x10000 }] 
           
           await espLoader.write_flash({
               fileArray: fileArray,
@@ -266,9 +273,9 @@ export function DeviceConfigModal() {
           addLog("Flasheo completado exitosamente!", 'sys')
           addLog("Reiniciando dispositivo...", 'sys')
           
-          // Hard reset?
+          // Hard reset to run app
           await transport.setDTR(false)
-          await transport.setRTS(true) // Reset pulse
+          await transport.setRTS(true)
           await new Promise(resolve => setTimeout(resolve, 100))
           await transport.setRTS(false)
           
@@ -279,14 +286,19 @@ export function DeviceConfigModal() {
           setIsFlashing(false)
           // Re-enable terminal
           addLog("Reconectando terminal...", 'sys')
-          await startTerminalStreams(port)
+          // We might need to close and re-open port entirely if state is messed up, 
+          // but usually starting streams again checks out.
+          // Ideally: await port.close(); await port.open(...)
+          // But user permission persists. 
+          try {
+             await startTerminalStreams(port)
+          } catch (e) {
+             addLog("Error reconectando terminal. Por favor reconecta USB.", 'sys')
+             setIsConnected(false)
+          }
       }
   }
   
-  // Helper to convert Uint8Array to string for esptool (it expects string sometimes depending on version, or Uint8Array)
-  // esptool-js updated versions take Uint8Array directly usually, but older ones took binary string.
-  // The 'fileArray' elements expect 'data' as string in some definitions. 
-  // Let's check the library: usually accepts string.
   function cleanBinaryString(data: Uint8Array): string {
       let str = "";
       for (let i = 0; i < data.length; i++) {
