@@ -336,7 +336,7 @@ export function DeviceConfigModal() {
           Configurar Dispositivo
         </Button>
       </DialogTrigger>
-      <DialogContent className="w-[95vw] max-w-[95vw] sm:max-w-2xl lg:max-w-4xl bg-card border-border shadow-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
+      <DialogContent className="max-w-[95vw] sm:max-w-2xl lg:max-w-4xl bg-card border-border shadow-2xl max-h-[90vh] overflow-y-auto p-4 sm:p-6">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2 text-lg sm:text-xl">
              <Smartphone className="h-5 w-5 sm:h-6 sm:w-6 text-primary" />
@@ -373,9 +373,9 @@ export function DeviceConfigModal() {
 
                  {/* Config Tabs */}
                  <Tabs defaultValue="config" className="w-full">
-                    <TabsList className="grid w-full grid-cols-2 h-auto">
-                        <TabsTrigger value="config" disabled={!isConnected || isFlashing} className="text-xs sm:text-sm py-2">Configuración</TabsTrigger>
-                        <TabsTrigger value="firmware" disabled={!isConnected} className="text-xs sm:text-sm py-2">Firmware</TabsTrigger>
+                    <TabsList className="grid w-full grid-cols-2 h-auto text-xs sm:text-sm">
+                        <TabsTrigger value="config" disabled={!isConnected || isFlashing} className="py-2">Configuración</TabsTrigger>
+                        <TabsTrigger value="firmware" disabled={!isConnected} className="py-2">Firmware</TabsTrigger>
                     </TabsList>
                     
                     <TabsContent value="config" className="space-y-3 sm:space-y-4 pt-3 sm:pt-4">
