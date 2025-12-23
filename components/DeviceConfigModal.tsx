@@ -219,6 +219,9 @@ export function DeviceConfigModal() {
 
           addLog("Deteniendo terminal...", 'sys')
           await stopTerminalStreams()
+          
+          // Wait for streams to fully close
+          await new Promise(r => setTimeout(r, 500))
 
           // 2. Load the binary file
           addLog(`Descargando firmware: ${fw.filename}...`, 'sys')
@@ -230,66 +233,53 @@ export function DeviceConfigModal() {
           addLog(`Firmware descargado (${fileData.byteLength} bytes)`, 'sys')
 
           // 3. Initialize esptool
-          const transport = new Transport(port)
+          addLog("Inicializando transport...", 'sys')
+          const transport = new Transport(port, true)
+          await transport.connect()
           
-          // Hardware Reset
-          addLog("Sincronizando...", 'sys')
+          // Hardware Reset sequence
+          addLog("Sincronizando con bootloader...", 'sys')
           await transport.setDTR(false)
           await transport.setRTS(true)
           await new Promise(r => setTimeout(r, 100))
           await transport.setDTR(true)
           await transport.setRTS(false)
-          await new Promise(r => setTimeout(r, 500)) 
+          await new Promise(r => setTimeout(r, 50))
           await transport.setDTR(false)
-          await new Promise(r => setTimeout(r, 1000))
+          await new Promise(r => setTimeout(r, 100))
+          
+          // Additional sync delay
+          await new Promise(r => setTimeout(r, 500))
 
           const term = {
             clean: () => {},
-            writeLine: (data: string) => { /* console.log(data) */ },
+            writeLine: (data: string) => addLog(data, 'sys'),
             write: (data: string) => { /* console.log(data) */ }
           }
            
-          // @ts-ignore
-          // Explicitly pass 115200 as romBaudRate (4th argument)
-          // Some versions of esptool-js require 4 args to correctly map the terminal object
-          const espLoader = new ESPLoader(transport, 115200, term, 115200)
+          addLog("Conectando al chip ESP32...", 'sys')
           
-          addLog("Conectando al Bootloader...", 'sys')
+          // @ts-ignore - ESPLoader constructor
+          const espLoader = new ESPLoader({
+              transport: transport,
+              baudrate: 115200,
+              terminal: term
+          })
           
           try {
-             await espLoader.main_fn()
+             const chip = await espLoader.main()
+             addLog(`Chip detectado: ${chip}`, 'sys')
              
-             // Verify chip detection
              // @ts-ignore
              if (!espLoader.chip) {
-                 throw new Error("Chip no detectado (Chip is undefined)")
+                 throw new Error("Chip no detectado después de main()")
              }
              
-             addLog("Bootloader conectado!", 'sys')
+             addLog("Sincronización exitosa!", 'sys')
           } catch(e: any) {
-             console.error("Main_fn failed", e)
-             addLog(`Error conectando bootloader: ${e?.message || e}`, 'sys')
-             addLog("Reintentando...", 'sys')
-             await new Promise(r => setTimeout(r, 1000))
-             
-             // Hard Reset again
-             await transport.setDTR(false)
-             await transport.setRTS(true)
-             await new Promise(r => setTimeout(r, 200))
-             await transport.setDTR(true)
-             await transport.setRTS(false)
-             await new Promise(r => setTimeout(r, 1000))
-             await transport.setDTR(false)
-             await new Promise(r => setTimeout(r, 1000))
-             
-             // Re-instantiate
-             // @ts-ignore
-             const retryLoader = new ESPLoader(transport, 115200, term, 115200)
-             await retryLoader.main_fn()
-             addLog("Bootloader conectado (reintento)!", 'sys')
-             // Verify again
-             // @ts-ignore
-             if (!retryLoader.chip) throw new Error("Chip no detectado tras reintento")
+             console.error("Connection failed", e)
+             addLog(`Error: ${e?.message || e}`, 'sys')
+             throw e
           }
 
           // 4. Flash
