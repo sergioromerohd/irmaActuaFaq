@@ -1,0 +1,16 @@
+[
+    {
+        "version": "v1.1.0",
+        "name": "IRMA Seta Odr",
+        "filename": "irma-seta-v2.1.0.bin",
+        "releaseDate": "2025-12-23",
+        "description": "cambio de id y preparacion de odr y funcionamiento web"
+    },
+    {
+        "version": "v2.2.0-beta",
+        "name": "IRMA Seta Beta",
+        "filename": "irma-seta-v2.2.0-beta.bin",
+        "releaseDate": "2024-12-23",
+        "description": "Incluye soporte experimental para FFT en borde y nuevo driver de acelerómetro."
+    }
+]
