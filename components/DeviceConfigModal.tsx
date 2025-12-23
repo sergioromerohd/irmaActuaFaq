@@ -241,20 +241,6 @@ export function DeviceConfigModal() {
           addLog("Inicializando transport...", 'sys')
           const transport = new Transport(port)
           
-          // Hardware Reset sequence
-          addLog("Sincronizando con bootloader...", 'sys')
-          await transport.setDTR(false)
-          await transport.setRTS(true)
-          await new Promise(r => setTimeout(r, 100))
-          await transport.setDTR(true)
-          await transport.setRTS(false)
-          await new Promise(r => setTimeout(r, 50))
-          await transport.setDTR(false)
-          await new Promise(r => setTimeout(r, 100))
-          
-          // Additional sync delay
-          await new Promise(r => setTimeout(r, 500))
-
           const term = {
             clean: () => {},
             writeLine: (data: string) => addLog(data, 'sys'),
