@@ -277,10 +277,10 @@ export function DeviceConfigModal() {
           const fileArray = [{ data: fileString, address: 0x10000 }] 
           
           // @ts-ignore
-          await espLoader.write_flash({
+          await espLoader.writeFlash({
               fileArray: fileArray,
-              flash_size: "keep",
-              erase_all: false,
+              flashSize: "keep",
+              eraseAll: false,
               compress: true,
               reportProgress: (current: number, total: number) => {
                   setFlashProgress(Math.round((current / total) * 100))
