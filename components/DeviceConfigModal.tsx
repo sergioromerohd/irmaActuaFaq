@@ -235,8 +235,10 @@ export function DeviceConfigModal() {
           addLog("Deteniendo terminal...", 'sys')
           await stopTerminalStreams()
           
-          // Small delay to ensure everything is settled
-          await new Promise(r => setTimeout(r, 200))
+          // Close the port so esptool can reopen it
+          addLog("Cerrando puerto...", 'sys')
+          await port.close()
+          await new Promise(r => setTimeout(r, 300))
 
           // 2. Load the binary file
           addLog(`Descargando firmware: ${fw.filename}...`, 'sys')
@@ -306,6 +308,9 @@ export function DeviceConfigModal() {
           await new Promise(resolve => setTimeout(resolve, 100))
           await transport.setRTS(false)
           
+          // Disconnect esptool's transport
+          await transport.disconnect()
+          
       } catch (err: any) {
           console.error(err)
           addLog(`Error flasheando: ${err?.message || "Error desconocido"}`, 'sys')
@@ -316,12 +321,16 @@ export function DeviceConfigModal() {
           try {
              setTimeout(async () => {
                  try {
-                     if (port && port.readable && !port.readable.locked) {
-                         await startTerminalStreams(port)
-                         setTimeout(() => catchWrite(writer, "INFO"), 1000)
-                     }
-                 } catch(ex) { console.error(ex) }
-             }, 1000)
+                     // Reopen the port for terminal use
+                     await port.open({ baudRate: 115200 })
+                     await startTerminalStreams(port)
+                     setTimeout(() => catchWrite(writer, "INFO"), 1000)
+                 } catch(ex) { 
+                     console.error(ex)
+                     addLog("Error reconectando. Por favor reconecta el USB.", 'sys')
+                     setIsConnected(false)
+                 }
+             }, 1500)
           } catch (e) {
              addLog("Error reconectando terminal. Por favor reconecta USB.", 'sys')
              setIsConnected(false)
