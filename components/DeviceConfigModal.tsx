@@ -237,13 +237,9 @@ export function DeviceConfigModal() {
           const fileString = cleanBinaryString(fileData)
           addLog(`Firmware descargado (${fileData.byteLength} bytes)`, 'sys')
 
-          // 3. Reopen port for esptool
-          addLog("Reabriendo puerto para flasheo...", 'sys')
-          await port.open({ baudRate: 115200 })
-          
-          // Initialize esptool transport
+          // 3. Initialize esptool transport (let it handle opening the port)
           addLog("Inicializando transport...", 'sys')
-          const transport = new Transport(port, true)
+          const transport = new Transport(port)
           
           // Hardware Reset sequence
           addLog("Sincronizando con bootloader...", 'sys')
