@@ -226,7 +226,16 @@ export function DeviceConfigModal() {
 
           // 3. Initialize esptool
           const transport = new Transport(port)
-          const espLoader = new ESPLoader(transport, 115200, undefined) // default baudrate
+          
+          // ESPLoader requires a terminal-like object for logging
+          const term = {
+            clean: () => {},
+            writeLine: (data: string) => { /* console.log(data) */ },
+            write: (data: string) => { /* console.log(data) */ }
+          }
+           
+          // @ts-ignore
+          const espLoader = new ESPLoader(transport, 115200, term)
           
           addLog("Conectando al Bootloader...", 'sys')
           await espLoader.main_fn()
