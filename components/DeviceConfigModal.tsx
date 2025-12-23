@@ -222,6 +222,11 @@ export function DeviceConfigModal() {
           
           // Wait for streams to fully close
           await new Promise(r => setTimeout(r, 500))
+          
+          // Close the port completely before flashing
+          addLog("Cerrando puerto serial...", 'sys')
+          await port.close()
+          await new Promise(r => setTimeout(r, 300))
 
           // 2. Load the binary file
           addLog(`Descargando firmware: ${fw.filename}...`, 'sys')
@@ -232,10 +237,13 @@ export function DeviceConfigModal() {
           const fileString = cleanBinaryString(fileData)
           addLog(`Firmware descargado (${fileData.byteLength} bytes)`, 'sys')
 
-          // 3. Initialize esptool
+          // 3. Reopen port for esptool
+          addLog("Reabriendo puerto para flasheo...", 'sys')
+          await port.open({ baudRate: 115200 })
+          
+          // Initialize esptool transport
           addLog("Inicializando transport...", 'sys')
           const transport = new Transport(port, true)
-          await transport.connect()
           
           // Hardware Reset sequence
           addLog("Sincronizando con bootloader...", 'sys')
@@ -286,6 +294,7 @@ export function DeviceConfigModal() {
           addLog("Escribiendo flash... (Esto puede tardar)", 'sys')
           const fileArray = [{ data: fileString, address: 0x10000 }] 
           
+          // @ts-ignore
           await espLoader.write_flash({
               fileArray: fileArray,
               flash_size: "keep",
