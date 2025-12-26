@@ -1,7 +1,8 @@
 import { MetadataRoute } from 'next'
+import { getSiteUrl } from '@/lib/site'
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.dbbasico.com' // Usando el dominio placeholder definido en layout
+  const baseUrl = getSiteUrl().toString().replace(/\/$/, '')
   
   return [
     {
@@ -27,6 +28,30 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified: new Date(),
       changeFrequency: 'monthly',
       priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/actua`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/actua/faq`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.7,
+    },
+    {
+      url: `${baseUrl}/cia`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.75,
+    },
+    {
+      url: `${baseUrl}/cia/faq`,
+      lastModified: new Date(),
+      changeFrequency: 'monthly',
+      priority: 0.65,
     },
     {
       url: `${baseUrl}/contacto`,
