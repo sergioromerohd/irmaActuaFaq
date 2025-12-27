@@ -1,20 +1,49 @@
 import type { Metadata } from "next"
+import { getSiteUrl } from "@/lib/site"
+
+const siteUrl = getSiteUrl()
 
 export const metadata: Metadata = {
-  title: "Plataforma IRMA - Monitorización de Vibraciones en la Nube",
-  description: "Gestione sus sensores de vibración en tiempo real. Análisis espectral, alertas inteligentes y mantenimiento predictivo con la plataforma IRMA.",
-  keywords: ["plataforma vibraciones", "fft online", "monitorización remota", "mantenimiento predictivo", "ISO 8041", "nube iot"],
+  title: "IRMA - Monitorización Inteligente de Vibraciones",
+  description:
+    "Plataforma en la nube para gestionar sensores de vibración: datos en tiempo real, alertas, análisis espectral (FFT) e informes técnicos.",
+  keywords: [
+    "monitorización de vibraciones",
+    "sensor acelerómetro",
+    "fft",
+    "alertas",
+    "mantenimiento predictivo",
+    "monitorización estructural",
+    "IoT",
+    "IRMA",
+  ],
+  metadataBase: siteUrl,
+  alternates: {
+    canonical: "/irma",
+  },
   openGraph: {
-    title: "Plataforma IRMA | Control Total de Vibraciones",
-    description: "Visualice y analice datos de vibración desde cualquier lugar. La solución definitiva para ingeniería civil e industrial.",
+    type: "website",
+    locale: "es_ES",
+    url: "/irma",
+    siteName: "dbbasico",
+    title: "IRMA | Monitorización de Vibraciones en Tiempo Real",
+    description:
+      "Visualiza datos de vibración en tiempo real, configura alertas y analiza espectros de frecuencia (FFT) desde web y móvil.",
     images: [
       {
-        url: "/images/irma-dashboard-preview.jpg", // Placeholder image path
+        url: "/images/irma-device.png",
         width: 1200,
         height: 630,
-        alt: "Dashboard de Plataforma IRMA",
+        alt: "IRMA - Monitorización de vibraciones",
       },
     ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "IRMA | Monitorización de Vibraciones",
+    description:
+      "Plataforma cloud para sensores de vibración: tiempo real, alertas y análisis FFT.",
+    images: ["/images/irma-device.png"],
   },
 }
 
