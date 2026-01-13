@@ -6,6 +6,7 @@ import Image from "next/image"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   Activity,
   Smartphone,
@@ -116,25 +117,73 @@ export default function IrmaPage() {
               </div>
               
               <h1 className="text-5xl lg:text-7xl font-extrabold tracking-tight leading-tight bg-clip-text text-transparent bg-gradient-to-r from-accent via-blue-600 to-accent">
-                Monitorización Inteligente de Vibraciones
+                IRMA no es solo un dispositivo. Es una plataforma.
               </h1>
               
               <p className="text-xl text-muted-foreground leading-relaxed max-w-2xl mx-auto lg:mx-0">
-                Plataforma en la nube para la gestión centralizada de sensores. Visualiza datos en tiempo real, gestiona alertas y genera informes técnicos con precisión milimétrica.
+                En dbbasico hemos desarrollado IRMA como una plataforma tecnológica modular que cubre todo el ciclo del dato vibratorio y acústico: desde la medición en campo hasta el análisis avanzado y la monitorización remota.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-                <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer">
-                  <Button size="lg" className="bg-accent hover:bg-accent/90 text-accent-foreground text-lg px-8 py-6 h-auto shadow-lg shadow-accent/25 hover:shadow-accent/40 transition-all duration-300 hover:-translate-y-1">
-                    Acceso Web
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <Link href="/irma/faq">
-                  <Button size="lg" variant="outline" className="text-lg px-8 py-6 h-auto backdrop-blur-sm bg-background/50 hover:bg-background/80 transition-all duration-300">
-                    Saber Más
-                  </Button>
-                </Link>
+              <div className="w-full max-w-2xl mx-auto lg:mx-0">
+                <Tabs defaultValue="app" className="w-full">
+                  <TabsList className="grid w-full grid-cols-3 bg-muted/50 p-1 mb-6">
+                    <TabsTrigger value="app" className="text-xs md:text-base px-1">IRMA App (Android)</TabsTrigger>
+                    <TabsTrigger value="data" className="text-xs md:text-base px-1">IRMAdata (SaaS)</TabsTrigger>
+                    <TabsTrigger value="web" className="text-xs md:text-base px-1">IRMAweb</TabsTrigger>
+                  </TabsList>
+                  
+                  <TabsContent value="app" className="mt-0">
+                    <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
+                      <CardContent className="p-6 flex gap-4 items-start">
+                        <div className="bg-accent/10 p-3 rounded-xl">
+                          <Smartphone className="h-6 w-6 text-accent" />
+                        </div>
+                        <div className="space-y-2 text-left">
+                          <h4 className="font-bold text-lg">Instrumentación de Campo</h4>
+                          <p className="text-muted-foreground leading-relaxed">
+                            Instrumentación de campo con módulos funcionales específicos (flancos, control en obra, molestias, vibración de confort, severidad, predictivo, monitorización, etc.).
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  <TabsContent value="data" className="mt-0">
+                    <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
+                      <CardContent className="p-6 flex gap-4 items-start">
+                        <div className="bg-blue-500/10 p-3 rounded-xl">
+                          <Brain className="h-6 w-6 text-blue-500" />
+                        </div>
+                        <div className="space-y-2 text-left">
+                          <h4 className="font-bold text-lg">Post-procesado SaaS</h4>
+                          <p className="text-muted-foreground leading-relaxed">
+                            Post-procesado de los datos grabados, análisis avanzado, comparativas, histórico y generación de informes.
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+
+                  <TabsContent value="web" className="mt-0">
+                    <Card className="bg-card/50 backdrop-blur-sm border-accent/20">
+                      <CardContent className="p-6 flex gap-4 items-start">
+                        <div className="bg-green-500/10 p-3 rounded-xl">
+                          <Monitor className="h-6 w-6 text-green-500" />
+                        </div>
+                        <div className="space-y-2 text-left">
+                          <h4 className="font-bold text-lg">Control IoT</h4>
+                          <p className="text-muted-foreground leading-relaxed">
+                            Visualización y seguimiento de dispositivos IoT monitorizados, con acceso remoto, tendencias y control continuo.
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </TabsContent>
+                </Tabs>
+                
+                <p className="mt-6 text-muted-foreground leading-relaxed">
+                  Esta arquitectura modular nos permite adaptar IRMA a distintos perfiles profesionales y casos de uso normativos, manteniendo trazabilidad, rigor técnico y escalabilidad.
+                </p>
               </div>
             </motion.div>
 
