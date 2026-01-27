@@ -4,18 +4,25 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import Image from "next/image"
 import { usePathname } from "next/navigation"
-import { Menu, X, ChevronDown } from "lucide-react"
+import { Menu, X, ChevronDown, ChevronRight } from "lucide-react"
 import { ThemeToggle } from "./theme-toggle"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+  DropdownMenuPortal,
 } from "@/components/ui/dropdown-menu"
+import { appsNavList } from "@/lib/apps-data"
+import { DynamicIcon } from "@/components/DynamicIcon"
 
 export function SiteHeader() {
   const pathname = usePathname()
   const [open, setOpen] = useState(false)
+  const [appsExpanded, setAppsExpanded] = useState(false)
   const [progress, setProgress] = useState(0)
   const [elevated, setElevated] = useState(false)
 
@@ -69,13 +76,35 @@ export function SiteHeader() {
               <DropdownMenuTrigger className={`flex items-center gap-1 text-sm font-medium transition-colors outline-none ${isActive("/irma")}`}>
                 IRMA <ChevronDown className="h-4 w-4" />
               </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
+              <DropdownMenuContent align="end" className="w-52">
                 <DropdownMenuItem asChild>
-                  <Link href="/irma" className="cursor-pointer">Plataforma IRMA</Link>
+                  <Link href="/irma" className="cursor-pointer">Sistema IRMA</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
                   <Link href="/irma/dispositivo" className="cursor-pointer">Dispositivo (Seta)</Link>
                 </DropdownMenuItem>
+                
+                {/* Aplicaciones - Submenú colapsable */}
+                <DropdownMenuSub>
+                  <DropdownMenuSubTrigger className="cursor-pointer">
+                    <span className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-app-primary"></span>
+                      Aplicaciones
+                    </span>
+                  </DropdownMenuSubTrigger>
+                  <DropdownMenuPortal>
+                    <DropdownMenuSubContent className="w-48">
+                      {appsNavList.map((app) => (
+                        <DropdownMenuItem key={app.slug} asChild>
+                          <Link href={`/irma/apps/${app.slug}`} className="cursor-pointer flex items-center gap-2">
+                            <DynamicIcon name={app.iconName} className="h-4 w-4 text-app-primary" />
+                            {app.name}
+                          </Link>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuSubContent>
+                  </DropdownMenuPortal>
+                </DropdownMenuSub>
               </DropdownMenuContent>
             </DropdownMenu>
 
@@ -123,7 +152,7 @@ export function SiteHeader() {
                     className="block text-sm text-foreground/70 hover:text-primary"
                     onClick={() => setOpen(false)}
                   >
-                    Plataforma
+                    Sistema IRMA
                   </Link>
                   <Link
                     href="/irma/dispositivo"
@@ -132,6 +161,34 @@ export function SiteHeader() {
                   >
                     Dispositivo (Seta)
                   </Link>
+                  
+                  {/* Aplicaciones - Colapsable en móvil */}
+                  <button
+                    onClick={() => setAppsExpanded(!appsExpanded)}
+                    className="flex items-center justify-between w-full text-xs font-semibold text-muted-foreground mt-3 mb-1 hover:text-app-primary transition-colors"
+                  >
+                    <span className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-app-primary"></span>
+                      Aplicaciones
+                    </span>
+                    <ChevronRight className={`h-4 w-4 transition-transform duration-200 ${appsExpanded ? 'rotate-90' : ''}`} />
+                  </button>
+                  
+                  <div className={`overflow-hidden transition-all duration-300 ease-in-out ${appsExpanded ? 'max-h-48 opacity-100' : 'max-h-0 opacity-0'}`}>
+                    <div className="pl-4 border-l-2 border-app-primary/30 space-y-2 py-1">
+                      {appsNavList.map((app) => (
+                        <Link
+                          key={app.slug}
+                          href={`/irma/apps/${app.slug}`}
+                          className="flex items-center gap-2 text-sm text-foreground/70 hover:text-app-primary transition-colors"
+                          onClick={() => setOpen(false)}
+                        >
+                          <DynamicIcon name={app.iconName} className="h-3.5 w-3.5" />
+                          {app.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
                </div>
             </div>
 
@@ -153,13 +210,12 @@ export function SiteHeader() {
         </div>
       )}
       {/* Scroll progress bar */}
-      <div className="h-0.5 w-full bg-transparent">
-        <div
-          className="h-full bg-gradient-to-r from-primary via-accent to-primary transition-[width] duration-150"
-          style={{ width: `${progress}%` }}
-          aria-hidden
-        />
-      </div>
+      <progress
+        className="scroll-progress w-full h-0.5"
+        value={progress}
+        max={100}
+        aria-hidden
+      />
     </header>
   )
 }

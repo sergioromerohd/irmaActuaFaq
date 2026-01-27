@@ -19,6 +19,11 @@
   --muted-foreground: oklch(0.35 0 0); /* #4b5563 */
   --accent: oklch(0.65 0.18 35); /* #f97316 orange-500 */
   --accent-foreground: oklch(1 0 0); /* #ffffff */
+  
+  /* App-specific colors (IRMA Apps - Green theme) */
+  --app-primary: oklch(0.60 0.17 145); /* #4CAF50 green */
+  --app-primary-light: oklch(0.70 0.15 145); /* lighter green */
+  --app-primary-foreground: oklch(1 0 0); /* white */
   --destructive: oklch(0.6 0.2 30); /* #ea580c */
   --destructive-foreground: oklch(1 0 0); /* #ffffff */
   --border: oklch(0.92 0 0); /* #e5e7eb */
@@ -56,6 +61,11 @@
   --secondary-foreground: oklch(1 0 0);
   --accent: oklch(0.72 0.18 35); /* match orange accent */
   --accent-foreground: oklch(1 0 0);
+
+  /* App-specific colors (IRMA Apps - Green theme for dark mode) */
+  --app-primary: oklch(0.68 0.17 145); /* brighter green on dark */
+  --app-primary-light: oklch(0.75 0.15 145);
+  --app-primary-foreground: oklch(1 0 0);
 
   /* Status and neutrals */
   --destructive: oklch(0.62 0.2 30); /* readable red/orange */
@@ -111,6 +121,10 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  /* App colors */
+  --color-app-primary: var(--app-primary);
+  --color-app-primary-light: var(--app-primary-light);
+  --color-app-primary-foreground: var(--app-primary-foreground);
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -132,4 +146,24 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+/* Scroll progress bar */
+.scroll-progress {
+  appearance: none;
+  background: transparent;
+}
+
+.scroll-progress::-webkit-progress-bar {
+  background: transparent;
+}
+
+.scroll-progress::-webkit-progress-value {
+  background: linear-gradient(90deg, oklch(0.55 0.15 200), oklch(0.65 0.18 35), oklch(0.55 0.15 200));
+  transition: width 150ms ease;
+}
+
+.scroll-progress::-moz-progress-bar {
+  background: linear-gradient(90deg, oklch(0.55 0.15 200), oklch(0.65 0.18 35), oklch(0.55 0.15 200));
+  transition: width 150ms ease;
 }
