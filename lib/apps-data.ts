@@ -44,6 +44,25 @@ export const appsData: AppData[] = [
         iconName: "Volume2"
       },
       {
+        title: "Detección Inteligente",
+        subtitle: "IA aplicada al sonido",
+        description: "Algoritmos avanzados que identifican y clasifican automáticamente tipos de ruido y sus fuentes de origen.",
+        iconName: "Volume2"
+      },
+      {
+        title: "Detección Inteligente",
+        subtitle: "IA aplicada al sonido",
+        description: "Algoritmos avanzados que identifican y clasifican automáticamente tipos de ruido y sus fuentes de origen.",
+        iconName: "Volume2"
+      },
+      {
+        title: "Detección Inteligente",
+        subtitle: "IA aplicada al sonido",
+        description: "Algoritmos avanzados que identifican y clasifican automáticamente tipos de ruido y sus fuentes de origen.",
+        iconName: "Volume2"
+      },
+      
+      {
         title: "Alertas en Tiempo Real",
         subtitle: "Notificaciones instantáneas",
         description: "Recibe alertas inmediatas cuando se superan los umbrales establecidos o se detectan patrones anómalos.",

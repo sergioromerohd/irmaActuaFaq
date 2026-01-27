@@ -113,8 +113,17 @@ export function AppLandingTemplate({
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "easeOut" }}
-              className="text-center lg:text-left"
+              className="relative text-center lg:text-left"
             >
+              <div className="absolute inset-0 -z-10 pointer-events-none flex items-center justify-center lg:justify-start">
+                <Image
+                  src="/images/irma-logo.png"
+                  alt="IRMA"
+                  width={520}
+                  height={520}
+                  className="opacity-10 dark:opacity-15 blur-[1px]"
+                />
+              </div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
