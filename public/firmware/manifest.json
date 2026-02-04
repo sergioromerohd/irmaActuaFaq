@@ -3,7 +3,7 @@
         "version": "v1.1.0",
         "name": "IRMA Seta Odr",
         "filename": "irma-seta-v2.1.0.bin",
-        "releaseDate": "2025-12-23",
-        "description": "cambio de id y preparacion de odr y funcionamiento web"
+        "releaseDate": "2026-02-04",
+        "description": "Fix Rc5 error deberia funcionar ya :/"
     }
 ]

@@ -25,18 +25,19 @@ export const appsData: AppData[] = [
   {
     slug: "soundbreak",
     name: "SoundBreak",
-    tagline: "Monitorización de ruido en tiempo real",
-    description: "Detecta, analiza y gestiona eventos sonoros con precisión. SoundBreak transforma datos acústicos en información accionable para una gestión inteligente del ruido ambiental.",
+    tagline: "monitoreo y analisis del indice SBI entre el altavoz y la pared",
+    description: "Detecta, analiza y Gestiona el estado de la instalacion del equipo y como esta afectando al indice SBI entre el altavoz y la pared.",
     heroImage: "/images/apps/soundbreak-hero.png",
     youtubeUrl: "https://www.youtube.com/watch?v=AlRrmLhkNPY",
     iconName: "Volume2",
     features: [
       {
-        title: "Monitorización 24/7",
-        subtitle: "Vigilancia continua",
-        description: "Sistema de monitorización activo las 24 horas del día, los 7 días de la semana, capturando cada evento sonoro relevante.",
-        iconName: "Clock"
-      }
+        title: "Visualizacion Simple",
+        subtitle: "Interfaz intuitiva",
+        description: "Panel de control claro y fácil de usar, con colores intuitivos y UX optimizada para rápida interpretación.",
+        iconName: "Monitor"
+      },
+      
     ],
     metadata: {
       title: "SoundBreak",
