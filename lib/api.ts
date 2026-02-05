@@ -1,4 +1,4 @@
-export const API_BASE_URL = "https://irmaback.dbblab.es";
+export const API_BASE_URL = "/api-backend";
 
 export interface ApiError {
   message: string;
