@@ -28,7 +28,7 @@ export const appsData: AppData[] = [
     tagline: "monitoreo y analisis del indice SBI entre el altavoz y la pared",
     description: "Detecta, analiza y Gestiona el estado de la instalacion del equipo y como esta afectando al indice SBI entre el altavoz y la pared.",
     heroImage: "/images/apps/soundbreak-hero.png",
-    youtubeUrl: "https://www.youtube.com/watch?v=AlRrmLhkNPY",
+    youtubeUrl: "https://youtu.be/san3DlDB60s",
     iconName: "Volume2",
     features: [
       {
