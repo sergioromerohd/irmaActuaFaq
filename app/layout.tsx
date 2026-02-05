@@ -5,6 +5,7 @@ import { GeistMono } from "geist/font/mono"
 import { Analytics } from "@vercel/analytics/next"
 import { Suspense } from "react"
 import { ThemeProvider } from "@/components/theme-provider"
+import { AuthProvider } from "@/components/auth-context"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { ScrollToTop } from "@/components/scroll-to-top"
@@ -107,11 +108,13 @@ export default function RootLayout({
       </head>
       <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <SiteHeader />
-          <Suspense fallback={null}>{children}</Suspense>
-          <ScrollToTop />
-          <SiteFooter />
-          <Analytics />
+          <AuthProvider>
+            <SiteHeader />
+            <Suspense fallback={null}>{children}</Suspense>
+            <ScrollToTop />
+            <SiteFooter />
+            <Analytics />
+          </AuthProvider>
         </ThemeProvider>
       </body>
     </html>

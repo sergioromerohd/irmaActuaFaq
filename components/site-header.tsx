@@ -18,6 +18,58 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { appsNavList } from "@/lib/apps-data"
 import { DynamicIcon } from "@/components/DynamicIcon"
+import { User, LogOut, Settings, LayoutDashboard } from "lucide-react"
+import { useAuth } from "@/components/auth-context"
+import {
+  DropdownMenuSeparator,
+  DropdownMenuLabel,
+} from "@/components/ui/dropdown-menu"
+
+function UserNav() {
+  const { user, logout, isAdmin } = useAuth()
+
+  if (!user) {
+    return (
+      <Link href="/login" className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-muted transition-colors" title="Iniciar sesión">
+        <User className="h-5 w-5" />
+      </Link>
+    )
+  }
+
+  return (
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild>
+        <button className="inline-flex h-9 w-9 items-center justify-center rounded-md hover:bg-muted transition-colors outline-none">
+          <User className="h-5 w-5 text-primary" />
+        </button>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="w-56">
+        <DropdownMenuLabel>
+          <div className="flex flex-col space-y-1">
+            <p className="text-sm font-medium leading-none">{user.nombre}</p>
+            <p className="text-xs leading-none text-muted-foreground">{user.email}</p>
+          </div>
+        </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        {isAdmin && (
+          <>
+            <DropdownMenuItem asChild>
+              <Link href="/admin" className="cursor-pointer">
+                <LayoutDashboard className="mr-2 h-4 w-4" />
+                Panel Admin
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+          </>
+        )}
+        <DropdownMenuItem onClick={logout} className="cursor-pointer text-red-600 focus:text-red-600">
+          <LogOut className="mr-2 h-4 w-4" />
+          Cerrar sesión
+        </DropdownMenuItem>
+      </DropdownMenuContent>
+    </DropdownMenu>
+  )
+}
 
 export function SiteHeader() {
   const pathname = usePathname()
@@ -113,6 +165,7 @@ export function SiteHeader() {
           </nav>
 
           <div className="flex items-center gap-2">
+            <UserNav />
             <ThemeToggle />
             <button
               aria-label="Abrir menú"
