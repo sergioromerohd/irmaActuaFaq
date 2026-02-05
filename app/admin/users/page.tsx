@@ -3,8 +3,9 @@
 import { useEffect, useState } from "react"
 import { useAuth } from "@/components/auth-context"
 import { fetchApi } from "@/lib/api"
-import { Loader2, Trash2, Edit, ChevronLeft, ChevronRight, Search } from "lucide-react"
+import { Loader2, Trash2, Edit, ChevronLeft, ChevronRight, Search, Plus } from "lucide-react"
 import { UserEditModal } from "./user-edit-modal"
+import { UserCreateModal } from "./user-create-modal"
 
 interface User {
   _id: string
@@ -29,6 +30,8 @@ export default function AdminUsersPage() {
   // Edit State
   const [editingUser, setEditingUser] = useState<User | null>(null)
   const [isEditModalOpen, setIsEditModalOpen] = useState(false)
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false)
+
 
   const fetchUsers = async (pageNum: number) => {
     setLoading(true)
@@ -90,6 +93,13 @@ export default function AdminUsersPage() {
           <p className="text-muted-foreground">Gestión de usuarios y permisos.</p>
         </div>
         <div className="flex items-center gap-2">
+           <button 
+             onClick={() => setIsCreateModalOpen(true)}
+             className="inline-flex items-center justify-center rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+           >
+             <Plus className="mr-2 h-4 w-4" />
+             Nuevo Usuario
+           </button>
            <span className="text-sm text-muted-foreground bg-muted px-3 py-1 rounded-full">
              Total: {totalUsers}
            </span>
@@ -222,6 +232,12 @@ export default function AdminUsersPage() {
           onUpdate={handleUserUpdated}
         />
       )}
+
+      <UserCreateModal 
+        isOpen={isCreateModalOpen}
+        onClose={() => setIsCreateModalOpen(false)}
+        onCreated={() => fetchUsers(page)}
+      />
     </div>
   )
 }

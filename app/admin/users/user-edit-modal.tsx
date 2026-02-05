@@ -1,9 +1,9 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useAuth } from "@/components/auth-context"
 import { fetchApi } from "@/lib/api"
-import { Loader2, X } from "lucide-react"
+import { Loader2, X, Plus } from "lucide-react"
 
 interface User {
   _id: string
@@ -13,6 +13,11 @@ interface User {
   subscriptionStatus: string
   subscriptionPlan: string
   subscriptionEndDate: string
+}
+
+interface Role {
+  _id: string
+  nombre: string
 }
 
 interface UserEditModalProps {
@@ -26,22 +31,33 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
   const { token } = useAuth()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const [availableRoles, setAvailableRoles] = useState<Role[]>([])
+
+  // Initialize roles: map existing user roles to their IDs if they are objects, or use them directly if strings
+  // Although backend returns populated roles usually.
+  const initialRoleIds = user.roles.map((r: any) => 
+    typeof r === 'object' && r._id ? r._id : r
+  )
 
   const [formData, setFormData] = useState({
     nombre: user.nombre || "",
     email: user.email || "",
     subscriptionStatus: user.subscriptionStatus || "free",
     subscriptionPlan: user.subscriptionPlan || "",
-    subscriptionEndDate: user.subscriptionEndDate ? new Date(user.subscriptionEndDate).toISOString().split('T')[0] : ""
+    subscriptionEndDate: user.subscriptionEndDate ? new Date(user.subscriptionEndDate).toISOString().split('T')[0] : "",
+    roles: initialRoleIds as string[]
   })
 
-  // Basic role management - just checking/checking "admin"
-  // Note: API doc says "currently modifies the role array", so we should be careful.
-  // Assuming roles is an array of strings or objects.
-  const hasAdminRole = user.roles.some((r: any) => 
-    (typeof r === 'string' ? r === 'admin' : r.nombre === 'admin')
-  )
-  const [isAdmin, setIsAdmin] = useState(hasAdminRole)
+  useEffect(() => {
+    if (isOpen && token) {
+      // Fetch available roles
+      fetchApi("/api/usuarios/roles", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then(data => setAvailableRoles(data))
+      .catch(console.error)
+    }
+  }, [isOpen, token])
 
   if (!isOpen) return null
 
@@ -51,49 +67,14 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
     setError("")
 
     try {
-      // Prepare payload
-      // Note: Managing roles via this simple checkbox might be tricky depending on how the backend expects it.
-      // API Doc says: "Para gestionar roles, actualmente se modifica el array de roles".
-      // We will try to preserve existing roles structure but toggle admin.
-      
-      // Since the request is risky regarding roles structure without full type definition, 
-      // I'll focus on subscription and basic data as per requirements + user role request.
-      
       const payload: any = {
         ...formData,
-        // If date is empty string, send null
         subscriptionEndDate: formData.subscriptionEndDate || null
       }
       
-      // Role logic: simple approach
-      // If we want to add admin, we add "admin" string or object? 
-      // The API response showed objects: [{"nombre": "user"}]. 
-      // The login response showed strings: ["admin", "user"].
-      // I will send an array of strings for simplicity if the backend supports it, 
-      // OR reconstruct the object array.
-      // Let's assume the backend handles mixed or we stick to what we received. 
-      // Safe bet: Don't touch roles if we are unsure, OR send what we want.
-      // User asked for "management of users and roles".
+      // Send roles as array of IDs. Admin Routes PUT handles this if we trust it blindly updates the field.
+      // If the backend expects IDs, this is perfect.
       
-      let newRoles = [...user.roles]
-      if (isAdmin && !hasAdminRole) {
-         // Add admin
-         // Check format of first role to guess format
-         const firstRole = user.roles[0]
-         if (firstRole && typeof firstRole === 'object') {
-             newRoles.push({ nombre: 'admin' })
-         } else {
-             newRoles.push('admin')
-         }
-      } else if (!isAdmin && hasAdminRole) {
-         // Remove admin
-         newRoles = newRoles.filter((r: any) => 
-             (typeof r === 'string' ? r !== 'admin' : r.nombre !== 'admin')
-         )
-      }
-      
-      payload.roles = newRoles
-
       await fetchApi(`/api/admin/users/${user._id}`, {
         method: "PUT",
         headers: {
@@ -108,6 +89,15 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
     } finally {
       setLoading(false)
     }
+  }
+
+  const toggleRole = (roleId: string) => {
+    setFormData(prev => {
+      const roles = prev.roles.includes(roleId)
+        ? prev.roles.filter(id => id !== roleId)
+        : [...prev.roles, roleId]
+      return { ...prev, roles }
+    })
   }
 
   return (
@@ -141,15 +131,28 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
           </div>
 
           <div className="space-y-2">
-             <label className="flex items-center gap-2 cursor-pointer">
-               <input 
-                 type="checkbox" 
-                 checked={isAdmin}
-                 onChange={e => setIsAdmin(e.target.checked)}
-                 className="h-4 w-4 rounded border-gray-300 text-primary focus:ring-primary"
-               />
-               <span className="text-sm font-medium">Es Administrador</span>
-             </label>
+            <label className="text-sm font-medium">Roles</label>
+            <div className="flex flex-wrap gap-2 rounded-md border p-2 min-h-[50px]">
+              {availableRoles.length === 0 ? (
+                <span className="text-xs text-muted-foreground p-1">Cargando roles...</span>
+              ) : (
+                availableRoles.map(role => (
+                  <button
+                    key={role._id}
+                    type="button"
+                    onClick={() => toggleRole(role._id)}
+                    className={`text-xs px-2 py-1 rounded-full border transition-colors ${
+                      formData.roles.includes(role._id)
+                        ? "bg-primary text-primary-foreground border-primary"
+                        : "bg-background hover:bg-muted"
+                    }`}
+                  >
+                    {role.nombre}
+                    {formData.roles.includes(role._id) && <Plus className="ml-1 h-3 w-3 inline" />}
+                  </button>
+                ))
+              )}
+            </div>
           </div>
 
           <div className="border-t pt-4 mt-4">
