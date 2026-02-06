@@ -4,7 +4,7 @@ import { useEffect, useState } from "react"
 import Link from "next/link"
 import { useAuth } from "@/components/auth-context"
 import { fetchApi } from "@/lib/api"
-import { Users, UserPlus } from "lucide-react"
+import { Users, UserPlus, Shield, CreditCard } from "lucide-react"
 
 export default function AdminDashboardPage() {
   const { token } = useAuth()
@@ -62,18 +62,46 @@ export default function AdminDashboardPage() {
             </p>
           </div>
         </Link>
-        
-        {/* Quick Action: New User */}
-         <Link 
-          href="/admin/users" 
-          className="rounded-xl border bg-primary text-primary-foreground shadow transition-transform hover:-translate-y-1 block"
+
+        {/* Roles Management Card */}
+        <Link 
+          href="/admin/roles" 
+          className="rounded-xl border bg-card text-card-foreground shadow transition-colors hover:bg-muted/50 block group"
         >
-          <div className="p-6 flex flex-col items-center justify-center gap-3 h-full text-center">
-            <div className="bg-primary-foreground/20 p-3 rounded-full">
-               <UserPlus className="h-6 w-6" />
+          <div className="p-6 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">Roles</h3>
+              <Shield className="h-4 w-4 text-muted-foreground" />
             </div>
-            <h3 className="font-bold text-lg">Crear Nuevo Usuario</h3>
-            <p className="text-xs text-primary-foreground/80">Acceso rápido para registrar un nuevo perfil.</p>
+            
+            <div className="flex items-center justify-center py-4">
+              <Shield className="h-10 w-10 text-muted-foreground/20" />
+            </div>
+            
+            <p className="text-xs text-muted-foreground mt-2">
+              Configurar roles y permisos del sistema.
+            </p>
+          </div>
+        </Link>
+
+        {/* Subscriptions Management Card */}
+        <Link 
+          href="/admin/subscriptions" 
+          className="rounded-xl border bg-card text-card-foreground shadow transition-colors hover:bg-muted/50 block group"
+        >
+          <div className="p-6 flex flex-col gap-2">
+            <div className="flex items-center justify-between">
+              <h3 className="text-sm font-medium text-muted-foreground group-hover:text-primary transition-colors">Suscripciones</h3>
+              <CreditCard className="h-4 w-4 text-muted-foreground" />
+            </div>
+            
+             <div className="flex items-center justify-center py-4">
+              <CreditCard className="h-10 w-10 text-muted-foreground/20" />
+            </div>
+            
+            <p className="text-xs text-muted-foreground mt-2">
+              Gestionar tipos y planes de suscripción.
+            </p>
           </div>
         </Link>
       </div>

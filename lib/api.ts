@@ -20,9 +20,15 @@ export async function fetchApi(endpoint: string, options: RequestInit = {}) {
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({}));
+    console.error("API Error Response:", {
+      status: response.status,
+      url: response.url,
+      errorData
+    });
     throw {
       message: errorData.message || "Un error ocurrió durante la petición",
       status: response.status,
+      details: errorData // Attach full details to the error object
     } as ApiError;
   }
 

@@ -32,6 +32,7 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const [availableRoles, setAvailableRoles] = useState<Role[]>([])
+  const [subscriptionTypes, setSubscriptionTypes] = useState<string[]>([])
 
   // Initialize roles: map existing user roles to their IDs if they are objects, or use them directly if strings
   // Although backend returns populated roles usually.
@@ -56,6 +57,18 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
       })
       .then(data => setAvailableRoles(data))
       .catch(console.error)
+
+      // Fetch subscription types
+      fetchApi("/api/admin/subscriptions", {
+        headers: { Authorization: `Bearer ${token}` }
+      })
+      .then((data: any[]) => {
+          const dynamicTypes = data.map(d => d.nombre);
+          // Merge with defaults, unique values
+          const allTypes = Array.from(new Set([...dynamicTypes]));
+          setSubscriptionTypes(allTypes);
+      })
+      .catch(console.error)
     }
   }, [isOpen, token])
 
@@ -67,14 +80,23 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
     setError("")
 
     try {
+      // Construct payload with exact fields expected by backend
+      const { subscriptionPlan, subscriptionEndDate, email, nombre, ...rest } = formData;
       const payload: any = {
-        ...formData,
-        subscriptionEndDate: formData.subscriptionEndDate || null
+        ...rest, // subscriptionStatus, roles
       }
       
-      // Send roles as array of IDs. Admin Routes PUT handles this if we trust it blindly updates the field.
-      // If the backend expects IDs, this is perfect.
-      
+      // Only include fields if they have values to avoid validation errors
+      if (email) payload.email = email;
+      if (nombre) payload.nombre = nombre;
+
+      // Only include subscriptionEndDate if it has a value to avoid 400 with isISO8601
+      if (subscriptionEndDate) {
+        payload.subscriptionEndDate = subscriptionEndDate;
+      }
+
+      console.log("PUT Payload:", payload); // Debugging payload
+
       await fetchApi(`/api/admin/users/${user._id}`, {
         method: "PUT",
         headers: {
@@ -102,7 +124,7 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-background/80 backdrop-blur-sm p-4">
-      <div className="w-full max-w-lg rounded-lg border bg-card p-6 shadow-lg animate-in fade-in zoom-in-95 duration-200">
+      <div className="w-full max-w-lg rounded-lg border bg-card p-6 shadow-lg animate-in fade-in zoom-in-95 duration-200 focus:outline-none overflow-y-auto max-h-[90vh]">
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-xl font-semibold">Editar Usuario</h2>
           <button onClick={onClose} className="rounded-full p-1 hover:bg-muted">
@@ -165,9 +187,9 @@ export function UserEditModal({ user, isOpen, onClose, onUpdate }: UserEditModal
                     onChange={e => setFormData({ ...formData, subscriptionStatus: e.target.value })}
                     className="w-full rounded-md border bg-background px-3 py-2 text-sm"
                   >
-                    <option value="free">Free</option>
-                    <option value="trial">Trial</option>
-                    <option value="premium">Premium</option>
+                    {subscriptionTypes.map(type => (
+                       <option key={type} value={type}>{type.charAt(0).toUpperCase() + type.slice(1)}</option>
+                    ))}
                   </select>
                 </div>
                 <div className="space-y-2">
