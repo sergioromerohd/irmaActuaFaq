@@ -361,7 +361,9 @@ export default function IrmaPage() {
                   <p className="text-muted-foreground mb-6">
                     Lleva el control en tu bolsillo. Ideal para técnicos de campo e instalaciones rápidas. Disponible para iOS y Android.
                   </p>
-                   <Button variant="outline" className="w-full">Descargar App</Button>
+                   <Link href="https://irmaback.dbblab.es/api/download/latest" target="_blank" rel="noopener noreferrer">
+                       <Button variant="outline" className="w-full">Descargar App</Button>
+                   </Link>
                 </Card>
               </motion.div>
 
