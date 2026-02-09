@@ -226,9 +226,7 @@ export function SiteHeader() {
                     </span>
                     <ChevronRight className={`h-4 w-4 transition-transform duration-200 ${appsExpanded ? 'rotate-90' : ''}`} />
                   </button>
-                    {typeof window !== "undefined" &&
-                    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1") && (
-                      <div className={`overflow-hidden transition-all duration-300 ease-in-out ${appsExpanded ? "max-h-48 opacity-100" : "max-h-0 opacity-0"}`}>
+                    <div className={`overflow-hidden transition-all duration-300 ease-in-out ${appsExpanded ? "max-h-48 opacity-100" : "max-h-0 opacity-0"}`}>
                       <div className="pl-4 border-l-2 border-app-primary/30 space-y-2 py-1">
                         {appsNavList.map((app) => (
                         <Link
@@ -242,8 +240,7 @@ export function SiteHeader() {
                         </Link>
                         ))}
                       </div>
-                      </div>
-                    )}
+                    </div>
                </div>
             </div>
 
