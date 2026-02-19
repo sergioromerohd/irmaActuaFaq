@@ -46,6 +46,28 @@ export const appsData: AppData[] = [
     }
   },
   {
+    slug: "WallFit",
+    name: "WallFit",
+    tagline: "Identificacion de Paredes de Edificios",
+    description: "WallFit identifica y analiza las características estructurales de las paredes de edificios mediante sensores avanzados de vibración.",
+    heroImage: "/images/apps/wallfit-hero.png",
+    youtubeUrl: "",
+    iconName: "Activity",
+    features: [
+      {
+        title: "Análisis de Vibración",
+        subtitle: "Sensores avanzados",
+        description: "Utiliza sensores de vibración para detectar propiedades estructurales y posibles daños en paredes.",
+        iconName: "Activity"
+      }
+    ],
+    metadata: {
+      title: "WallFit",
+      description: "Identificacion de paredes de edificios mediante análisis de vibración.",
+      keywords: ["WallFit", "monitorización vibración", "IRMA",  "infraestructuras"]
+    }
+  },
+  {
     slug: "livecomfort",
     name: "LiveComfort",
     tagline: "Control de confort ambiental",
@@ -111,7 +133,7 @@ export const appsData: AppData[] = [
       description: "Seguridad en eventos deportivos. Monitorización acústica y ambiental para estadios y recintos.",
       keywords: ["MatchGuard", "seguridad eventos", "estadios", "IRMA", "monitorización deportiva", "control masas"]
     }
-  }
+  },
 ]
 
 // Helper para obtener app por slug
