@@ -28,7 +28,7 @@ export const appsData: AppData[] = [
     tagline: "monitoreo y analisis del indice SBI entre el altavoz y la pared",
     description: "Detecta, analiza y Gestiona el estado de la instalacion del equipo y como esta afectando al indice SBI entre el altavoz y la pared.",
     heroImage: "/images/apps/soundbreak-hero.png",
-    youtubeUrl: "https://youtu.be/san3DlDB60s",
+    youtubeUrl: "https://youtu.be/EQJjehLiSrI?si=D7WuPzm2vI0I4yJX",
     iconName: "Volume2",
     features: [
       {
@@ -96,7 +96,7 @@ export const appsData: AppData[] = [
     tagline: "Análisis de carga de viento",
     description: "Monitoriza condiciones eólicas y evalúa su impacto estructural en tiempo real. WindLoad proporciona datos críticos para la seguridad de edificios, grúas, andamios y estructuras temporales.",
     heroImage: "/images/apps/windload-hero.png",
-    youtubeUrl: "",
+    youtubeUrl: "https://youtu.be/BaSypoH3UcQ?si=Jlpf8igxxMBTRYKt",
     iconName: "Wind",
     features: [
       {
