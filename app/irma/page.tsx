@@ -21,7 +21,8 @@ import {
   Gauge,
   CheckCircle,
   Shield,
-  Users
+  Users,
+  Headphones
 } from "lucide-react"
 import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion"
 import { IrmaLiveSimulator } from "@/components/IrmaLiveSimulator"
@@ -343,11 +344,11 @@ export default function IrmaPage() {
       {/* Cross Platform Section */}
       <section className="py-24 bg-muted/30">
         <div className="container mx-auto px-4">
-          <div className="max-w-4xl mx-auto text-center space-y-8">
+          <div className="max-w-5xl mx-auto text-center space-y-8">
             <h3 className="text-4xl font-bold">Disponible donde estés</h3>
             <p className="text-xl text-muted-foreground">Accede a tus datos desde cualquier dispositivo y lugar.</p>
     
-            <div className="grid md:grid-cols-2 gap-8 mt-12">
+            <div className="grid md:grid-cols-3 gap-8 mt-12">
               <motion.div
                 initial={{ opacity: 0, x: -30 }}
                 whileInView={{ opacity: 1, x: 0 }}
@@ -385,6 +386,27 @@ export default function IrmaPage() {
                   <Link href="https://irmaweb.dbblab.es/" target="_blank" rel="noopener noreferrer">
                       <Button className="w-full bg-accent hover:bg-accent/90 text-accent-foreground">Ir a la Web</Button>
                   </Link>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                 initial={{ opacity: 0, x: 30 }}
+                 whileInView={{ opacity: 1, x: 0 }}
+                 viewport={{ once: true }}
+              >
+                <Card className="text-center p-8 h-full hover:shadow-xl transition-all duration-300">
+                  <div className="h-20 w-20 rounded-3xl bg-accent/10 flex items-center justify-center mx-auto mb-6">
+                    <Headphones className="h-10 w-10 text-accent" />
+                  </div>
+                  <h4 className="text-2xl font-bold mb-4">
+                      Ruido Rosa
+                  </h4>
+                  <p className="text-muted-foreground mb-6">
+                    Descarga directa en formato WAV.
+                  </p>
+                  <a href="/pinknoise.wav" download>
+                      <Button variant="outline" className="w-full border-accent text-accent hover:bg-accent hover:text-white">Descargar Audio</Button>
+                  </a>
                 </Card>
               </motion.div>
             </div>
