@@ -66,9 +66,6 @@ export default function IrmaPage() {
     offset: ["start start", "end end"],
   })
 
-  const heroY = useTransform(scrollYProgress, [0, 0.2], [0, 100])
-  const heroOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0])
-
   return (
     <div ref={containerRef} className="min-h-screen bg-background overflow-x-hidden">
       
@@ -109,7 +106,6 @@ export default function IrmaPage() {
               initial={{ opacity: 0, x: -50 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8, ease: "circOut" }}
-              style={{ y: heroY, opacity: heroOpacity }}
               className="space-y-8 text-center lg:text-left"
             >
               <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent font-medium border border-accent/20 backdrop-blur-sm">
