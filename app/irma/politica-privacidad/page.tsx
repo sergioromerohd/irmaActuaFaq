@@ -281,7 +281,7 @@ const sections: Section[] = [
           {[
             { right: "Acceso", desc: "Conocer qué datos tenemos sobre ti." },
             { right: "Rectificación", desc: "Corregir datos inexactos o incompletos." },
-            { right: "Supresión", desc: "Solicitar que eliminemos tus datos ("derecho al olvido")." },
+            { right: "Supresión", desc: "Solicitar que eliminemos tus datos ('derecho al olvido')." },
             { right: "Limitación", desc: "Restringir el tratamiento de tus datos en ciertos supuestos." },
             { right: "Portabilidad", desc: "Recibir tus datos en formato estructurado y usable." },
             { right: "Oposición", desc: "Oponerte al tratamiento basado en interés legítimo." },
