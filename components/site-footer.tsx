@@ -36,7 +36,7 @@ export function SiteFooter() {
             <Link href="https://dbbasico.es/aviso-legal/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
               Aviso Legal
             </Link>
-            <Link href="https://dbbasico.es/politica-de-privacidad/" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
+            <Link href="/irma/politica-privacidad" className="text-muted-foreground hover:text-foreground transition-colors">
               Política de Privacidad
             </Link>
           </div>
