@@ -32,11 +32,36 @@ export const appsData: AppData[] = [
     iconName: "Volume2",
     features: [
       {
-        title: "Visualizacion Simple",
-        subtitle: "Interfaz intuitiva",
-        description: "Panel de control claro y fácil de usar, con colores intuitivos y UX optimizada para rápida interpretación.",
-        iconName: "Monitor"
+        title: "Validación de Anclajes",
+        subtitle: "Índice SBI",
+        description: "Permite validar anclajes y sistemas de fijación de altavoces mediante un índice propio que cuantifica la transmisión vibratoria estructural.",
+        iconName: "Anchor"
       },
+      {
+        title: "Evaluación de Molestia",
+        subtitle: "Clasificación del impacto",
+        description: "Determina el nivel de molestia estructural generado en el receptor, facilitando una interpretación clara del comportamiento del sistema.",
+        iconName: "Gauge"
+      },
+      {
+        title: "Base Predictiva",
+        subtitle: "Ensayos y algoritmo propio",
+        description: "Integra un algoritmo desarrollado a partir de múltiples ensayos para anticipar el comportamiento del sistema en el receptor.",
+        iconName: "BrainCircuit"
+      },
+      {
+        title: "Experiencia de Uso Ágil",
+        subtitle: "Navegación sencilla",
+        description: "Diseñada para que técnicos e instaladores accedan rápidamente a las mediciones, resultados y conclusiones sin complejidad operativa.",
+        iconName: "Navigation"
+      },
+      {
+        title: "Lectura Rápida",
+        subtitle: "Indicadores directos",
+        description: "Muestra la información clave mediante indicadores visuales que permiten evaluar el comportamiento del anclaje de un solo vistazo.",
+        iconName: "Eye"
+      }
+
       
     ],
     metadata: {
@@ -55,10 +80,22 @@ export const appsData: AppData[] = [
     iconName: "Activity",
     features: [
       {
-        title: "Análisis de Vibración",
-        subtitle: "Sensores avanzados",
-        description: "Utiliza sensores de vibración para detectar propiedades estructurales y posibles daños en paredes.",
-        iconName: "Activity"
+        title: "Identificación por Impacto",
+        subtitle: "Ensayo no invasivo",
+        description: "Permite identificar el tipo de pared mediante un impacto controlado y el análisis de su respuesta vibratoria.",
+        iconName: "ScanSearch"
+      },
+      {
+        title: "Interfaz Intuitiva",
+        subtitle: "Visualización clara",
+        description: "Presenta los resultados de forma sencilla para facilitar la interpretación técnica durante la inspección.",
+        iconName: "LayoutDashboard"
+      },
+      {
+        title: "Medición Rápida",
+        subtitle: "Resultados en campo",
+        description: "Facilita una identificación ágil directamente sobre el elemento constructivo, sin necesidad de ensayos destructivos.",
+        iconName: "Timer"
       }
     ],
     metadata: {
@@ -77,12 +114,23 @@ export const appsData: AppData[] = [
     iconName: "Thermometer",
     features: [
       {
-        title: "Temperatura Óptima",
-        subtitle: "Control térmico preciso",
-        description: "Monitorización continua de temperatura con alertas configurables para mantener el confort ideal.",
-        iconName: "Thermometer"
+        title: "Evaluación Continua",
+        subtitle: "Medición en forjado",
+        description: "Realiza mediciones continuas sobre el forjado para evaluar el comportamiento vibratorio del espacio en condiciones reales de uso.",
+        iconName: "Activity"
       },
-      
+      {
+        title: "Interfaz Clara",
+        subtitle: "Resultados comprensibles",
+        description: "Presenta los resultados de forma sencilla para facilitar la interpretación técnica del confort vibratorio.",
+        iconName: "MonitorCheck"
+      },
+      {
+        title: "Viviendas y actividad",
+        subtitle: "Ámbitos de aplicación",
+        description: "Diseñada para analizar el confort vibratorio tanto en recintos residenciales como en locales con actividad.",
+        iconName: "Home"
+      }
     ],
     metadata: {
       title: "LiveComfort",
