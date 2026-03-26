@@ -491,7 +491,7 @@ export function DeviceConfigModal() {
                                     onClick={() => setFlashMode('update')}
                                     className="text-[10px] sm:text-xs"
                                   >
-                                    Actualizar (0x10000)
+                                    Actualizar
                                   </Button>
                                   <Button 
                                     variant={flashMode === 'full' ? "secondary" : "outline"} 
@@ -499,11 +499,11 @@ export function DeviceConfigModal() {
                                     onClick={() => setFlashMode('full')}
                                     className="text-[10px] sm:text-xs border-orange-500/50"
                                   >
-                                    Desde Cero (Full)
+                                    Nueva Instalación
                                   </Button>
                                 </div>
                                 <p className="text-[9px] text-muted-foreground italic">
-                                   * <b>Desde Cero</b> flashea el bootloader y las particiones. Úsalo en chips nuevos.
+                                   * <b>Nueva Instalación</b> flashea el bootloader y las particiones. Úsalo en chips nuevos.
                                 </p>
                             </div>
 
