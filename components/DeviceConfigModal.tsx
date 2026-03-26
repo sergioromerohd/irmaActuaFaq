@@ -65,6 +65,7 @@ export function DeviceConfigModal() {
   const [flashProgress, setFlashProgress] = React.useState(0)
   const [firmwares, setFirmwares] = React.useState<Firmware[]>([])
   const [selectedFirmware, setSelectedFirmware] = React.useState<string>("")
+  const [flashAddress, setFlashAddress] = React.useState<number>(0x10000)
 
   // Load firmwares
   React.useEffect(() => {
@@ -300,8 +301,9 @@ export function DeviceConfigModal() {
           // Forzar flasheo a 0x10000 para la aplicación. 
           // Si el chip es totalmente nuevo y el binario NO es un merge, 
           // el bootloader puede seguir faltando.
-          addLog("Escribiendo memoria Flash...", 'sys')
-          const fileArray = [{ data: fileString, address: 0x10000 }] 
+          // Aplicar la dirección seleccionada (0x10000 por defecto, 0x0 para recuperación)
+          addLog(`Escribiendo memoria Flash en dirección ${flashAddress.toString(16)}...`, 'sys')
+          const fileArray = [{ data: fileString, address: flashAddress }] 
           
           // @ts-ignore
           await espLoader.writeFlash({
@@ -317,7 +319,7 @@ export function DeviceConfigModal() {
           addLog("¡Flasheo completado con éxito!", 'sys')
           addLog("Reiniciando dispositivo...", 'sys')
           
-          
+
           // Hard reset logic
           try {
               await transport.setDTR(false)
@@ -462,8 +464,36 @@ export function DeviceConfigModal() {
 
                     <TabsContent value="firmware" className="space-y-3 sm:space-y-4 pt-3 sm:pt-4">
                         <div className="space-y-3 sm:space-y-4">
-                           <Label className="text-xs sm:text-sm">Versiones Disponibles</Label>
-                           <ScrollArea className="h-[150px] sm:h-[200px] border rounded-md p-2">
+                            <div className="space-y-3 p-3 bg-secondary/20 rounded-lg border border-border">
+                               <Label className="text-xs sm:text-sm font-bold flex items-center gap-2">
+                                  <RotateCcw className="h-4 w-4 text-orange-500" />
+                                  Modo de Flasheo
+                               </Label>
+                               <div className="grid grid-cols-2 gap-2">
+                                  <Button 
+                                    variant={flashAddress === 0x10000 ? "default" : "outline"} 
+                                    size="sm" 
+                                    onClick={() => setFlashAddress(0x10000)}
+                                    className="text-[10px] sm:text-xs"
+                                  >
+                                    Actualización (0x10000)
+                                  </Button>
+                                  <Button 
+                                    variant={flashAddress === 0x0 ? "secondary" : "outline"} 
+                                    size="sm" 
+                                    onClick={() => setFlashAddress(0x0)}
+                                    className="text-[10px] sm:text-xs border-orange-500/50"
+                                  >
+                                    Fábrica / Vacío (0x0)
+                                  </Button>
+                                </div>
+                                <p className="text-[9px] text-muted-foreground italic">
+                                   * USA <b>0x0</b> si el chip está vacío o da error 'header miss'.
+                                </p>
+                            </div>
+
+                            <Label className="text-xs sm:text-sm">Versiones Disponibles</Label>
+                            <ScrollArea className="h-[120px] sm:h-[150px] border rounded-md p-2">
                              {firmwares.map((fw) => (
                                <div 
                                  key={fw.filename} 
