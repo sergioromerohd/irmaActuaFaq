@@ -166,6 +166,16 @@ export function DeviceConfigModal() {
       // Note: Do NOT close the port itself, or esptool cannot use it.
   }
 
+  const stopPortCompletely = async () => {
+      await stopTerminalStreams()
+      if (port) {
+          try {
+              // We try to close it twice to be sure it's released by the browser
+              await port.close().catch(() => {})
+          } catch (e) {}
+      }
+  }
+
   const disconnectSerial = async () => {
       await stopTerminalStreams()
       if (port) {
@@ -225,41 +235,44 @@ export function DeviceConfigModal() {
       try {
           setIsFlashing(true)
           setFlashProgress(0)
-          addLog("Iniciando proceso de flasheo...", 'sys')
+          addLog("Preparando proceso de flasheo...", 'sys')
           
-          // Try soft entry to bootloader first if possible
-          addLog("Enviando comando BOOTLOADER...", 'sys')
-          await writeToPort(writer, "BOOTLOADER")
-          await new Promise(r => setTimeout(r, 500))
+          // 1. Try soft entry but don't fail if it doesn't respond (blank chips)
+          try {
+              addLog("Intentando reinicio a BOOTLOADER por software...", 'sys')
+              await writeToPort(writer, "BOOTLOADER")
+              await new Promise(r => setTimeout(r, 200))
+          } catch (e) {
+              addLog("No se pudo enviar comando BOOTLOADER (normal en chips vacíos)", 'sys')
+          }
 
-          addLog("Deteniendo terminal...", 'sys')
-          await stopTerminalStreams()
-          
-          // Close the port so esptool can reopen it
-          addLog("Cerrando puerto...", 'sys')
-          await port.close()
-          await new Promise(r => setTimeout(r, 300))
+          addLog("Deteniendo terminal y liberando puerto...", 'sys')
+          await stopPortCompletely()
+          await new Promise(r => setTimeout(r, 500))
 
           // 2. Load the binary file
           addLog(`Descargando firmware: ${fw.filename}...`, 'sys')
           const response = await fetch(`/firmware/${fw.filename}`)
+          if (!response.ok) throw new Error("Error al descargar el archivo de firmware")
+          
           const blob = await response.blob()
           const data = await blob.arrayBuffer()
           const fileData = new Uint8Array(data)
           const fileString = cleanBinaryString(fileData)
-          addLog(`Firmware descargado (${fileData.byteLength} bytes)`, 'sys')
+          addLog(`Firmware listo (${fileData.byteLength} bytes)`, 'sys')
 
-          // 3. Initialize esptool transport (let it handle opening the port)
-          addLog("Inicializando transport...", 'sys')
+          // 3. Initialize esptool transport
+          addLog("Iniciando esptool-js transport...", 'sys')
           const transport = new Transport(port)
           
           const term = {
             clean: () => {},
             writeLine: (data: string) => addLog(data, 'sys'),
-            write: (data: string) => { /* console.log(data) */ }
+            write: (data: string) => { /* Silencing raw writes to avoid log spam */ }
           }
            
-          addLog("Conectando al chip ESP32...", 'sys')
+          addLog("Sincronizando con el chip ESP32...", 'sys')
+          addLog("Tip: Si falla, mantén pulsado el botón 'Boot' del dispositivo.", 'sys')
           
           // @ts-ignore - ESPLoader constructor
           const espLoader = new ESPLoader({
@@ -270,22 +283,24 @@ export function DeviceConfigModal() {
           
           try {
              const chip = await espLoader.main()
-             addLog(`Chip detectado: ${chip}`, 'sys')
+             addLog(`¡Éxito! Chip detectado: ${chip}`, 'sys')
              
              // @ts-ignore
              if (!espLoader.chip) {
-                 throw new Error("Chip no detectado después de main()")
+                 throw new Error("Chip no detectado después de la sincronización.")
              }
-             
-             addLog("Sincronización exitosa!", 'sys')
           } catch(e: any) {
              console.error("Connection failed", e)
-             addLog(`Error: ${e?.message || e}`, 'sys')
+             addLog(`Error de sincronización: ${e?.message || e}`, 'sys')
+             addLog("Asegúrate de que el chip está en modo bootloader.", 'sys')
              throw e
           }
 
           // 4. Flash
-          addLog("Escribiendo flash... (Esto puede tardar)", 'sys')
+          // Forzar flasheo a 0x10000 para la aplicación. 
+          // Si el chip es totalmente nuevo y el binario NO es un merge, 
+          // el bootloader puede seguir faltando.
+          addLog("Escribiendo memoria Flash...", 'sys')
           const fileArray = [{ data: fileString, address: 0x10000 }] 
           
           // @ts-ignore
@@ -299,42 +314,36 @@ export function DeviceConfigModal() {
               }
           })
 
-          addLog("Flasheo completado exitosamente!", 'sys')
+          addLog("¡Flasheo completado con éxito!", 'sys')
           addLog("Reiniciando dispositivo...", 'sys')
           
-          // Hard reset to run app
-          await transport.setDTR(false)
-          await transport.setRTS(true)
-          await new Promise(resolve => setTimeout(resolve, 100))
-          await transport.setRTS(false)
-          
-          // Disconnect esptool's transport
-          await transport.disconnect()
+          // Hard reset logic
+          try {
+              await transport.setDTR(false)
+              await transport.setRTS(true)
+              await new Promise(resolve => setTimeout(resolve, 100))
+              await transport.setRTS(false)
+              await transport.disconnect()
+          } catch (e) {}
           
       } catch (err: any) {
           console.error(err)
-          addLog(`Error flasheando: ${err?.message || "Error desconocido"}`, 'sys')
+          addLog(`ERROR: ${err?.message || "Error fatal durante el flasheo"}`, 'sys')
       } finally {
           setIsFlashing(false)
-          // Re-enable terminal
-          addLog("Reconectando terminal...", 'sys')
-          try {
-             setTimeout(async () => {
-                 try {
-                     // Reopen the port for terminal use
-                     await port.open({ baudRate: 115200 })
-                     await startTerminalStreams(port)
-                     setTimeout(() => catchWrite(writer, "INFO"), 1000)
-                 } catch(ex) { 
-                     console.error(ex)
-                     addLog("Error reconectando. Por favor reconecta el USB.", 'sys')
-                     setIsConnected(false)
-                 }
-             }, 1500)
-          } catch (e) {
-             addLog("Error reconectando terminal. Por favor reconecta USB.", 'sys')
-             setIsConnected(false)
-          }
+          addLog("Reintentando conexión con la terminal...", 'sys')
+          
+          setTimeout(async () => {
+              try {
+                  // Reopen the port for terminal use
+                  await port.open({ baudRate: 115200 }).catch(() => {})
+                  await startTerminalStreams(port)
+                  setTimeout(() => catchWrite(writer, "INFO"), 1000)
+              } catch(ex) { 
+                  addLog("Terminal no disponible automáticamente. Pulsa 'Conectar' manualmente.", 'sys')
+                  setIsConnected(false)
+              }
+          }, 1000)
       }
   }
   
