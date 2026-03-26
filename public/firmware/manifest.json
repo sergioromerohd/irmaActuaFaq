@@ -4,13 +4,13 @@
         "name": "IRMA 355 hybrid",
         "filename": "irma-seta-v2.1.0.bin",
         "releaseDate": "2026-03-26",
-        "description": "sETA adxl355 hYBRIDA"
+        "description": "Seta ADXL355 hybrid"
     },
     {
         "version": "v1.0.0",
-        "name": "IRMA 355 hybrid",
+        "name": "IRMA MPU hybrid",
         "filename": "irma-seta-MPU-v1.0.0.bin",
         "releaseDate": "2026-03-26",
-        "description": "pRIMERA VERSION DE LA SETA MPU"
+        "description": "Primera version de la seta MPU"
     }
 ]
