@@ -65,7 +65,7 @@ export function DeviceConfigModal() {
   const [flashProgress, setFlashProgress] = React.useState(0)
   const [firmwares, setFirmwares] = React.useState<Firmware[]>([])
   const [selectedFirmware, setSelectedFirmware] = React.useState<string>("")
-  const [flashAddress, setFlashAddress] = React.useState<number>(0x10000)
+  const [flashMode, setFlashMode] = React.useState<'update' | 'full'>('update')
 
   // Load firmwares
   React.useEffect(() => {
@@ -251,15 +251,35 @@ export function DeviceConfigModal() {
           await stopPortCompletely()
           await new Promise(r => setTimeout(r, 500))
 
-          // 2. Load the binary file
+          // 2. Load the binary files
+          const filesToFlash = []
+          
+          if (flashMode === 'full') {
+              addLog("Descargando archivos base (bootloader + partitions)...", 'sys')
+              
+              const blRes = await fetch('/firmware/bootloader.bin')
+              if (!blRes.ok) throw new Error("No se pudo descargar el bootloader.bin")
+              const blData = new Uint8Array(await blRes.arrayBuffer())
+              filesToFlash.push({ data: cleanBinaryString(blData), address: 0x0 })
+              
+              const ptRes = await fetch('/firmware/partitions.bin')
+              if (!ptRes.ok) throw new Error("No se pudo descargar el partitions.bin")
+              const ptData = new Uint8Array(await ptRes.arrayBuffer())
+              filesToFlash.push({ data: cleanBinaryString(ptData), address: 0x8000 })
+              
+              addLog("Archivos base listos.", 'sys')
+          }
+
           addLog(`Descargando firmware: ${fw.filename}...`, 'sys')
           const response = await fetch(`/firmware/${fw.filename}`)
-          if (!response.ok) throw new Error("Error al descargar el archivo de firmware")
+          if (!response.ok) throw new Error("Error al descargar el archivo de firmware principal")
           
           const blob = await response.blob()
           const data = await blob.arrayBuffer()
           const fileData = new Uint8Array(data)
           const fileString = cleanBinaryString(fileData)
+          
+          filesToFlash.push({ data: fileString, address: 0x10000 })
           addLog(`Firmware listo (${fileData.byteLength} bytes)`, 'sys')
 
           // 3. Initialize esptool transport
@@ -298,18 +318,13 @@ export function DeviceConfigModal() {
           }
 
           // 4. Flash
-          // Forzar flasheo a 0x10000 para la aplicación. 
-          // Si el chip es totalmente nuevo y el binario NO es un merge, 
-          // el bootloader puede seguir faltando.
-          // Aplicar la dirección seleccionada (0x10000 por defecto, 0x0 para recuperación)
-          addLog(`Escribiendo memoria Flash en dirección ${flashAddress.toString(16)}...`, 'sys')
-          const fileArray = [{ data: fileString, address: flashAddress }] 
+          addLog(`Escribiendo ${filesToFlash.length} archivo(s) en la memoria Flash...`, 'sys')
           
           // @ts-ignore
           await espLoader.writeFlash({
-              fileArray: fileArray,
+              fileArray: filesToFlash,
               flashSize: "keep",
-              eraseAll: false,
+              eraseAll: flashMode === 'full', 
               compress: true,
               reportProgress: (current: number, total: number) => {
                   setFlashProgress(Math.round((current / total) * 100))
@@ -467,28 +482,28 @@ export function DeviceConfigModal() {
                             <div className="space-y-3 p-3 bg-secondary/20 rounded-lg border border-border">
                                <Label className="text-xs sm:text-sm font-bold flex items-center gap-2">
                                   <RotateCcw className="h-4 w-4 text-orange-500" />
-                                  Modo de Flasheo
+                                  Tipo de Instalación
                                </Label>
                                <div className="grid grid-cols-2 gap-2">
                                   <Button 
-                                    variant={flashAddress === 0x10000 ? "default" : "outline"} 
+                                    variant={flashMode === 'update' ? "default" : "outline"} 
                                     size="sm" 
-                                    onClick={() => setFlashAddress(0x10000)}
+                                    onClick={() => setFlashMode('update')}
                                     className="text-[10px] sm:text-xs"
                                   >
-                                    Actualización (0x10000)
+                                    Actualizar (0x10000)
                                   </Button>
                                   <Button 
-                                    variant={flashAddress === 0x0 ? "secondary" : "outline"} 
+                                    variant={flashMode === 'full' ? "secondary" : "outline"} 
                                     size="sm" 
-                                    onClick={() => setFlashAddress(0x0)}
+                                    onClick={() => setFlashMode('full')}
                                     className="text-[10px] sm:text-xs border-orange-500/50"
                                   >
-                                    Fábrica / Vacío (0x0)
+                                    Desde Cero (Full)
                                   </Button>
                                 </div>
                                 <p className="text-[9px] text-muted-foreground italic">
-                                   * USA <b>0x0</b> si el chip está vacío o da error 'header miss'.
+                                   * <b>Desde Cero</b> flashea el bootloader y las particiones. Úsalo en chips nuevos.
                                 </p>
                             </div>
 
