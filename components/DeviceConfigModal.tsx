@@ -317,6 +317,7 @@ export function DeviceConfigModal() {
           addLog("¡Flasheo completado con éxito!", 'sys')
           addLog("Reiniciando dispositivo...", 'sys')
           
+          
           // Hard reset logic
           try {
               await transport.setDTR(false)
