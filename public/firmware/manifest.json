@@ -3,7 +3,14 @@
         "version": "v1.1.0",
         "name": "IRMA 355 hybrid",
         "filename": "irma-seta-v2.1.0.bin",
-        "releaseDate": "2026-03-20",
-        "description": "Fixes a seta ofline reconexion y datos por ap 20/3/26"
+        "releaseDate": "2026-03-26",
+        "description": "sETA adxl355 hYBRIDA"
+    },
+    {
+        "version": "v1.0.0",
+        "name": "IRMA 355 hybrid",
+        "filename": "irma-seta-MPU-v1.0.0.bin",
+        "releaseDate": "2026-03-26",
+        "description": "pRIMERA VERSION DE LA SETA MPU"
     }
 ]
