@@ -3,14 +3,14 @@
         "version": "v1.1.0",
         "name": "IRMA 355 hybrid",
         "filename": "irma-seta-v2.1.0.bin",
-        "releaseDate": "2026-03-26",
+        "releaseDate": "2026-05-21",
         "description": "Seta ADXL355 hybrid con sleep mode y mejoras en la gestión de energía"
     },
     {
-        "version": "v1.0.0",
+        "version": "v1.0.1",
         "name": "IRMA MPU hybrid",
-        "filename": "irma-seta-MPU-v1.0.0.bin",
-        "releaseDate": "2026-03-26",
-        "description": "Primera version de la seta MPU hybrid con sleep mode y mejoras en la gestión de energía"
+        "filename": "irma-seta-MPU-v1.0.1.bin",
+        "releaseDate": "2026-05-21",
+        "description": "Deteccion SDA y SCL, optimizacion de consumo y fix en formato de la fft"
     }
 ]
