@@ -12,5 +12,12 @@
         "filename": "irma-seta-MPU-v1.0.1.bin",
         "releaseDate": "2026-06-05",
         "description": "ota y blinks actualizados para el IRMA MPU hybrid"
+    },
+    {
+        "version": "v1.0.1",
+        "name": "IRMA MPU SD hybrid",
+        "filename": "irma-seta-MPU-SDv1.0.1.bin",
+        "releaseDate": "2026-06-05",
+        "description": "ota y blinks actualizados para el IRMA MPU hybrid"
     }
 ]
