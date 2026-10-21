@@ -1,10 +1,17 @@
 [
     {
+        "version": "26.1013.1",
+        "name": "IRMA 355 SD hybrid",
+        "filename": "irma-seta-355-SD-26.1013.1.bin",
+        "releaseDate": "2026-10-13",
+        "description": "Versión SD del IRMA 355 (ADXL355): sesiones, logs y buffer circular en tarjeta SD"
+    },
+    {
         "version": "v1.1.0",
-        "name": "IRMA 355 hybrid",
+        "name": "IRMA 355 noSD hybrid",
         "filename": "irma-seta-355-v2.1.0.bin",
         "releaseDate": "2026-06-05",
-        "description": "ota y blinks actualizados para el IRMA 355 hybrid"
+        "description": "Versión sin tarjeta SD del IRMA 355 (ADXL355): ota y blinks actualizados"
     },
     {
         "version": "v1.0.1",
